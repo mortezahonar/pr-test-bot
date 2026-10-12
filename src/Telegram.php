@@ -1,0 +1,140 @@
+<?php
+
+declare(strict_types=1);
+
+final class Telegram
+{
+    public function __construct(private string $token)
+    {
+    }
+
+    private function url(string $method): string
+    {
+        return 'https://api.telegram.org/bot' . $this->token . '/' . $method;
+    }
+
+    public function call(string $method, array $params = [], int $timeout = 60): array
+    {
+        $res = Http::form($this->url($method), $params, $timeout);
+
+        if (!is_array($res['json']) || ($res['json']['ok'] ?? false) !== true) {
+            throw new RuntimeException('Telegram API ' . $method . ' failed: ' . $res['raw']);
+        }
+
+        return $res['json']['result'];
+    }
+
+    /**
+     * Long polling. Blocks up to $timeout seconds.
+     */
+    public function getUpdates(int $offset, int $timeout = 50): array
+    {
+        $res = Http::form($this->url('getUpdates'), [
+            'offset'          => $offset,
+            'timeout'         => $timeout,
+            'allowed_updates' => json_encode(['message', 'callback_query']),
+        ], $timeout + 20);
+
+        if (!is_array($res['json']) || ($res['json']['ok'] ?? false) !== true) {
+            throw new RuntimeException('getUpdates failed: ' . $res['raw']);
+        }
+
+        return $res['json']['result'];
+    }
+
+    public function sendMessage(string $chatId, string $text, ?int $threadId = null, ?array $keyboard = null): array
+    {
+        $params = [
+            'chat_id'                  => $chatId,
+            'text'                     => $text,
+            'parse_mode'               => 'HTML',
+            'link_preview_options'     => json_encode(['is_disabled' => true]),
+        ];
+
+        if ($threadId !== null) {
+            $params['message_thread_id'] = $threadId;
+        }
+
+        if ($keyboard !== null) {
+            $params['reply_markup'] = json_encode($keyboard);
+        }
+
+        return $this->call('sendMessage', $params);
+    }
+
+    public function sendPhoto(string $chatId, string $photoUrl, ?string $caption = null, ?int $threadId = null): array
+    {
+        $params = [
+            'chat_id' => $chatId,
+            'photo'   => $photoUrl,
+        ];
+
+        if ($caption !== null && $caption !== '') {
+            $params['caption'] = $caption;
+            $params['parse_mode'] = 'HTML';
+        }
+
+        if ($threadId !== null) {
+            $params['message_thread_id'] = $threadId;
+        }
+
+        return $this->call('sendPhoto', $params, 120);
+    }
+
+    public function editMessageText(string $chatId, int $messageId, string $text): array
+    {
+        return $this->call('editMessageText', [
+            'chat_id'                  => $chatId,
+            'message_id'               => $messageId,
+            'text'                     => $text,
+            'parse_mode'               => 'HTML',
+            'link_preview_options'     => json_encode(['is_disabled' => true]),
+        ]);
+    }
+
+    public function editMessageCaption(string $chatId, int $messageId, string $caption): array
+    {
+        return $this->call('editMessageCaption', [
+            'chat_id'    => $chatId,
+            'message_id' => $messageId,
+            'caption'    => $caption,
+            'parse_mode' => 'HTML',
+        ]);
+    }
+
+    public function deleteMessage(string $chatId, int $messageId): array
+    {
+        return $this->call('deleteMessage', [
+            'chat_id'    => $chatId,
+            'message_id' => $messageId,
+        ]);
+    }
+
+    public function createForumTopic(string $chatId, string $name): array
+    {
+        return $this->call('createForumTopic', [
+            'chat_id' => $chatId,
+            'name'    => $name,
+        ]);
+    }
+
+    public function editForumTopic(string $chatId, int $threadId, string $name): array
+    {
+        return $this->call('editForumTopic', [
+            'chat_id'           => $chatId,
+            'message_thread_id' => $threadId,
+            'name'              => $name,
+        ]);
+    }
+
+    public function answerCallbackQuery(string $callbackId, ?string $text = null): array
+    {
+        $params = ['callback_query_id' => $callbackId];
+
+        if ($text !== null && $text !== '') {
+            $params['text'] = $text;
+        }
+
+        return $this->call('answerCallbackQuery', $params);
+    }
+}

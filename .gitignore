@@ -1,0 +1,6 @@
+/secrets.php
+/config.local.php
+*.log
+
+# state/ is committed on purpose: GitHub-hosted runners are ephemeral,
+# so the topic map, pending jobs and polling offset must persist in the repo.

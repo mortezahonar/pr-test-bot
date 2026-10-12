@@ -1,0 +1,28 @@
+{
+  "association": {
+    "CONTRIBUTOR": "مشارکت‌کننده",
+    "OWNER": "مالک",
+    "MEMBER": "عضو",
+    "COLLABORATOR": "همکار",
+    "FIRST_TIME_CONTRIBUTOR": "مشارکت‌کنندهٔ بار اول",
+    "FIRST_TIMER": "نخستین‌بار"
+  },
+  "review_state": {
+    "APPROVED": "تأیید شد",
+    "CHANGES_REQUESTED": "درخواست تغییر",
+    "DISMISSED": "رد شد",
+    "PENDING": "در انتظار"
+  },
+  "events": {
+    "labeled": "برچسب «{label}» توسط {actor} اضافه شد",
+    "unlabeled": "برچسب «{label}» توسط {actor} حذف شد",
+    "renamed": "عنوان از «{old}» به «{new}» تغییر کرد",
+    "cross-referenced": "ارجاع به: {title}",
+    "review_requested": "درخواست بازبینی",
+    "review_requested_removed": "درخواست بازبینی لغو شد",
+    "closed": "بسته شد",
+    "merged": "ادغام شد",
+    "reopened": "دوباره باز شد"
+  },
+  "ai_policy_line": "[x] سیاست هوش مصنوعی مولد (لینک صفحه اصلی) − ترجمه فارسی (لینک تاپیک ترجمه) را خوانده‌ام و مشارکت من یا بدون کمک AI ساخته شده، یا هم با این سیاست سازگار است و هم زیر مجوز GNU/GPL نسخه ۲ یا جدیدتر منتشر شده است."
+}

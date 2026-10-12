@@ -1,0 +1,45 @@
+name: pr-test-bot
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: pr-test-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      PR_BOT_TOKEN: ${{ secrets.PR_BOT_TOKEN }}
+      PR_CHAT_ID: ${{ secrets.PR_CHAT_ID }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_GLOSSARY: ${{ github.workspace }}/data/joomla-translation-glossary.md
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run one cycle
+        run: php bot.php --once
+
+      - name: Persist state
+        if: always()
+        run: |
+          git config user.name "pr-test-bot"
+          git config user.email "pr-test-bot@users.noreply.github.com"
+          git add -A state
+          if git diff --cached --quiet; then
+            echo "state unchanged"
+            exit 0
+          fi
+          git commit -m "state: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push
