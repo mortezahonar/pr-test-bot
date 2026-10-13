@@ -223,6 +223,26 @@ function handleUpdate(array $update): void
         // We asked for a PR number and this is the answer.
         $store->clearAwaiting((string) $userId);
         $pr = (int) $n[1];
+        $hasTopic = $store->topicExists($pr);
+
+        if ($awaiting === 'topic' && $hasTopic) {
+            $log('topic ' . $pr . ' already exists; suggested the update command');
+            $telegram->sendMessage($chatId, Persian::rtl(
+                'این PR از قبل تاپیک دارد. برای آپدیت‌کردنش این را بفرست:' . "\n" . '/pr_update ' . $pr
+            ));
+
+            return;
+        }
+
+        if ($awaiting === 'update' && !$hasTopic) {
+            $log('topic ' . $pr . ' is missing; suggested the topic command');
+            $telegram->sendMessage($chatId, Persian::rtl(
+                'این PR هنوز تاپیک ندارد. برای ساختنش این را بفرست:' . "\n" . '/pr_topic ' . $pr
+            ));
+
+            return;
+        }
+
         $isUpdate = $awaiting === 'update';
         $log('awaited number: ' . $pr . ' for ' . $awaiting);
     } elseif (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
