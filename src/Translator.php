@@ -115,7 +115,7 @@ final class Translator
         }, $s) ?? $s;
 
         // HTML entities written literally in the source
-        $s = preg_replace_callback('#&(?:[a-zA-Z]+|#[0-9]+);#', function (array $m): string {
+        $s = preg_replace_callback('~&(?:[a-zA-Z]+|#[0-9]+);~', function (array $m): string {
             return $this->atom('entity', ['text' => $m[0]]);
         }, $s) ?? $s;
 

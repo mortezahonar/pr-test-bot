@@ -8,7 +8,7 @@ final class Gemini
 
     public function __construct(
         private string $apiKey,
-        private string $model = 'gemini-2.5-flash'
+        private string $model = 'gemini-3.8-flash'
     ) {
     }
 

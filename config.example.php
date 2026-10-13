@@ -12,7 +12,7 @@ return [
     'chat_id'            => 'PASTE_CHAT_ID',
     'github_token'       => 'PASTE_GITHUB_TOKEN',
     'gemini_api_key'     => 'PASTE_GEMINI_API_KEY',
-    'gemini_model'       => 'gemini-2.5-flash',
+    'gemini_model'       => 'gemini-3.8-flash',
 
     // Optional SOCKS5 proxy, e.g. 'socks5h://127.0.0.1:9050'.
     'proxy'              => '',
