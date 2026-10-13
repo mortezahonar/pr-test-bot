@@ -42,7 +42,17 @@ final class Gemini
 
         foreach ($this->models as $model) {
             for ($attempt = 1; $attempt <= self::MAX_ATTEMPTS; $attempt++) {
-                $res = $this->request($model, $system, $userText, $timeout);
+                try {
+                    $res = $this->request($model, $system, $userText, $timeout);
+                } catch (Throwable $e) {
+                    // A transport failure (timeout, connection reset) carries no
+                    // HTTP status to retry on: try the next model right away
+                    // instead of waiting on the same one again.
+                    $lastError = $e;
+
+                    break;
+                }
+
                 $status = (int) $res['status'];
 
                 if ($status < 400 && is_array($res['json'])) {

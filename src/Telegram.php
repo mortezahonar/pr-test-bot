@@ -13,7 +13,13 @@ final class Telegram
         return 'https://api.telegram.org/bot' . $this->token . '/' . $method;
     }
 
-    public function call(string $method, array $params = [], int $timeout = 60): array
+    /**
+     * The type of "result" depends on the method: most return an object, but
+     * some (answerCallbackQuery, deleteMessage) return a bare true.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function call(string $method, array $params = [], int $timeout = 60): mixed
     {
         $res = Http::form($this->url($method), $params, $timeout);
 
@@ -29,10 +35,8 @@ final class Telegram
      * text is escaped and retried, because an unstyled message beats no message.
      *
      * @param array<string, mixed> $params
-     *
-     * @return array<string, mixed>
      */
-    private function callText(string $method, array $params, int $timeout = 60): array
+    private function callText(string $method, array $params, int $timeout = 60): mixed
     {
         try {
             return $this->call($method, $params, $timeout);
@@ -108,7 +112,7 @@ final class Telegram
         return $this->callText('sendPhoto', $params, 120);
     }
 
-    public function editMessageText(string $chatId, int $messageId, string $text, ?array $keyboard = null): array
+    public function editMessageText(string $chatId, int $messageId, string $text, ?array $keyboard = null): array|bool
     {
         $params = [
             'chat_id'                  => $chatId,
@@ -125,7 +129,7 @@ final class Telegram
         return $this->callText('editMessageText', $params);
     }
 
-    public function editMessageCaption(string $chatId, int $messageId, string $caption): array
+    public function editMessageCaption(string $chatId, int $messageId, string $caption): array|bool
     {
         return $this->callText('editMessageCaption', [
             'chat_id'    => $chatId,
@@ -135,9 +139,9 @@ final class Telegram
         ]);
     }
 
-    public function deleteMessage(string $chatId, int $messageId): array
+    public function deleteMessage(string $chatId, int $messageId): bool
     {
-        return $this->call('deleteMessage', [
+        return (bool) $this->call('deleteMessage', [
             'chat_id'    => $chatId,
             'message_id' => $messageId,
         ]);
@@ -151,16 +155,16 @@ final class Telegram
         ]);
     }
 
-    public function editForumTopic(string $chatId, int $threadId, string $name): array
+    public function editForumTopic(string $chatId, int $threadId, string $name): bool
     {
-        return $this->call('editForumTopic', [
+        return (bool) $this->call('editForumTopic', [
             'chat_id'           => $chatId,
             'message_thread_id' => $threadId,
             'name'              => $name,
         ]);
     }
 
-    public function answerCallbackQuery(string $callbackId, ?string $text = null): array
+    public function answerCallbackQuery(string $callbackId, ?string $text = null): bool
     {
         $params = ['callback_query_id' => $callbackId];
 
@@ -168,6 +172,6 @@ final class Telegram
             $params['text'] = $text;
         }
 
-        return $this->call('answerCallbackQuery', $params);
+        return (bool) $this->call('answerCallbackQuery', $params);
     }
 }

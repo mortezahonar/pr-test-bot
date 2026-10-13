@@ -254,11 +254,6 @@ function handleUpdate(array $update): void
         askAbout($pr, $store->topicExists($pr));
 
         return;
-    } elseif (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
-        $log('action: ' . $m[1] . ' job=' . $m[2]);
-        handleJobAction($m[1], $m[2]);
-
-        return;
     } elseif (preg_match('#^/?pr[-_]?(topic|update)(?:@\w+)?\s+(\d+)$#', $command, $m) === 1) {
         $store->clearAwaiting((string) $userId);
         $pr = (int) $m[2];
