@@ -59,6 +59,13 @@ $argv = $argv ?? [];
 $once = in_array('--once', $argv, true);
 $pollTimeout = $once ? 0 : 50;
 
+$fileIndex = array_search('--update-file', $argv, true);
+
+if ($fileIndex !== false && isset($argv[$fileIndex + 1])) {
+    processUpdateFile((string) $argv[$fileIndex + 1], $offset);
+    exit(0);
+}
+
 $log('Bot started. mode=' . ($once ? 'once' : 'poll') . ' offset=' . $offset);
 
 while (true) {
@@ -89,6 +96,38 @@ while (true) {
     if ($once) {
         $log('Done. updates=' . count($updates) . ' offset=' . $offset);
         break;
+    }
+}
+
+/**
+ * Process a single update that the worker stored, instead of polling Telegram.
+ */
+function processUpdateFile(string $file, int $offset): void
+{
+    global $log;
+
+    $raw = is_file($file) ? (string) file_get_contents($file) : '';
+
+    $log('Bot started. mode=update-file offset=' . $offset);
+
+    if (trim($raw) === '') {
+        $log('update-file: missing or empty file ' . $file);
+
+        return;
+    }
+
+    $update = json_decode($raw, true);
+
+    if (!is_array($update)) {
+        $log('update-file: invalid JSON in ' . $file);
+
+        return;
+    }
+
+    try {
+        handleUpdate($update);
+    } catch (Throwable $e) {
+        $log('update error: ' . $e->getMessage());
     }
 }
 

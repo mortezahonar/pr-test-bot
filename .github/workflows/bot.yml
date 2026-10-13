@@ -1,9 +1,20 @@
 name: pr-test-bot
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'
+  # Telegram -> Cloudflare Worker -> here. Each update is processed on arrival.
+  repository_dispatch:
+    types: [telegram]
+
   workflow_dispatch:
+    inputs:
+      poll:
+        description: "Read updates with getUpdates (only when no webhook is set)"
+        type: boolean
+        default: false
+
+  # Safety net: makes sure the webhook is still registered.
+  schedule:
+    - cron: '17 * * * *'
 
 concurrency:
   group: pr-test-bot
@@ -28,8 +39,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run one cycle
+      - name: Fetch the pending update
+        if: github.event_name == 'repository_dispatch'
+        env:
+          HOOK_URL: ${{ secrets.PR_HOOK_URL }}
+          HOOK_SECRET: ${{ secrets.PR_HOOK_SECRET }}
+          KEY: ${{ github.event.client_payload.key }}
+        run: |
+          mkdir -p /tmp/pr-bot
+          curl -sS --fail --retry 3 --retry-connrefused \
+            -H "X-Bot-Secret: $HOOK_SECRET" \
+            "$HOOK_URL/pending/$KEY" -o /tmp/pr-bot/update.json
+          test -s /tmp/pr-bot/update.json
+          echo "fetched $(wc -c < /tmp/pr-bot/update.json) bytes"
+
+      - name: Process the update
+        if: github.event_name == 'repository_dispatch'
+        run: php bot.php --update-file /tmp/pr-bot/update.json
+
+      - name: Manual poll
+        if: github.event_name == 'workflow_dispatch' && inputs.poll
         run: php bot.php --once
+
+      - name: Webhook health check
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        env:
+          HOOK_URL: ${{ secrets.PR_HOOK_URL }}
+          TELEGRAM_SECRET: ${{ secrets.PR_TELEGRAM_SECRET }}
+        run: |
+          info=$(curl -sS "https://api.telegram.org/bot$PR_BOT_TOKEN/getWebhookInfo")
+          echo "$info"
+          current=$(printf '%s' "$info" | jq -r '.result.url')
+          if [ "$current" != "$HOOK_URL" ]; then
+            echo "webhook is '$current'; re-registering"
+            curl -sS -X POST "https://api.telegram.org/bot$PR_BOT_TOKEN/setWebhook" \
+              -d "url=$HOOK_URL" \
+              -d "secret_token=$TELEGRAM_SECRET" \
+              --data-urlencode 'allowed_updates=["message","callback_query"]'
+          fi
 
       - name: Persist state
         if: always()
