@@ -6,13 +6,15 @@ final class Store
 {
     private string $topicsDir;
     private string $pendingDir;
+    private string $awaitingDir;
 
     public function __construct(private string $dir)
     {
         $this->topicsDir = $dir . '/topics';
         $this->pendingDir = $dir . '/pending';
+        $this->awaitingDir = $dir . '/awaiting';
 
-        foreach ([$dir, $this->topicsDir, $this->pendingDir] as $path) {
+        foreach ([$dir, $this->topicsDir, $this->pendingDir, $this->awaitingDir] as $path) {
             if (!is_dir($path)) {
                 mkdir($path, 0775, true);
             }
@@ -130,6 +132,62 @@ final class Store
         if (is_file($path)) {
             unlink($path);
         }
+    }
+
+    /**
+     * Remember that we asked this user a question and are waiting for the answer.
+     */
+    public function setAwaiting(string $userId, string $command): void
+    {
+        $this->writeJson(
+            $this->awaitingPath($userId),
+            ['command' => $command, 'at' => gmdate('c')]
+        );
+    }
+
+    /**
+     * The command we are waiting for a number for, or null.
+     */
+    public function getAwaiting(string $userId): ?string
+    {
+        $path = $this->awaitingPath($userId);
+
+        if (!is_file($path)) {
+            return null;
+        }
+
+        $data = $this->readJson($path);
+
+        if (!is_array($data)) {
+            return null;
+        }
+
+        // An old question must not swallow today's message.
+        $at = strtotime((string) ($data['at'] ?? ''));
+
+        if ($at === false || time() - $at > 1800) {
+            $this->clearAwaiting($userId);
+
+            return null;
+        }
+
+        $command = (string) ($data['command'] ?? '');
+
+        return $command === '' ? null : $command;
+    }
+
+    public function clearAwaiting(string $userId): void
+    {
+        $path = $this->awaitingPath($userId);
+
+        if (is_file($path)) {
+            unlink($path);
+        }
+    }
+
+    private function awaitingPath(string $userId): string
+    {
+        return $this->awaitingDir . '/' . preg_replace('#[^0-9]#', '', $userId) . '.json';
     }
 
     private function readJson(string $path): mixed

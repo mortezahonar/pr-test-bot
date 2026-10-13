@@ -215,14 +215,41 @@ function handleUpdate(array $update): void
         }
     }
 
-    if (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
+    $awaiting = $store->getAwaiting((string) $userId);
+    $pr = 0;
+    $isUpdate = false;
+
+    if ($awaiting !== null && preg_match('~^#?(\d{1,7})$~', $command, $n) === 1) {
+        // We asked for a PR number and this is the answer.
+        $store->clearAwaiting((string) $userId);
+        $pr = (int) $n[1];
+        $isUpdate = $awaiting === 'update';
+        $log('awaited number: ' . $pr . ' for ' . $awaiting);
+    } elseif (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
         $log('action: ' . $m[1] . ' job=' . $m[2]);
         handleJobAction($m[1], $m[2]);
 
         return;
-    }
+    } elseif (preg_match('#^/?pr[-_]?(topic|update)(?:@\w+)?\s+(\d+)$#', $command, $m) === 1) {
+        $store->clearAwaiting((string) $userId);
+        $pr = (int) $m[2];
+        $isUpdate = $m[1] === 'update';
+    } elseif (preg_match('#^/?pr[-_]?(topic|update)$#', $command, $m) === 1) {
+        // No number given: ask for it instead of repeating the help text.
+        $mode = $m[1];
+        $store->setAwaiting((string) $userId, $mode);
+        $log('asked for a PR number, mode=' . $mode);
+        $telegram->sendMessage($chatId, Persian::rtl(
+            'شمارهٔ PR چند است؟ فقط عدد را بفرست.'
+        ));
 
-    if (preg_match('#^/?pr[-_]?(topic|update)(?:@\w+)?\s+(\d+)$#', $command, $m) !== 1) {
+        return;
+    } elseif ($awaiting !== null) {
+        $log('awaited a number, got: ' . json_encode($text, JSON_UNESCAPED_UNICODE));
+        $telegram->sendMessage($chatId, Persian::rtl('عدد را نگرفتم. شمارهٔ PR را به رقم بفرست.'));
+
+        return;
+    } else {
         if (str_starts_with($text, '/')) {
             $telegram->sendMessage($chatId, Persian::rtl($help));
         }
@@ -230,8 +257,6 @@ function handleUpdate(array $update): void
         return;
     }
 
-    $pr = (int) $m[2];
-    $isUpdate = $m[1] === 'update';
     $log('pr command: update=' . ($isUpdate ? 'yes' : 'no') . ' pr=' . $pr);
 
     $status = $telegram->sendMessage($chatId, Persian::rtl('در حال آماده‌سازی #' . $pr . ' ...'));
