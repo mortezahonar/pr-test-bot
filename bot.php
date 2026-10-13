@@ -152,6 +152,16 @@ function handleUpdate(array $update): void
         . ' text=' . json_encode($update['message']['text'] ?? '-', JSON_UNESCAPED_UNICODE)
     );
 
+    // This bot serves exactly one group. Anything arriving from elsewhere is
+    // dropped here, before it can reach Telegram or GitHub.
+    $sourceChat = (string) ($update['message']['chat']['id'] ?? $update['callback_query']['message']['chat']['id'] ?? '');
+
+    if ($sourceChat !== $chatId) {
+        $log('ignored: update from chat ' . ($sourceChat === '' ? 'unknown' : $sourceChat));
+
+        return;
+    }
+
     if (isset($update['callback_query'])) {
         $callback = $update['callback_query'];
         $userId = (int) ($callback['from']['id'] ?? 0);
