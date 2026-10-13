@@ -36,7 +36,7 @@ final class Gemini
      * Falls back to the next configured model when a model is unavailable,
      * and retries transient failures a few times before giving up.
      */
-    public function generate(string $system, string $userText, int $timeout = 180): string
+    public function generate(string $system, string $userText, int $timeout = 60): string
     {
         $lastError = null;
 
