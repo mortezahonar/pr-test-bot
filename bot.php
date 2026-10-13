@@ -137,12 +137,12 @@ function handleUpdate(array $update): void
         return;
     }
 
-    if (preg_match('#^/(pr-topic|pr-update)(?:@\w+)?\s+(\d+)\s*$#', $text, $m) !== 1) {
+    if (preg_match('#^/pr[-_](topic|update)(?:@\w+)?\s+(\d+)\s*$#', $text, $m) !== 1) {
         if (str_starts_with($text, '/start') || str_starts_with($text, '/help')) {
             $telegram->sendMessage($chatId, Persian::rtl(
                 "دستورها:\n"
-                . "/pr-topic <شماره PR> — ساخت تاپیک جدید\n"
-                . "/pr-update <شماره PR> — آپدیت تاپیک موجود\n"
+                . "/pr_topic <شماره PR> — ساخت تاپیک جدید\n"
+                . "/pr_update <شماره PR> — آپدیت تاپیک موجود\n"
                 . "/approve <کد> — تأیید و ارسال پیش‌نویس\n"
                 . "/cancel <کد> — لغو پیش‌نویس"
             ));
@@ -151,9 +151,8 @@ function handleUpdate(array $update): void
         return;
     }
 
-    $command = $m[1];
     $pr = (int) $m[2];
-    $isUpdate = $command === 'pr-update';
+    $isUpdate = $m[1] === 'update';
 
     $status = $telegram->sendMessage($chatId, Persian::rtl('در حال آماده‌سازی #' . $pr . ' ...'));
 
