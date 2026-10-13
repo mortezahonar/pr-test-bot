@@ -200,10 +200,20 @@ function handleUpdate(array $update): void
     $command = rtrim($text, "/ \t");
 
     $help = "دستورها:\n"
-        . "/pr_topic 48586 — ساخت تاپیک جدید\n"
-        . "/pr_update 48586 — آپدیت تاپیک موجود\n"
-        . "/approve 3d8d9e64195e — تأیید و ارسال پیش‌نویس\n"
-        . "/cancel 3d8d9e64195e — لغو پیش‌نویس";
+        . "/pr_topic شماره پی آر — ساخت تاپیک جدید\n"
+        . "/pr_update شماره پی آر — آپدیت تاپیک موجود";
+
+    $pendingIds = $store->listPending();
+
+    if ($pendingIds === []) {
+        $help .= "\n\nپیش‌نویس آماده‌ای نیست.";
+    } else {
+        $help .= "\n\nپیش‌نویس‌های آماده (لغو = همان کد با /cancel):";
+
+        foreach ($pendingIds as $pendingId) {
+            $help .= "\n/approve " . $pendingId;
+        }
+    }
 
     if (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
         $log('action: ' . $m[1] . ' job=' . $m[2]);

@@ -107,6 +107,22 @@ final class Store
         return is_array($data) ? $data : null;
     }
 
+    /**
+     * @return string[] The ids of every draft waiting for approval.
+     */
+    public function listPending(): array
+    {
+        $ids = [];
+
+        foreach (glob($this->pendingDir . '/*.json') ?: [] as $path) {
+            $ids[] = basename($path, '.json');
+        }
+
+        sort($ids);
+
+        return $ids;
+    }
+
     public function deletePending(string $id): void
     {
         $path = $this->pendingDir . '/' . $id . '.json';
