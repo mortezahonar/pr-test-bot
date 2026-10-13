@@ -135,16 +135,36 @@ function handleUpdate(array $update): void
 {
     global $telegram, $service, $store, $chatId, $isAllowed, $log;
 
+    $updateId = (int) ($update['update_id'] ?? 0);
+    $kind = 'other';
+
+    if (isset($update['callback_query'])) {
+        $kind = 'callback';
+    } elseif (isset($update['message']['text'])) {
+        $kind = 'text';
+    } elseif (isset($update['message'])) {
+        $kind = 'message-no-text';
+    }
+
+    $log(
+        'update #' . $updateId . ' kind=' . $kind
+        . ' user=' . (string) ($update['message']['from']['username'] ?? $update['callback_query']['from']['username'] ?? '?')
+        . ' text=' . json_encode($update['message']['text'] ?? '-', JSON_UNESCAPED_UNICODE)
+    );
+
     if (isset($update['callback_query'])) {
         $callback = $update['callback_query'];
         $userId = (int) ($callback['from']['id'] ?? 0);
 
         if (!$isAllowed($userId)) {
+            $log('callback from user ' . $userId . ' not allowed');
+
             return;
         }
 
         $data = (string) ($callback['data'] ?? '');
         $callbackId = (string) $callback['id'];
+        $log('callback data: ' . json_encode($data, JSON_UNESCAPED_UNICODE));
 
         if (!preg_match('#^(approve|cancel):([a-zA-Z0-9_-]+)$#', $data, $m)) {
             answerCallback($callbackId, 'دستور نامعتبر');
@@ -153,12 +173,15 @@ function handleUpdate(array $update): void
         }
 
         answerCallback($callbackId, 'در حال پردازش...');
+        $log('callback action: ' . $m[1] . ' job=' . $m[2]);
         handleJobAction($m[1], $m[2]);
 
         return;
     }
 
     if (!isset($update['message']['text'])) {
+        $log('no message text');
+
         return;
     }
 
@@ -167,6 +190,8 @@ function handleUpdate(array $update): void
     $userId = (int) ($message['from']['id'] ?? 0);
 
     if (!$isAllowed($userId)) {
+        $log('message from user ' . $userId . ' not allowed');
+
         return;
     }
 
@@ -181,6 +206,7 @@ function handleUpdate(array $update): void
         . "/cancel 3d8d9e64195e — لغو پیش‌نویس";
 
     if (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
+        $log('action: ' . $m[1] . ' job=' . $m[2]);
         handleJobAction($m[1], $m[2]);
 
         return;
@@ -196,6 +222,7 @@ function handleUpdate(array $update): void
 
     $pr = (int) $m[2];
     $isUpdate = $m[1] === 'update';
+    $log('pr command: update=' . ($isUpdate ? 'yes' : 'no') . ' pr=' . $pr);
 
     $status = $telegram->sendMessage($chatId, Persian::rtl('در حال آماده‌سازی #' . $pr . ' ...'));
 
