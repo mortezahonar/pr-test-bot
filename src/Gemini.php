@@ -11,7 +11,11 @@ final class Gemini
      */
     private const RETRYABLE_STATUS = [429, 500, 502, 503, 504];
 
-    private const MAX_ATTEMPTS = 3;
+    /**
+     * How many times each model is tried before moving on to the next one.
+     * Every model in the chain gets this many attempts of its own.
+     */
+    private const MAX_ATTEMPTS = 5;
 
     private const RETRY_DELAY = 3;
 
