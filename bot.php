@@ -170,21 +170,25 @@ function handleUpdate(array $update): void
         return;
     }
 
-    if (preg_match('#^/(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)\s*$#', $text, $m) === 1) {
+    // People type these commands by hand: tolerate a missing leading slash and
+    // stray trailing characters.
+    $command = rtrim($text, "/ \t");
+
+    $help = "دستورها:\n"
+        . "/pr_topic 48586 — ساخت تاپیک جدید\n"
+        . "/pr_update 48586 — آپدیت تاپیک موجود\n"
+        . "/approve 3d8d9e64195e — تأیید و ارسال پیش‌نویس\n"
+        . "/cancel 3d8d9e64195e — لغو پیش‌نویس";
+
+    if (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
         handleJobAction($m[1], $m[2]);
 
         return;
     }
 
-    if (preg_match('#^/pr[-_](topic|update)(?:@\w+)?\s+(\d+)\s*$#', $text, $m) !== 1) {
-        if (str_starts_with($text, '/start') || str_starts_with($text, '/help')) {
-            $telegram->sendMessage($chatId, Persian::rtl(
-                "دستورها:\n"
-                . "/pr_topic 48586 — ساخت تاپیک جدید\n"
-                . "/pr_update 48586 — آپدیت تاپیک موجود\n"
-                . "/approve 3d8d9e64195e — تأیید و ارسال پیش‌نویس\n"
-                . "/cancel 3d8d9e64195e — لغو پیش‌نویس"
-            ));
+    if (preg_match('#^/?pr[-_]?(topic|update)(?:@\w+)?\s+(\d+)$#', $command, $m) !== 1) {
+        if (str_starts_with($text, '/')) {
+            $telegram->sendMessage($chatId, Persian::rtl($help));
         }
 
         return;
