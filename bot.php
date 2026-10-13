@@ -180,10 +180,10 @@ function handleUpdate(array $update): void
         if (str_starts_with($text, '/start') || str_starts_with($text, '/help')) {
             $telegram->sendMessage($chatId, Persian::rtl(
                 "دستورها:\n"
-                . "/pr_topic <شماره PR> — ساخت تاپیک جدید\n"
-                . "/pr_update <شماره PR> — آپدیت تاپیک موجود\n"
-                . "/approve <کد> — تأیید و ارسال پیش‌نویس\n"
-                . "/cancel <کد> — لغو پیش‌نویس"
+                . "/pr_topic 48586 — ساخت تاپیک جدید\n"
+                . "/pr_update 48586 — آپدیت تاپیک موجود\n"
+                . "/approve 3d8d9e64195e — تأیید و ارسال پیش‌نویس\n"
+                . "/cancel 3d8d9e64195e — لغو پیش‌نویس"
             ));
         }
 

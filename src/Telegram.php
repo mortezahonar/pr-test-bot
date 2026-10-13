@@ -25,6 +25,33 @@ final class Telegram
     }
 
     /**
+     * Sends text that is parsed as HTML. When Telegram rejects an entity the
+     * text is escaped and retried, because an unstyled message beats no message.
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return array<string, mixed>
+     */
+    private function callText(string $method, array $params, int $timeout = 60): array
+    {
+        try {
+            return $this->call($method, $params, $timeout);
+        } catch (RuntimeException $e) {
+            if (!str_contains($e->getMessage(), 'parse entities')) {
+                throw $e;
+            }
+
+            foreach (['text', 'caption'] as $field) {
+                if (isset($params[$field])) {
+                    $params[$field] = htmlspecialchars((string) $params[$field], ENT_QUOTES | ENT_SUBSTITUTE);
+                }
+            }
+
+            return $this->call($method, $params, $timeout);
+        }
+    }
+
+    /**
      * Long polling. Blocks up to $timeout seconds.
      */
     public function getUpdates(int $offset, int $timeout = 50): array
@@ -59,7 +86,7 @@ final class Telegram
             $params['reply_markup'] = json_encode($keyboard);
         }
 
-        return $this->call('sendMessage', $params);
+        return $this->callText('sendMessage', $params);
     }
 
     public function sendPhoto(string $chatId, string $photoUrl, ?string $caption = null, ?int $threadId = null): array
@@ -78,12 +105,12 @@ final class Telegram
             $params['message_thread_id'] = $threadId;
         }
 
-        return $this->call('sendPhoto', $params, 120);
+        return $this->callText('sendPhoto', $params, 120);
     }
 
     public function editMessageText(string $chatId, int $messageId, string $text): array
     {
-        return $this->call('editMessageText', [
+        return $this->callText('editMessageText', [
             'chat_id'                  => $chatId,
             'message_id'               => $messageId,
             'text'                     => $text,
@@ -94,7 +121,7 @@ final class Telegram
 
     public function editMessageCaption(string $chatId, int $messageId, string $caption): array
     {
-        return $this->call('editMessageCaption', [
+        return $this->callText('editMessageCaption', [
             'chat_id'    => $chatId,
             'message_id' => $messageId,
             'caption'    => $caption,
