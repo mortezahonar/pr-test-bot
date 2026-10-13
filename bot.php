@@ -169,6 +169,7 @@ function handleUpdate(array $update): void
         $job = $service->plan($pr, $isUpdate);
     } catch (Throwable $e) {
         $message = $e->getMessage();
+        $log('plan error: ' . get_class($e) . ': ' . $message . ' @ ' . $e->getFile() . ':' . $e->getLine());
 
         if ($message === 'NO_TOPIC') {
             $telegram->editMessageText($chatId, $status['message_id'], Persian::rtl(
