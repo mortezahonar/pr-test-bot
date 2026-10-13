@@ -106,12 +106,18 @@ final class Persian
         $out = [];
 
         foreach ($lines as $line) {
-            if (preg_match('#^https?://\S+$#u', trim($line)) === 1) {
-                $out[] = $line;
-                continue;
-            }
+            $trimmed = trim($line);
 
-            if (trim($line) === '') {
+            // An empty line, a line that already carries the mark, and a line
+            // whose first strong character is Latin (a URL, a command, a hash)
+            // all read left-to-right on their own. Adding the mark there is
+            // pointless, and in front of a command it can stop Telegram from
+            // offering the command for a tap.
+            if (
+                $trimmed === ''
+                || str_starts_with($line, self::RLM)
+                || preg_match('#^[A-Za-z0-9/]#', $trimmed) === 1
+            ) {
                 $out[] = $line;
                 continue;
             }

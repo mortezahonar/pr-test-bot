@@ -254,7 +254,7 @@ function handleUpdate(array $update): void
         $store->clearAwaiting((string) $userId);
         $pr = (int) $m[2];
         $isUpdate = $m[1] === 'update';
-    } elseif (preg_match('#^/?pr[-_]?(topic|update)$#', $command, $m) === 1) {
+    } elseif (preg_match('#^/?pr[-_]?(topic|update)(?:@\w+)?$#', $command, $m) === 1) {
         // No number given: ask for it instead of repeating the help text.
         $mode = $m[1];
         $store->setAwaiting((string) $userId, $mode);
@@ -270,6 +270,8 @@ function handleUpdate(array $update): void
 
         return;
     } else {
+        $log('no branch matched; text=' . json_encode($text, JSON_UNESCAPED_UNICODE));
+
         if (str_starts_with($text, '/')) {
             $telegram->sendMessage($chatId, Persian::rtl($help));
         }
