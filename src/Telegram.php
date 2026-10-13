@@ -108,15 +108,21 @@ final class Telegram
         return $this->callText('sendPhoto', $params, 120);
     }
 
-    public function editMessageText(string $chatId, int $messageId, string $text): array
+    public function editMessageText(string $chatId, int $messageId, string $text, ?array $keyboard = null): array
     {
-        return $this->callText('editMessageText', [
+        $params = [
             'chat_id'                  => $chatId,
             'message_id'               => $messageId,
             'text'                     => $text,
             'parse_mode'               => 'HTML',
             'link_preview_options'     => json_encode(['is_disabled' => true]),
-        ]);
+        ];
+
+        if ($keyboard !== null) {
+            $params['reply_markup'] = json_encode($keyboard);
+        }
+
+        return $this->callText('editMessageText', $params);
     }
 
     public function editMessageCaption(string $chatId, int $messageId, string $caption): array

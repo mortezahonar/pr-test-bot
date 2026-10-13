@@ -164,7 +164,40 @@ function handleUpdate(array $update): void
 
         $data = (string) ($callback['data'] ?? '');
         $callbackId = (string) $callback['id'];
+        $messageId = (int) ($callback['message']['message_id'] ?? 0);
         $log('callback data: ' . json_encode($data, JSON_UNESCAPED_UNICODE));
+
+        if ($data === 'ask') {
+            answerCallback($callbackId, 'شمارهٔ PR را بفرست');
+            $store->setAwaiting((string) $userId, 'auto');
+            $log('menu: asked for a PR number');
+            $telegram->sendMessage($chatId, Persian::rtl('شمارهٔ PR چند است؟ فقط عدد را بفرست.'));
+
+            return;
+        }
+
+        if ($data === 'no') {
+            answerCallback($callbackId, 'باشد');
+
+            if ($messageId > 0) {
+                $telegram->editMessageText($chatId, $messageId, Persian::rtl('باشد. کاری انجام نشد.'), ['inline_keyboard' => []]);
+            }
+
+            return;
+        }
+
+        if (preg_match('#^(upd|new):(\d{1,7})$#', $data, $m) === 1) {
+            answerCallback($callbackId, 'در حال پردازش...');
+            $log('menu choice: ' . $m[1] . ' pr=' . $m[2]);
+
+            if ($messageId > 0) {
+                $telegram->editMessageText($chatId, $messageId, Persian::rtl('شمارهٔ PR: ' . $m[2]), ['inline_keyboard' => []]);
+            }
+
+            runPlan((int) $m[2], $m[1] === 'upd');
+
+            return;
+        }
 
         if (!preg_match('#^(approve|cancel):([a-zA-Z0-9_-]+)$#', $data, $m)) {
             answerCallback($callbackId, 'دستور نامعتبر');
@@ -199,22 +232,6 @@ function handleUpdate(array $update): void
     // stray trailing characters.
     $command = rtrim($text, "/ \t");
 
-    $help = "دستورها:\n"
-        . "/pr_topic شماره پی آر — ساخت تاپیک جدید\n"
-        . "/pr_update شماره پی آر — آپدیت تاپیک موجود";
-
-    $pendingIds = $store->listPending();
-
-    if ($pendingIds === []) {
-        $help .= "\n\nپیش‌نویس آماده‌ای نیست.";
-    } else {
-        $help .= "\n\nپیش‌نویس‌های آماده (لغو = همان کد با /cancel):";
-
-        foreach ($pendingIds as $pendingId) {
-            $help .= "\n/approve " . $pendingId;
-        }
-    }
-
     $awaiting = $store->getAwaiting((string) $userId);
     $pr = 0;
     $isUpdate = false;
@@ -223,28 +240,10 @@ function handleUpdate(array $update): void
         // We asked for a PR number and this is the answer.
         $store->clearAwaiting((string) $userId);
         $pr = (int) $n[1];
-        $hasTopic = $store->topicExists($pr);
+        $log('number received: pr=' . $pr . ' mode=' . $awaiting);
+        askAbout($pr, $store->topicExists($pr));
 
-        if ($awaiting === 'topic' && $hasTopic) {
-            $log('topic ' . $pr . ' already exists; suggested the update command');
-            $telegram->sendMessage($chatId, Persian::rtl(
-                'این PR از قبل تاپیک دارد. برای آپدیت‌کردنش این را بفرست:' . "\n" . '/pr_update ' . $pr
-            ));
-
-            return;
-        }
-
-        if ($awaiting === 'update' && !$hasTopic) {
-            $log('topic ' . $pr . ' is missing; suggested the topic command');
-            $telegram->sendMessage($chatId, Persian::rtl(
-                'این PR هنوز تاپیک ندارد. برای ساختنش این را بفرست:' . "\n" . '/pr_topic ' . $pr
-            ));
-
-            return;
-        }
-
-        $isUpdate = $awaiting === 'update';
-        $log('awaited number: ' . $pr . ' for ' . $awaiting);
+        return;
     } elseif (preg_match('#^/?(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)$#', $command, $m) === 1) {
         $log('action: ' . $m[1] . ' job=' . $m[2]);
         handleJobAction($m[1], $m[2]);
@@ -253,15 +252,21 @@ function handleUpdate(array $update): void
     } elseif (preg_match('#^/?pr[-_]?(topic|update)(?:@\w+)?\s+(\d+)$#', $command, $m) === 1) {
         $store->clearAwaiting((string) $userId);
         $pr = (int) $m[2];
+        $hasTopic = $store->topicExists($pr);
         $isUpdate = $m[1] === 'update';
+        $log('explicit command: update=' . ($isUpdate ? 'yes' : 'no') . ' pr=' . $pr . ' topic=' . ($hasTopic ? 'yes' : 'no'));
+
+        // An explicit command that contradicts the current state asks instead of acting.
+        if (($isUpdate && !$hasTopic) || (!$isUpdate && $hasTopic)) {
+            askAbout($pr, $hasTopic);
+
+            return;
+        }
     } elseif (preg_match('#^/?pr[-_]?(topic|update)(?:@\w+)?$#', $command, $m) === 1) {
-        // No number given: ask for it instead of repeating the help text.
-        $mode = $m[1];
-        $store->setAwaiting((string) $userId, $mode);
-        $log('asked for a PR number, mode=' . $mode);
-        $telegram->sendMessage($chatId, Persian::rtl(
-            'شمارهٔ PR چند است؟ فقط عدد را بفرست.'
-        ));
+        // No number given: ask for it instead of repeating a command list.
+        $store->setAwaiting((string) $userId, $m[1]);
+        $log('asked for a PR number, mode=' . $m[1]);
+        $telegram->sendMessage($chatId, Persian::rtl('شمارهٔ PR چند است؟ فقط عدد را بفرست.'));
 
         return;
     } elseif ($awaiting !== null) {
@@ -270,16 +275,76 @@ function handleUpdate(array $update): void
 
         return;
     } else {
-        $log('no branch matched; text=' . json_encode($text, JSON_UNESCAPED_UNICODE));
+        $log('no branch matched; showing the menu');
 
         if (str_starts_with($text, '/')) {
-            $telegram->sendMessage($chatId, Persian::rtl($help));
+            $telegram->sendMessage($chatId, menuText(), null, menuKeyboard());
         }
 
         return;
     }
 
-    $log('pr command: update=' . ($isUpdate ? 'yes' : 'no') . ' pr=' . $pr);
+    runPlan($pr, $isUpdate);
+}
+
+/**
+ * Ask whether to update the existing topic or create a missing one, with buttons.
+ */
+function askAbout(int $pr, bool $hasTopic): void
+{
+    global $telegram, $chatId, $log;
+
+    $log('asking about pr=' . $pr . ' topic=' . ($hasTopic ? 'yes' : 'no'));
+
+    $telegram->sendMessage(
+        $chatId,
+        Persian::rtl(
+            'برای PR #' . $pr . ($hasTopic
+                ? ' از قبل تاپیک ساخته شده است. آیا می‌خواهی آپدیتش کنم؟'
+                : ' تاپیکی ساخته نشده است. بسازم؟')
+        ),
+        null,
+        [
+            'inline_keyboard' => [[
+                [
+                    'text'          => $hasTopic ? 'بله، آپدیت کن' : 'بله، بساز',
+                    'callback_data' => ($hasTopic ? 'upd:' : 'new:') . $pr,
+                ],
+                ['text' => 'نه', 'callback_data' => 'no'],
+            ]],
+        ]
+    );
+}
+
+/**
+ * The entry point: what the user sees before anything else.
+ */
+function menuText(): string
+{
+    return Persian::rtl(
+        'ربات ترجمهٔ PRهای جوملا' . "\n\n"
+        . 'کامنت‌های هر PR را به فارسی ترجمه می‌کند و در تاپیک همان PR می‌گذارد.' . "\n"
+        . 'برای شروع، شمارهٔ PR را بفرست.'
+    );
+}
+
+/**
+ * @return array<string, mixed>
+ */
+function menuKeyboard(): array
+{
+    return [
+        'inline_keyboard' => [[
+            ['text' => 'شمارهٔ PR را وارد می‌کنم', 'callback_data' => 'ask'],
+        ]],
+    ];
+}
+
+function runPlan(int $pr, bool $isUpdate): void
+{
+    global $telegram, $service, $store, $chatId, $log;
+
+    $log('run plan: update=' . ($isUpdate ? 'yes' : 'no') . ' pr=' . $pr);
 
     $status = $telegram->sendMessage($chatId, Persian::rtl('در حال آماده‌سازی #' . $pr . ' ...'));
 
@@ -291,7 +356,7 @@ function handleUpdate(array $update): void
 
         if ($message === 'NO_TOPIC') {
             $telegram->editMessageText($chatId, $status['message_id'], Persian::rtl(
-                'این PR هنوز تاپیکی ندارد؛ اول /pr-topic ' . $pr . ' را اجرا کن.'
+                'این PR هنوز تاپیکی ندارد؛ اول تاپیکش را بساز.'
             ));
         } else {
             $telegram->editMessageText($chatId, $status['message_id'], Persian::rtl('خطا: ' . $message));
@@ -315,10 +380,8 @@ function handleUpdate(array $update): void
     $telegram->editMessageText($chatId, $status['message_id'], $summary);
 
     $telegram->sendMessage($chatId, Persian::rtl(
-        'تأیید می‌کنی؟' . "\n\n"
-        . 'دکمه را بزن یا این دستور را بنویس:' . "\n"
-        . '/approve ' . $jobId . "\n"
-        . '/cancel ' . $jobId
+        'تأیید می‌کنی؟' . "\n"
+        . ($job['is_update'] ? 'آپدیت PR #' . $pr : 'تاپیک PR #' . $pr)
     ), null, $keyboard);
 }
 
