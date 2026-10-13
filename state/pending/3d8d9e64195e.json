@@ -1,0 +1,18 @@
+{
+    "pr": 48586,
+    "is_update": true,
+    "topic_name": "[#48586] - [6.2] موجودیت‌های HTML (HTML entities) در عنوان صفحه",
+    "thread_id": 331,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "‏Emmanuel Lemor\n\n‏<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏18 مهر 1405 — ساعت 17:39"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را :white_check_mark: با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/4d9375975050fdf769274a6df53b0a8d7ec85aa7\">4d93759</a> تست کردم\n\n‏سلام <a href=\"https://github.com/brianteeman\">@brianteeman</a>، بابت اصلاحیه و دستورالعمل‌های تست متشکرم، درخواست ادغام (Pull Request) آسانی برای تست بود.\n‏‏―――――――――――――――――\n‏این کامنت با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48586\">issues.joomla.org/tracker/joomla-cms/48586</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-10-10T14:09:42Z",
+    "warnings": []
+}
