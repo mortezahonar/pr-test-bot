@@ -108,31 +108,13 @@ function handleUpdate(array $update): void
         $callbackId = (string) $callback['id'];
 
         if (!preg_match('#^(approve|cancel):([a-zA-Z0-9_-]+)$#', $data, $m)) {
-            $telegram->answerCallbackQuery($callbackId, 'دستور نامعتبر');
+            answerCallback($callbackId, 'دستور نامعتبر');
+
             return;
         }
 
-        $action = $m[1];
-        $jobId = $m[2];
-        $job = $store->loadPending($jobId);
-
-        if ($job === null) {
-            $telegram->answerCallbackQuery($callbackId, 'این پیش‌نویس منقضی شده است.');
-            return;
-        }
-
-        if ($action === 'cancel') {
-            $store->deletePending($jobId);
-            $telegram->answerCallbackQuery($callbackId, 'لغو شد.');
-            $telegram->sendMessage($chatId, Persian::rtl('لغو شد.'), $job['thread_id'] ?? null);
-            return;
-        }
-
-        $telegram->answerCallbackQuery($callbackId, 'در حال ارسال...');
-        $store->deletePending($jobId);
-
-        $result = executeJob($job);
-        $telegram->sendMessage($chatId, Persian::rtl($result['text']), $result['thread_id']);
+        answerCallback($callbackId, 'در حال پردازش...');
+        handleJobAction($m[1], $m[2]);
 
         return;
     }
@@ -149,10 +131,20 @@ function handleUpdate(array $update): void
         return;
     }
 
+    if (preg_match('#^/(approve|cancel)(?:@\w+)?\s+([a-zA-Z0-9_-]+)\s*$#', $text, $m) === 1) {
+        handleJobAction($m[1], $m[2]);
+
+        return;
+    }
+
     if (preg_match('#^/(pr-topic|pr-update)(?:@\w+)?\s+(\d+)\s*$#', $text, $m) !== 1) {
         if (str_starts_with($text, '/start') || str_starts_with($text, '/help')) {
             $telegram->sendMessage($chatId, Persian::rtl(
-                "دستورها:\n/pr-topic <شماره PR> — ساخت تاپیک جدید\n/pr-update <شماره PR> — آپدیت تاپیک موجود"
+                "دستورها:\n"
+                . "/pr-topic <شماره PR> — ساخت تاپیک جدید\n"
+                . "/pr-update <شماره PR> — آپدیت تاپیک موجود\n"
+                . "/approve <کد> — تأیید و ارسال پیش‌نویس\n"
+                . "/cancel <کد> — لغو پیش‌نویس"
             ));
         }
 
@@ -196,7 +188,50 @@ function handleUpdate(array $update): void
 
     $telegram->editMessageText($chatId, $status['message_id'], $summary);
 
-    $telegram->sendMessage($chatId, Persian::rtl('تأیید می‌کنی؟'), null, $keyboard);
+    $telegram->sendMessage($chatId, Persian::rtl(
+        'تأیید می‌کنی؟' . "\n\n"
+        . 'دکمه را بزن یا این دستور را بنویس:' . "\n"
+        . '/approve ' . $jobId . "\n"
+        . '/cancel ' . $jobId
+    ), null, $keyboard);
+}
+
+function answerCallback(string $callbackId, string $text): void
+{
+    global $telegram, $log;
+
+    try {
+        $telegram->answerCallbackQuery($callbackId, $text);
+    } catch (Throwable $e) {
+        // Telegram expires callback queries within seconds, and this bot polls
+        // on a schedule. A failed acknowledgement must not abort the action.
+        $log('callback ack failed: ' . $e->getMessage());
+    }
+}
+
+function handleJobAction(string $action, string $jobId): void
+{
+    global $telegram, $store, $chatId;
+
+    $job = $store->loadPending($jobId);
+
+    if ($job === null) {
+        $telegram->sendMessage($chatId, Persian::rtl('این پیش‌نویس منقضی شده است.'));
+
+        return;
+    }
+
+    if ($action === 'cancel') {
+        $store->deletePending($jobId);
+        $telegram->sendMessage($chatId, Persian::rtl('لغو شد.'), $job['thread_id'] ?? null);
+
+        return;
+    }
+
+    $store->deletePending($jobId);
+
+    $result = executeJob($job);
+    $telegram->sendMessage($chatId, Persian::rtl($result['text']), $result['thread_id']);
 }
 
 function buildPreview(array $job): string
