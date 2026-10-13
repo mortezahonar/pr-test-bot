@@ -26,7 +26,7 @@ final class Persian
 
     /**
      * Convert an ISO-8601 UTC timestamp to Jalali text with Iran time.
-     * Example: 2026-10-10T14:09:42Z -> "18 مهر 1405 — ساعت 17:39"
+     * Example: 2026-10-10T14:09:42Z -> "۱۸ مهر ۱۴۰۵ — ساعت ۱۷:۳۹"
      */
     public static function date(string $iso): string
     {
@@ -48,8 +48,10 @@ final class Persian
         $hour = (int) gmdate('H', $time);
         $minute = (int) gmdate('i', $time);
 
-        return $jd . ' ' . self::MONTHS[$jm] . ' ' . $jy
-            . ' — ساعت ' . sprintf('%02d:%02d', $hour, $minute);
+        return self::faDigits(
+            $jd . ' ' . self::MONTHS[$jm] . ' ' . $jy
+            . ' — ساعت ' . sprintf('%02d:%02d', $hour, $minute)
+        );
     }
 
     public static function jalaliFromTimestamp(int $ts): array
@@ -126,6 +128,17 @@ final class Persian
     public static function separator(): string
     {
         return self::RLM . str_repeat(self::SEPARATOR_DASH, 17);
+    }
+
+    /**
+     * Convert Latin digits to Persian (Jalali dates and times use Persian digits).
+     */
+    public static function faDigits(string $text): string
+    {
+        $latin = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        $fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+
+        return str_replace($latin, $fa, $text);
     }
 
     /**
