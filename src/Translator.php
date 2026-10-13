@@ -7,6 +7,15 @@ final class Translator
     private const L = "\u{27E6}";
     private const R = "\u{27E7}";
 
+    /**
+     * The only tags Telegram accepts in HTML mode. Any other tag found in the
+     * source is text the author was talking about, not markup to render.
+     */
+    private const RENDERED_TAGS = [
+        'a', 'b', 'blockquote', 'code', 'del', 'em', 'i', 'ins', 'pre', 's',
+        'span', 'strike', 'strong', 'tg-emoji', 'tg-spoiler', 'u',
+    ];
+
     /** @var array<int, array{type:string, data:array}> */
     private array $atoms = [];
 
@@ -86,6 +95,17 @@ final class Translator
 
     private function protect(string $s): string
     {
+        // Markdown links and images come from GitHub, which renders Markdown;
+        // Telegram does not. Without this the URL inside "[text](url)" is
+        // turned into an anchor of its own and the link ends up broken. A
+        // markdown image becomes a link to the image, because the photo itself
+        // is collected from HTML <img> tags by the caller.
+        $s = preg_replace_callback('#!?\[([^\]\n]*)\]\((https?://[^\s)]+)\)#i', function (array $m): string {
+            $label = $m[1] === '' ? $m[2] : $m[1];
+
+            return '<a href="' . $m[2] . '">' . $label . '</a>';
+        }, $s) ?? $s;
+
         // images (kept as atoms; sent separately)
         $s = preg_replace_callback('#<img\b[^>]*>#i', function (array $m): string {
             $alt = preg_match('#alt="([^"]*)"#i', $m[0], $a) === 1 ? $a[1] : '';
@@ -129,6 +149,17 @@ final class Translator
             return $this->atom('hash', ['hash' => $m[0]]);
         }, $s) ?? $s;
 
+        // Anything left that looks like a tag cannot be rendered by Telegram:
+        // the author was naming it, so escape it and keep it readable instead
+        // of letting Telegram reject the whole message.
+        $s = preg_replace_callback('#</?([a-zA-Z][a-zA-Z0-9-]*)(?:\s[^<>]*)?/?>#', function (array $m): string {
+            if (in_array(strtolower($m[1]), self::RENDERED_TAGS, true)) {
+                return $m[0];
+            }
+
+            return $this->atom('plain', ['text' => $m[0]]);
+        }, $s) ?? $s;
+
         return $s;
     }
 
@@ -160,6 +191,9 @@ final class Translator
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'entity':
                 return '<code>' . $this->esc($data['text']) . '</code>';
+            case 'plain':
+                // A tag Telegram cannot render: show it as text, not as markup.
+                return $this->esc($data['text']);
             case 'mention':
                 $login = $data['login'];
 
