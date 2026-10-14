@@ -1,0 +1,75 @@
+{
+    "pr": 48580,
+    "is_update": false,
+    "topic_name": "[#48580] - [6.2] فعال‌سازی کنتراست بالا (High Contrast) یا تک‌رنگ (Monochrome) در تنظیمات دسترسی‌پذیری (Accessibility Settings)، عناصر با موقعیت position: fixed را دچار اختلال می‌کند",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48580] - [6.2] فعال‌سازی کنتراست بالا (High Contrast) یا تک‌رنگ (Monochrome) در تنظیمات دسترسی‌پذیری (Accessibility Settings)، عناصر با موقعیت position: fixed را دچار اختلال می‌کند"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱۴ مهر ۱۴۰۵ — ساعت ۰۰:۰۲"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] فعال‌سازی کنتراست بالا (High Contrast) یا تک‌رنگ (Monochrome) در تنظیمات دسترسی‌پذیری (Accessibility Settings)، عناصر با موقعیت position: fixed را دچار اختلال می‌کند\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48580\">https://issues.joomla.org/tracker/joomla-cms/48580</a>\n\n‏درخواست ادغام (Pull Request) شماره #43894 را حل می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏کلاس‌های دسترسی‌پذیری (accessibility classes) Atum را از عنصر &lt;body&gt; به عنصر &lt;html&gt; منتقل کنید.\n\n‏کلاس‌های monochrome و a11y_contrast فیلترهای CSS را اعمال می‌کنند. اعمال یک فیلتر روی `&lt;body&gt;` یک بلوک دربرگیرنده (containing block) برای فرزندان با موقعیت position: fixed ایجاد می‌کند، که باعث می‌شود عناصر با موقعیت ثابت مانند آیکون و پنجره Debug System به‌جای ویوپورت (viewport)، نسبت به سند موقعیت‌دهی شوند.\n\n‏کلاس‌های دسترسی‌پذیری اکنون روی `&lt;html&gt;` اعمال می‌شوند، که از تداخل فیلتر با عناصر دارای position: fixed جلوگیری می‌کند.\n\n‏عملکرد دسترسی‌پذیری موجود و رفتار بصری در غیر این صورت بدون تغییر باقی می‌ماند.\n\n‏### دستورالعمل تست (Testing Instructions)\n‏دیباگ را در تنظیمات سراسری (global config) فعال کنید.\n‏مشاهده کنید که پلاگین دیباگ در پایین ویوپورت ثابت (fixed) شده است.\n‏در پروفایل کاربری ادمین خود:\n‏به تب Accessibility Settings بروید و Monochrome را فعال کنید.\n‏به داشبورد اصلی ادمین بروید.\n\n‏از آنجایی که این PR شامل تغییرات scss است، باید یا از یک بسته از پیش ساخته‌شده استفاده کنید یا برای بازسازی css دستور npm i را اجرا کنید.\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n\n‏پلاگین دیباگ به پایین html منتقل شده است و در پایین ویوپورت ثابت نیست.\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n\n‏پلاگین دیباگ در پایین ویوپورت ثابت است.\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای guide.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای guide.joomla.org نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای manual.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «NPM Resource Changed» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: [5.x] Enabling High Contrast or Monochrome in Accessibility Settings breaks position: fixed elements (<a href=\"https://github.com/joomla/joomla-cms/issues/43894\">https://github.com/joomla/joomla-cms/issues/43894</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Quy Ton\n\n<a href=\"https://github.com/QuyTon\">QuyTon</a>\n\n‏۱۴ مهر ۱۴۰۵ — ساعت ۰۶:۲۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏فایل `oiiii` را حذف کن."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Christiane Maier-Stadtherr\n\n<a href=\"https://github.com/chmst\">chmst</a>\n\n‏۱۸ مهر ۱۴۰۵ — ساعت ۱۳:۰۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏اگر «Highlight links» فعال باشد، دکمه پشت بدنه (body) قرار می‌گیرد و به این شکل دیده می‌شود.\n‏اما این موضوع به این PR مربوط نیست، صرفاً جهت اطلاع برای سایر  ذکر شد."
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/7b01ed8e-670e-4890-a81a-2d6befa97cd5",
+            "caption": "‏گرافیک"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱۸ مهر ۱۴۰۵ — ساعت ۱۳:۱۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏ممنون از پیشنهاد شما <a href=\"https://github.com/chmst\">@chmst</a> من تغییر شما را اعمال کردم"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Christiane Maier-Stadtherr\n\n<a href=\"https://github.com/chmst\">chmst</a>\n\n‏۱۸ مهر ۱۴۰۵ — ساعت ۱۴:۱۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/e626e91178067e4bae781e8f95950afadbdedd8a\">e626e91</a>\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48580\">issues.joomla.org/tracker/joomla-cms/48580</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-10-10T10:45:59Z",
+    "warnings": []
+}
