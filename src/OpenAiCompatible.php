@@ -36,10 +36,17 @@ final class OpenAiCompatible implements TextGenerator
         $lastError = null;
 
         for ($attempt = 1; $attempt <= self::MAX_ATTEMPTS; $attempt++) {
+            $started = microtime(true);
+
             try {
                 $res = $this->request($system, $userText, $timeout);
             } catch (Throwable $e) {
                 $lastError = $e;
+
+                Log::write(
+                    'fallback ' . $this->model . ' attempt ' . $attempt . ': transport failure after '
+                    . self::ms($started) . 'ms: ' . $e->getMessage()
+                );
 
                 break;
             }
@@ -50,12 +57,20 @@ final class OpenAiCompatible implements TextGenerator
                 $text = $this->extractText($res['json']);
 
                 if ($text !== null) {
+                    Log::write(
+                        'fallback ' . $this->model . ' attempt ' . $attempt . ': ok in ' . self::ms($started) . 'ms'
+                    );
+
                     return $text;
                 }
 
                 $reason    = $res['json']['choices'][0]['finish_reason'] ?? 'unknown';
                 $lastError = new RuntimeException(
                     'Provider returned no text (finishReason=' . $reason . ', model=' . $this->model . '): ' . $res['raw']
+                );
+
+                Log::write(
+                    'fallback ' . $this->model . ' attempt ' . $attempt . ': no text (finishReason=' . $reason . ')'
                 );
 
                 break;
@@ -65,16 +80,30 @@ final class OpenAiCompatible implements TextGenerator
                 'Provider HTTP ' . $status . ' (model=' . $this->model . '): ' . $res['raw']
             );
 
+            Log::write(
+                'fallback ' . $this->model . ' attempt ' . $attempt . ': HTTP ' . $status
+                . ' in ' . self::ms($started) . 'ms'
+            );
+
             if (!in_array($status, self::RETRYABLE_STATUS, true)) {
                 break;
             }
 
             if ($attempt < self::MAX_ATTEMPTS) {
-                sleep(self::RETRY_DELAY * $attempt);
+                $delay = self::RETRY_DELAY * $attempt;
+
+                Log::write('fallback ' . $this->model . ': waiting ' . $delay . 's');
+
+                sleep($delay);
             }
         }
 
         throw $lastError ?? new RuntimeException('Provider: request failed');
+    }
+
+    private static function ms(float $started): int
+    {
+        return (int) round((microtime(true) - $started) * 1000);
     }
 
     /**

@@ -48,6 +48,8 @@ final class Gemini implements TextGenerator
 
         foreach ($this->models as $model) {
             for ($attempt = 1; $attempt <= self::MAX_ATTEMPTS; $attempt++) {
+                $started = microtime(true);
+
                 try {
                     $res = $this->request($model, $system, $userText, $timeout);
                 } catch (Throwable $e) {
@@ -55,6 +57,11 @@ final class Gemini implements TextGenerator
                     // HTTP status to retry on: try the next model right away
                     // instead of waiting on the same one again.
                     $lastError = $e;
+
+                    Log::write(
+                        'gemini ' . $model . ' attempt ' . $attempt . ': transport failure after '
+                        . self::ms($started) . 'ms: ' . $e->getMessage()
+                    );
 
                     break;
                 }
@@ -65,6 +72,10 @@ final class Gemini implements TextGenerator
                     $text = $this->extractText($res['json']);
 
                     if ($text !== null) {
+                        Log::write(
+                            'gemini ' . $model . ' attempt ' . $attempt . ': ok in ' . self::ms($started) . 'ms'
+                        );
+
                         return $text;
                     }
 
@@ -73,6 +84,8 @@ final class Gemini implements TextGenerator
                         'Gemini returned no text (finishReason=' . $reason . ', model=' . $model . '): ' . $res['raw']
                     );
 
+                    Log::write('gemini ' . $model . ' attempt ' . $attempt . ': no text (finishReason=' . $reason . ')');
+
                     break;
                 }
 
@@ -80,17 +93,31 @@ final class Gemini implements TextGenerator
                     'Gemini HTTP ' . $status . ' (model=' . $model . '): ' . $res['raw']
                 );
 
+                Log::write(
+                    'gemini ' . $model . ' attempt ' . $attempt . ': HTTP ' . $status
+                    . ' in ' . self::ms($started) . 'ms'
+                );
+
                 if (!in_array($status, self::RETRYABLE_STATUS, true)) {
                     break;
                 }
 
                 if ($attempt < self::MAX_ATTEMPTS) {
-                    sleep(self::RETRY_DELAY * $attempt);
+                    $delay = self::RETRY_DELAY * $attempt;
+
+                    Log::write('gemini ' . $model . ': waiting ' . $delay . 's');
+
+                    sleep($delay);
                 }
             }
         }
 
         throw $lastError ?? new RuntimeException('Gemini: no model configured');
+    }
+
+    private static function ms(float $started): int
+    {
+        return (int) round((microtime(true) - $started) * 1000);
     }
 
     /**

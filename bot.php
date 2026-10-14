@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require __DIR__ . '/src/Http.php';
+require __DIR__ . '/src/Log.php';
 require __DIR__ . '/src/Persian.php';
 require __DIR__ . '/src/Telegram.php';
 require __DIR__ . '/src/GitHub.php';
@@ -65,6 +66,8 @@ $allowedUsers = array_map('strval', (array) $config['allowed_user_ids']);
 $log = static function (string $message): void {
     fwrite(STDOUT, '[' . date('Y-m-d H:i:s') . '] ' . $message . "\n");
 };
+
+Log::$sink = $log;
 
 $isAllowed = static function (int $userId) use ($allowedUsers): bool {
     return $allowedUsers === [] || in_array((string) $userId, $allowedUsers, true);

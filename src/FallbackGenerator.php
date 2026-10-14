@@ -23,9 +23,15 @@ final class FallbackGenerator implements TextGenerator
         $lastError = null;
 
         foreach ($this->generators as $generator) {
+            $name = (new ReflectionClass($generator))->getShortName();
+
+            Log::write('generator: trying ' . $name);
+
             try {
                 return $generator->generate($system, $userText, $timeout);
             } catch (Throwable $e) {
+                Log::write('generator: ' . $name . ' gave up: ' . $e->getMessage());
+
                 $lastError = $e;
             }
         }
