@@ -26,7 +26,7 @@ permissions:
 jobs:
   cycle:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
 
     env:
       PR_BOT_TOKEN: ${{ secrets.PR_BOT_TOKEN }}

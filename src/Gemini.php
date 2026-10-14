@@ -13,11 +13,10 @@ final class Gemini implements TextGenerator
 
     /**
      * How many times each model is tried before moving on to the next one.
-     * Every model in the chain gets this many attempts of its own.
-     * At ten attempts the delays alone add up to 135 seconds per model, which
-     * is what it takes to wait out a busy Gemini endpoint.
+     * Every model in the chain gets this many attempts of its own. A long wait
+     * only delays the stand-in provider, so the count is deliberately small.
      */
-    private const MAX_ATTEMPTS = 10;
+    private const MAX_ATTEMPTS = 3;
 
     private const RETRY_DELAY = 3;
 
