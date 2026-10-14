@@ -41,7 +41,7 @@ final class Telegram
         try {
             return $this->call($method, $params, $timeout);
         } catch (RuntimeException $e) {
-            if (!str_contains($e->getMessage(), 'parse entities')) {
+            if (!str_contains($e->getMessage(), 'parse')) {
                 throw $e;
             }
 
@@ -51,8 +51,43 @@ final class Telegram
                 }
             }
 
+            if (isset($params['rich_message'])) {
+                $rich = json_decode((string) $params['rich_message'], true);
+
+                if (is_array($rich)) {
+                    foreach (['html', 'markdown'] as $key) {
+                        if (isset($rich[$key])) {
+                            $rich[$key] = htmlspecialchars((string) $rich[$key], ENT_QUOTES | ENT_SUBSTITUTE);
+                        }
+                    }
+
+                    $params['rich_message'] = self::encode($rich);
+                }
+            }
+
             return $this->call($method, $params, $timeout);
         }
+    }
+
+    /**
+     * @param array<string, mixed> $value
+     */
+    private static function encode(array $value): string
+    {
+        return (string) json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Rich messages are the only way to get a Persian message laid out from the
+     * right. Two details matter: Telegram ignores the RLM mark inside a rich
+     * message, and it does not turn a newline into a line break, so the breaks
+     * have to be real <br> tags.
+     */
+    private static function richMessage(string $text): string
+    {
+        $html = str_replace("\n", '<br>', str_replace(Persian::RLM, '', $text));
+
+        return self::encode(['html' => $html, 'is_rtl' => true]);
     }
 
     /**
@@ -76,10 +111,8 @@ final class Telegram
     public function sendMessage(string $chatId, string $text, ?int $threadId = null, ?array $keyboard = null): array
     {
         $params = [
-            'chat_id'                  => $chatId,
-            'text'                     => $text,
-            'parse_mode'               => 'HTML',
-            'link_preview_options'     => json_encode(['is_disabled' => true]),
+            'chat_id'      => $chatId,
+            'rich_message' => self::richMessage($text),
         ];
 
         if ($threadId !== null) {
@@ -90,7 +123,7 @@ final class Telegram
             $params['reply_markup'] = json_encode($keyboard);
         }
 
-        return $this->callText('sendMessage', $params);
+        return $this->callText('sendRichMessage', $params);
     }
 
     public function sendPhoto(string $chatId, string $photoUrl, ?string $caption = null, ?int $threadId = null): array
@@ -115,11 +148,9 @@ final class Telegram
     public function editMessageText(string $chatId, int $messageId, string $text, ?array $keyboard = null): array|bool
     {
         $params = [
-            'chat_id'                  => $chatId,
-            'message_id'               => $messageId,
-            'text'                     => $text,
-            'parse_mode'               => 'HTML',
-            'link_preview_options'     => json_encode(['is_disabled' => true]),
+            'chat_id'      => $chatId,
+            'message_id'   => $messageId,
+            'rich_message' => self::richMessage($text),
         ];
 
         if ($keyboard !== null) {
