@@ -112,11 +112,13 @@ final class Persian
             // whose first strong character is Latin (a URL, a command, a hash)
             // all read left-to-right on their own. Adding the mark there is
             // pointless, and in front of a command it can stop Telegram from
-            // offering the command for a tap.
+            // offering the command for a tap. Lines that open with an HTML tag
+            // are left alone too: inside a rich message a mark in front of a
+            // link drags the link to the right, where it no longer reads.
             if (
                 $trimmed === ''
                 || str_starts_with($line, self::RLM)
-                || preg_match('#^[A-Za-z0-9/]#', $trimmed) === 1
+                || preg_match('#^[A-Za-z0-9/<]#', $trimmed) === 1
             ) {
                 $out[] = $line;
                 continue;

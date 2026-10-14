@@ -79,13 +79,14 @@ final class Telegram
 
     /**
      * Rich messages are the only way to get a Persian message laid out from the
-     * right. Three details matter: Telegram ignores the RLM mark inside a rich
-     * message, it does not turn a newline into a line break, and the bubble only
-     * starts from the right when the message ends with a real <br> tag.
+     * right. Two details matter: Telegram does not turn a newline into a line
+     * break, and the bubble only starts from the right when the message ends
+     * with a real <br> tag. The RLM marks are kept: without them a two-line
+     * Persian message stays left-aligned on the desktop client.
      */
     private static function richMessage(string $text): string
     {
-        $html = str_replace("\n", '<br>', str_replace(Persian::RLM, '', $text));
+        $html = str_replace("\n", '<br>', $text);
 
         return self::encode(['html' => $html . '<br>', 'is_rtl' => true]);
     }
