@@ -32,6 +32,7 @@ jobs:
       PR_BOT_TOKEN: ${{ secrets.PR_BOT_TOKEN }}
       PR_CHAT_ID: ${{ secrets.PR_CHAT_ID }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      FALLBACK_API_KEY: ${{ secrets.FALLBACK_API_KEY }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PR_GLOSSARY: ${{ github.workspace }}/data/joomla-translation-glossary.md
 

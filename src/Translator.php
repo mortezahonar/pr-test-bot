@@ -20,7 +20,7 @@ final class Translator
     private array $atoms = [];
 
     public function __construct(
-        private Gemini $gemini,
+        private TextGenerator $generator,
         private string $systemPrompt,
         private string $glossary = '',
         private bool $linkCommitHashes = true
@@ -56,7 +56,7 @@ final class Translator
             return '';
         }
 
-        $translated = $this->gemini->generate($this->systemPrompt(), $protected);
+        $translated = $this->generator->generate($this->systemPrompt(), $protected);
         $restored = $this->restore($translated);
 
         if ($markup) {

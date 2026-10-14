@@ -6,7 +6,10 @@ require __DIR__ . '/src/Http.php';
 require __DIR__ . '/src/Persian.php';
 require __DIR__ . '/src/Telegram.php';
 require __DIR__ . '/src/GitHub.php';
+require __DIR__ . '/src/TextGenerator.php';
 require __DIR__ . '/src/Gemini.php';
+require __DIR__ . '/src/OpenAiCompatible.php';
+require __DIR__ . '/src/FallbackGenerator.php';
 require __DIR__ . '/src/Translator.php';
 require __DIR__ . '/src/Store.php';
 require __DIR__ . '/src/PrService.php';
@@ -27,6 +30,20 @@ foreach (['bot_token', 'chat_id', 'gemini_api_key'] as $required) {
 $telegram = new Telegram((string) $config['bot_token']);
 $github = new GitHub((string) $config['github_token']);
 $gemini = new Gemini((string) $config['gemini_api_key'], (string) $config['gemini_model']);
+
+// Gemini is tried first; the stand-in provider takes over when Gemini is
+// unavailable and a key for it has been configured.
+$generators = [$gemini];
+
+if ((string) $config['fallback_api_key'] !== '') {
+    $generators[] = new OpenAiCompatible(
+        (string) $config['fallback_api_key'],
+        (string) $config['fallback_base_url'],
+        (string) $config['fallback_model']
+    );
+}
+
+$generator = new FallbackGenerator(...$generators);
 $store = new Store($stateDir);
 
 $systemPrompt = (string) file_get_contents(__DIR__ . '/data/translate_system.txt');
@@ -39,7 +56,7 @@ if ((string) $config['glossary_path'] !== '' && is_file((string) $config['glossa
 
 $labels = json_decode((string) file_get_contents(__DIR__ . '/data/labels.json'), true) ?: [];
 
-$translator = new Translator($gemini, $systemPrompt, $glossary, (bool) $config['link_commit_hashes']);
+$translator = new Translator($generator, $systemPrompt, $glossary, (bool) $config['link_commit_hashes']);
 $service = new PrService($github, $translator, $store, $labels, $stateDir);
 
 $chatId = (string) $config['chat_id'];

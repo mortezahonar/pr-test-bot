@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-final class Gemini
+final class Gemini implements TextGenerator
 {
     private const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/';
 
