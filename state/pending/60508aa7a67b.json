@@ -1,0 +1,18 @@
+{
+    "pr": 48580,
+    "is_update": true,
+    "topic_name": "[#48580] - [6.2] فعال‌سازی کنتراست بالا یا تک‌رنگ در تنظیمات دسترسی‌پذیری، عناصر position: fixed را خراب می‌کند",
+    "thread_id": 646,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "adih\n\n<a href=\"https://github.com/adiheutschi\">adiheutschi</a>\n\n‏۲۵ مهر ۱۴۰۵ — ساعت ۱۷:۴۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را :white_check_mark: با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/3dc01416c6b583c9690b6d2d5fe5cd3db7a64961\">3dc0141</a> تست کردم\n\n‏من تست کردم و وصله کار می‌کند! من از پکیج به‌روزرسانی Joomla_6.2.1-dev+pr.48580-Development-Update_Package.zip استفاده کرده‌ام\n‏―――――――――――――――――\n‏این کامنت با <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48580\">issues.joomla.org/tracker/joomla-cms/48580</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-10-17T14:18:37Z",
+    "warnings": []
+}
