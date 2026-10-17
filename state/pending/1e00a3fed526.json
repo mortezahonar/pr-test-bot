@@ -1,0 +1,26 @@
+{
+    "pr": 48565,
+    "is_update": true,
+    "topic_name": "[#48565] - [6.2] جداکننده منوی ادمین (Admin Menu Separator) در موقعیت اول نمایش داده نمی‌شود",
+    "thread_id": 327,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "Anita Kooistra\n\n<a href=\"https://github.com/anitabirdy\">anitabirdy</a>\n\n‏۲۵ مهر ۱۴۰۵ — ساعت ۱۸:۰۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را :white_check_mark: با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/1073758cb9e612a8bd9671ee4ec5b29db9494438\">1073758</a> تست کردم\n\n‏تست شد، <a href=\"https://github.com/brianteeman\">@brianteeman</a> بابت اصلاح و راهکار متشکرم.\n\n‏―――――――――――――――――\n‏این نظر با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48565\">issues.joomla.org/tracker/joomla-cms/48565</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "MarcelBirdCageCompany\n\n<a href=\"https://github.com/MarcelBirdCageCompany\">MarcelBirdCageCompany</a>\n\n‏۲۵ مهر ۱۴۰۵ — ساعت ۱۸:۰۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را :white_check_mark: با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/1073758cb9e612a8bd9671ee4ec5b29db9494438\">1073758</a> تست کردم\n\n‏تست‌شده در JWC 2026 Bugs Squad\n‏―――――――――――――――――\n‏این کامنت با <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48565\">issues.joomla.org/tracker/joomla-cms/48565</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-10-17T14:36:49Z",
+    "warnings": []
+}
