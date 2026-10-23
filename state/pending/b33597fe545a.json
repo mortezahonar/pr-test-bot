@@ -1,0 +1,34 @@
+{
+    "pr": 48572,
+    "is_update": false,
+    "topic_name": "[#48572] - [6.2] ثبت لاگ به‌روزرسانی CLI",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48572] - [6.2] ثبت لاگ به‌روزرسانی CLI"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱۳ مهر ۱۴۰۵ — ساعت ۱۴:۵۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] لاگ‌گیری به‌روزرسانی CLI\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48572\">https://issues.joomla.org/tracker/joomla-cms/48572</a>\n\n‏درخواست ادغام (Pull Request) شماره #42172 را حل می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست‌نامه هوش مصنوعی مولد</a> را خوانده‌ام و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است یا با این سیاست‌نامه و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏به‌روزرسان CLI اکنون پیشرفت به‌روزرسانی را همانند به‌روزرسان تحت وب ثبت می‌کند، از جمله:\n\n1. فایل به‌روزرسانی دانلودشده.\n2. شروع نصب.\n3. فرآیند پاک‌سازی.\n4. تکمیل به‌روزرسانی، شامل نسخه جدید جوملا.\n\n‏### دستورالعمل‌های تست\n‏اطمینان حاصل کنید که سایت روی نسخه‌ای از جوملا اجرا می‌شود که نسخه هسته جدیدتری برای آن در دسترس است.\n‏کانال به‌روزرسانی جوملا را روی کانال مناسب حاوی به‌روزرسانی قرار دهید.\n‏یک خط فرمان (command prompt) در پوشه نصب جوملا باز کنید.\n‏اجرا کنید:\n‏`php cli/joomla.php core:update`\n‏لاگ به‌روزرسانی جوملا را در این مسیر بررسی کنید:`administrator/logs/joomla_update.php`\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n\n‏لاگ نصب به‌جای اینکه بلافاصله قبل از نصب فایل‌های جوملا ثبت شود، قبل از مرحله نهایی‌سازی ثبت می‌شود، و هیچ ورودی لاگی مبنی بر تکمیل پس از پایان موفقیت‌آمیز به‌روزرسانی وجود ندارد.\n\n‏این امر باعث ناقص شدن لاگ به‌روزرسانی CLI می‌شود و ترتیب عملیات انجام‌شده در طول به‌روزرسانی را به دقت منعکس نمی‌کند.\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام (Pull Request)\n\n‏به‌روزرسان هسته CLI کل فرآیند به‌روزرسانی را دقیقاً مانند آنچه در به‌روزرسانی وب دریافت می‌کنید، به ترتیب درست ثبت می‌کند:\n\nSTART → URL → FILE → INSTALL → FINALISE → CLEANUP → COMPLETE\n\n‏نکته: یک ورودی لاگ اضافی مطابق گزارش #42171 وجود دارد که با این درخواست ادغام (PR) برطرف **نمی‌شود**\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییر مستندات برای راهنمای جوملا (guide.joomla.org) نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییر مستندات برای مستندات جوملا (manual.joomla.org) نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Heiko Lübbe\n\n<a href=\"https://github.com/muhme\">muhme</a>\n\n‏۲۵ مهر ۱۴۰۵ — ساعت ۱۷:۱۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/62a62381a4af3a8ef5155dfe2053ea3e607e31f9\">62a6238</a> تست کردم :white_check_mark:\n\n‏تست‌شده با JBT در نصب 6.1-dev با دستور `php cli/joomla.php core:update`\n‏* مشاهده ورودی‌های لاگِ گم‌شده قبل از PR\n‏* وارد کردن (به‌عنوان بازیابی) نمونه جوملا 61 که قبلاً خروجی گرفته شده بود\n‏* بازنویسی `administrator/logs/joomla_update.php` از این PR و اجرای `core:update`\n‏  * نمونه جوملا بدون مشکل به‌روزرسانی شد\n‏  * خطوط جدید در فایل لاگ عبارت‌اند از:\n‏    * `File Joomla_6.2.0-Stable-Update_Package.zip downloaded.`\n‏    * ...\n‏    * `Starting installation of new version.`\n‏    * ...\n‏    * `Cleaning up after installation.`\n‏    * `Update to version 6.1.5-dev is complete.`\n‏  * همان‌طور که نام‌گذاری شده، ورودی لاگ `WARNING JInstaller: :Install: Can't find XML setup file.` قبل و بعد از این PR وجود دارد.\n\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48572\">issues.joomla.org/tracker/joomla-cms/48572</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-10-17T13:44:17Z",
+    "warnings": []
+}
