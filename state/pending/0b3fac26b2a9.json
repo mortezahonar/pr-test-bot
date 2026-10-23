@@ -1,0 +1,118 @@
+{
+    "pr": 48688,
+    "is_update": false,
+    "topic_name": "[#48688] - [6.2] [AI] هنگام رد شدن ویرایش API، رکورد را چک‌این (Check-In) کنید",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48688] - [6.2] [AI] هنگام رد شدن ویرایش API، رکورد را چک‌این (Check-In) کنید"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Brian Mitchell\n\n<a href=\"https://github.com/genr8r\">genr8r</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۰۰:۴۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] [AI] هنگام رد شدن ویرایش API، رکورد را چک‌این (Check-In) کنید\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48688\">https://issues.joomla.org/tracker/joomla-cms/48688</a>\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏سلام به همگی،\n\n‏ما چندین سایت جوملا داریم که از طریق Web Services API روی آن‌ها مطلب نوشته می‌شود و متوجه شدیم که پس از رد شدن یک درخواست PATCH، رکوردها در حالت چک‌اوت (checked out) باقی می‌مانند. به نفر بعدی که رکورد را در بخش ادمین (backend) باز می‌کرد، گفته می‌شد که رکورد توسط کاربر API چک‌اوت شده است. مرتبط با این مورد، اما نه دقیقاً همان: #42219 (آن گزارش درباره به‌روزرسانی‌های موفق بود و قابل بازتولید نبود).\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏متد `ApiController::edit()` رکورد را چک‌اوت می‌کند و سپس `save()` را فراخوانی می‌کند. متد `save()` زمانی که اعتبارسنجی فرم با شکست مواجه شود (`InvalidParameterException`) یا زمانی که مدل از ذخیره‌سازی امتناع کند (`Exception\\Save`)، خطا می‌دهد و هر دوی این اتفاقات قبل از چک‌این (check-in) در انتهای `save()` رخ می‌دهند. بنابراین هر درخواست PATCH رد شده، رکورد را در حالت چک‌اوت برای کاربر API باقی می‌گذاشت.\n\n‏متد `edit()` اکنون فراخوانی `save()` را در یک بلوک قرار می‌دهد و قبل از پرتاب مجدد خطا، رکورد را چک‌این می‌کند. این رفتار مشابه فرم‌های HTML است: `FormController` رکورد را پس از یک ذخیره‌سازی ناموفق در حالت چک‌اوت نگه می‌دارد زیرا کاربر به فرم ویرایش بازمی‌گردد و بعداً ذخیره یا لغو می‌کند، اما یک درخواست API هیچ ویرایش یا لغو بعدی ندارد، بنابراین رد درخواست به معنای پایان ویرایش است. یک ذخیره‌سازی موفق بدون تغییر باقی می‌ماند (متد `save()` همچنان چک‌اینِ مخصوص خود را انجام می‌دهد) و `FormModel::checkin()` نیز برای جداولی که ستون‌های چک‌اوت ندارند، از قبل به‌صورت زودهنگام بازگشت (return) انجام می‌دهد.\n\n‏تست‌ها:\n\n‏- واحد (Unit): فایل جدید `tests/Unit/Libraries/Cms/MVC/Controller/ApiControllerTest.php` یک ویرایش رد شده و یک ویرایش موفق را پوشش می‌دهد.\n‏- سیستمی (System): مورد جدید در `tests/System/integration/api/com_content/Articles.cy.js` با عنوان \"does not leave an article checked out when an update is refused\"، که یک PATCH با عنوان خالی ارسال می‌کند و سپس وضعیت `checked_out` را بررسی می‌کند.\n\n‏هر دو تست جدید بدون این تغییر با شکست مواجه می‌شوند (مورد Cypress شناسه کاربر API را به عنوان مقدار `checked_out` گزارش می‌دهد) و با اعمال آن با موفقیت اجرا می‌شوند. اجرای محلی با ایمیج داکر تست سیستمی: `npx cypress run --spec tests/System/integration/install/Installation.cy.js,tests/System/integration/api/com_content/Articles.cy.js`.\n\n‏### دستورالعمل تست\n\n‏روی نسخه فعلی 6.2-dev تست کنید.\n\n1. پلاگین Web Services برای Content و پلاگین API Authentication - Token را فعال کنید و یک توکن API برای یک Super User ایجاد کنید.\n2. یک مقاله ایجاد کنید (در هر دسته‌ای).\n3. یک درخواست PATCH ارسال کنید که فرم آن را رد کند، برای مثال یک عنوان خالی:\n‏   `PATCH /api/index.php/v1/content/articles/{id}` با بدنه `{\"title\": \"\"}`\n4. API با پیام \"Field required: Title\" پاسخ می‌دهد. در بخش ادمین (backend) به مسیر Content > Articles بروید.\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n\n‏مقاله قفل چک‌اوت را نشان می‌دهد که توسط کاربر API نگه داشته شده است. باز کردن آن توسط کاربر دیگر گزارش می‌دهد که چک‌اوت شده است و تا زمانی که کسی آن را چک‌این نکند، به همان حالت باقی می‌ماند.\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام (Pull Request)\n\nAPI همچنان با پیام \"Field required: Title\" پاسخ می‌دهد و مقاله چک‌اوت نمی‌شود. یک PATCH معتبر (برای مثال `{\"title\": \"New title\"}`) همچنان ذخیره می‌شود و مقاله را طبق روال قبل، چک‌این می‌کند.\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای guide.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای guide.joomla.org نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای manual.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای manual.joomla.org نیست\n\n‏ممنون از بررسی شما. اگر ترجیح می‌دهید رویکرد یا تست به شکل دیگری انجام شود، خوشحال می‌شوم تغییر دهم."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-5.4-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Unit/System Tests» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Test instructions missing» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "Joomla! CMS Bot\n\n<a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۰۰:۴۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏لطفاً اطلاعات بیشتری به گزارش مشکل (Issue) خود اضافه کنید. بدون دستورالعمل‌های تست و/یا هرگونه توضیحی، ما این گزارش مشکل (Issue) را ظرف ۴ هفته خواهیم بست. با تشکر.\n‏*این یک پیام خودکار از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> است.*"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۰۰:۵۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏اکنون فقط اصلاحات امنیتی در 5.4 اعمال می‌شوند، بنابراین لطفاً ری‌بیس (rebase) را به 6.2-dev انجام دهید."
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏عنوان از «[5.4] [AI] Check the record back in when an API edit is refused» به «[6.2] [AI] Check the record back in when an API edit is refused» تغییر کرد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Unit/System Tests» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Unit/System Tests» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Brian Mitchell\n\n<a href=\"https://github.com/genr8r\">genr8r</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۰۱:۱۷"
+        },
+        {
+            "kind": "message",
+            "text": "‏طبق درخواست، روی 6.2-dev بازنشانی (Rebase) شد، ممنون <a href=\"https://github.com/brianteeman\">@brianteeman</a>. پس از بازنشانی، تست‌ها را به‌صورت محلی روی 6.2-dev دوباره اجرا کردم: کل مجموعه تست‌های واحد (unit suite) و تست سیستم جدید، هر دو با موفقیت انجام شدند. آیا کسی می‌تواند برچسب‌های PR-5.4-dev و \"Test instructions missing\" را حذف کند؟ دستورالعمل‌های تست در توضیحات موجود هستند."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Test instructions missing» توسط <a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-5.4-dev» توسط <a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Webservices» توسط <a href=\"https://github.com/alikon\">alikon</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۳:۳۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/b2f7a43c966f0bc37c53c22caf1a00dfcb190acd\">b2f7a43</a>\n‏―――――――――――――――――\n‏این نظر با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48688\">issues.joomla.org/tracker/joomla-cms/48688</a> ایجاد شد."
+        }
+    ],
+    "last_item_at": "2026-10-23T10:04:30Z",
+    "warnings": []
+}
