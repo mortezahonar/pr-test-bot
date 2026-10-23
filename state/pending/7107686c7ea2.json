@@ -1,0 +1,50 @@
+{
+    "pr": 48644,
+    "is_update": false,
+    "topic_name": "[#48644] - [6.2] بهبود تستهای API مقاله برای مدیریت خطا، صفحهبندی و رابطه دستهبندی",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48644] - [6.2] بهبود تستهای API مقاله برای مدیریت خطا، صفحهبندی و رابطه دستهبندی"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۲۴ مهر ۱۴۰۵ — ساعت ۱۱:۴۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] بهبود تست‌های API مقاله برای مدیریت خطا، صفحه‌بندی و رابطه دسته‌بندی\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48644\">https://issues.joomla.org/tracker/joomla-cms/48644</a>\n\n‏تست‌هایی برای مدیریت بارگذاریهای نامعتبر، صفحهبندی و رابطهٔ دسته اضافه شد.\n\n‏درخواست ادغام # <a href=\"https://developer.joomla.org/generative-ai-policy.html\"> را حل می‌کند.\n\n‏- [x] سیاست هوش مصنوعی تولیدشده (Generative AI policy) را خواندهام و مشارکت من یا با کمک AI ایجاد نشده یا با سیاست و GNU/GPL 2 یا نسخههای بعدتر سازگار است.\n\n‏### خلاصه تغییرات\n‏تست اضافه شد برای:\n\n‏-  صفحهبندی\n‏-  مدیریت خطا برای بارگذاری خراب (malformed payload)\n‏-  رابطهٔ دسته\n\n‏### دستورالعمل تست\n\n‏`npx cypress run --spec tests/System/integration/api/com_content/Articles.cy.js ` را اجرا کنید\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام\n\n‏برخی تستها\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام\n\n‏تستهای بیشتر\n\n‏### لینک مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [ ] تغییرات مستنداتی برای راهنمای جوملا (guide.joomla.org) لازم نیست\n\n‏- [ ] لینک درخواست ادغام برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [ ] تغییرات مستنداتی برای مستندات جوملا (manual.joomla.org) لازم نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Unit/System Tests» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: [5.4] Enhance article API tests for error handling, pagination and category relationship (<a href=\"https://github.com/joomla/joomla-cms/pull/48031\">https://github.com/joomla/joomla-cms/pull/48031</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Stefan Wendhausen\n\n<a href=\"https://github.com/tecpromotion\">tecpromotion</a>\n\n‏۲۴ مهر ۱۴۰۵ — ساعت ۱۸:۵۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏تمام ۱۳ تست در `Articles.cy.js` با موفقیت اجرا می‌شوند (Cypress 15.18.0، Electron، نسخه 6.2-dev روی PHP 8.3). چند پیشنهاد:\n\n‏۱. **تست Malformed-payload: کامنت گمراه‌کننده است.** API جوملا ویژگی‌ها (attributes) را به‌صورت تخت (flat) دریافت می‌کند؛ از wrapper نوع `data` در JSON:API استفاده نمی‌کند. حتی یک payload *معتبرِ* بسته‌بندی‌شده مانند `{data:{attributes:{title, catid}}}` نیز همان خطای 400 یعنی `Field required: Title\\nField required: Category` را برمی‌گرداند. این تست فیلدهای الزامیِ مفقود را بررسی می‌کند، نه فرمت‌بندی را. پیشنهاد می‌شود از یک ساختار تخت `{ title: 'automated test article' }` (بدون `catid`) به‌همراه به‌روزرسانی کامنت/نام تست استفاده کنید.\n‏۲. **تست دسته‌بندی (Category)، پیوند را اثبات نمی‌کند.** مقدار `catid: 2` از قبل مقدار پیش‌فرضِ `db_createArticle` است، بنابراین حتی اگر `catid` نادیده گرفته شود، assertion باز هم پاس می‌شود. از `cy.db_createCategory({ extension: 'com_content' })` استفاده کنید و همان شناسه را assert کنید (بررسی شد: شناسه دسته‌بندی جدید `10` به‌درستی در `relationships.category.data.id` بازگردانده می‌شود).\n‏۳. **استایل کد:** دستور `eslint --config build/eslint.config.mjs` تعداد ۳۱ خطا گزارش می‌دهد که همگی در خطوط جدید هستند (استفاده از دابل‌کوتیشن، ویژگی‌های کوتیشن‌دار، تورفتگی، فاصله‌های انتهایی، و فقدان کامای انتهایی). بخش موجودِ فایل تمیز است. دستور `--fix` تمام آن‌ها را برطرف می‌کند.\n\n‏تست صفحه‌بندی (pagination) دقیق است: اگر `offset` نادیده گرفته شود، تست شکست می‌خورد (به‌جای B، مقدار C را برمی‌گرداند)."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۲۷ مهر ۱۴۰۵ — ساعت ۱۶:۵۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من بازخورد شما را اعمال کرده‌ام."
+        }
+    ],
+    "last_item_at": "2026-10-19T13:24:18Z",
+    "warnings": []
+}
