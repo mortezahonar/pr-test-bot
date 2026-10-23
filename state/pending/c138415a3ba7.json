@@ -1,0 +1,94 @@
+{
+    "pr": 48682,
+    "is_update": false,
+    "topic_name": "[#48682] - [6.2] اجرای وظایف زمان‌بندی‌شده (Scheduled Task) با مدت‌زمان ۱۰۰ ثانیه یا بیشتر را در تاریخچه اجرا نگه دارید",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48682] - [6.2] اجرای وظایف زمان‌بندی‌شده (Scheduled Task) با مدت‌زمان ۱۰۰ ثانیه یا بیشتر را در تاریخچه اجرا نگه دارید"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Krishna Gandhi\n\n<a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a>\n\n‏۳۰ مهر ۱۴۰۵ — ساعت ۱۶:۴۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] اجرای وظایف زمان‌بندی‌شده (Scheduled Task) با مدت‌زمان ۱۰۰ ثانیه یا بیشتر را در تاریخچه اجرا نگه دارید\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48682\">https://issues.joomla.org/tracker/joomla-cms/48682</a>\n\n‏درخواست ادغام (Pull Request) شماره <a href=\"https://developer.joomla.org/generative-ai-policy.html\"> را حل می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد (Generative AI policy)</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏هنگام اجرای وظایف طولانی (وظیفه ترجمه از <a href=\"https://github.com/joomla-projects/gsoc26_translator_feedback\">پروژه GSoC</a>) روی یک سایت، متوجه شدم که برخی از اجراها در تاریخچه اجرا (Execution History) وجود ندارند.\n\n‏ستون duration در جدول #__scheduler_logs از نوع DECIMAL(5,3) است، بنابراین تنها می‌تواند تا 99.999 ثانیه را در خود نگه دارد. هنگامی که یک اجرا 100 ثانیه یا بیشتر طول می‌کشد، ذخیره ردیف تاریخچه اجرا (Execution History) با شکست مواجه شده و خطا نادیده گرفته می‌شود. خودِ وظیفه به‌خوبی اجرا می‌شود و آخرین زمان اجرا و کد خروج آن به‌روزرسانی می‌گردد، اما آن اجرا هرگز در تاریخچه اجرا نمایش داده نمی‌شود. این اتفاق هم برای اجراهای موفق و هم برای اجراهای ناموفق رخ می‌دهد.\n\n‏این درخواست ادغام (Pull Request)، ستون مذکور را در SQL نصب به DECIMAL(8,3) (و در PostgreSQL به NUMERIC(8,3)) افزایش می‌دهد و همچنین فایل‌های به‌روزرسانی را برای سایت‌های موجود اضافه می‌کند.\n\n‏### دستورالعمل تست (Testing Instructions)\n\n‏شما می‌توانید از هر وظیفه زمان‌بندی‌شده (Scheduled task) طولانی که اجرای آن بیش از 99.999 ثانیه طول می‌کشد استفاده کنید.\n\n‏**یا می‌توانیم با روش زیر چنین وضعیتی را ایجاد کنیم:**\n1. یک فایل `sleep.php` در ریشه سایت ایجاد کنید:\n‏   ```php\n   <?php\n   set_time_limit(0);\n   sleep(105);\n   echo 'ok';\n‏   ```\n2. سپس به مسیر سیستم (System) -> مدیریت (Manage) -> وظایف زمان‌بندی‌شده (Scheduled tasks) -> جدید (New) بروید و \"GET Request\" را جستجو و انتخاب کنید.\n‏آن را با دادن یک عنوان پیکربندی کنید و از URL: `https://&lt;your site&gt;/sleep.php` استفاده کنید و مهلت زمانی درخواست (Request Timeout) را روی 120 بگذارید. حالا ذخیره و بستن (Save&Close) را بزنید.\n\n3. روی وظیفه جدید، دکمه اجرای وظیفه (Run task) را کلیک کنید. این کار حدود 105 ثانیه طول می‌کشد.\n4. تاریخچه اجرا (Execution History) را باز کنید - به ردیف‌ها نگاه کنید (قبل و بعد از این درخواست ادغام).\n\n‏ **توجه: درخواست ادغام (Pull Request) را اعمال کنید، سپس مطمئن شوید که دیتابیس را از طریق مسیر زیر به‌روزرسانی کرده‌اید:\n‏ سیستم (System) -> نگهداری (Maintenance) -> دیتابیس (Database) --> به‌روزرسانی ساختار (Update Structure)، و سپس وظیفه را دوباره اجرا کنید.**\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n\n‏وظیفه پس از حدود 105 ثانیه با موفقیت به پایان می‌رسد، اما تاریخچه اجرا (Execution History) هیچ ورودی‌ای برای این اجرا نشان نمی‌دهد.\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n\n‏اجرا در تاریخچه اجرا (Execution History) با مدت زمان حدود 105 ثانیه ظاهر می‌شود.\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای guide.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای guide.joomla.org نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای manual.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Krishna Gandhi\n\n<a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a>\n\n‏۳۰ مهر ۱۴۰۵ — ساعت ۱۷:۱۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏ممنون <a href=\"https://github.com/brianteeman\">@brianteeman</a>، من آن را بررسی کردم: CAN FAIL برای دستوراتی در نظر گرفته شده است که در صورت اجرای مجدد با خطا مواجه می‌شوند، مانند افزودن ستونی که از قبل وجود دارد (به نکته ۲ در خلاصه #37156 مراجعه کنید). MODIFY می‌تواند بدون خطا دوباره اجرا شود. من این فایل به‌روزرسانی را دو بار از طریق نصب‌کننده اجرا کردم و اجرای دوم به‌خوبی انجام شد. (همچنین یک ADD COLUMN بدون نشانگر را امتحان کردم که در اجرای دوم با خطا مواجه شد.)\n\n‏دستورات MODIFY موجود در هسته (Core) نیز از آن استفاده نمی‌کنند - بنابراین معتقدم که آن را به همین شکل حفظ کنیم؟"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۳۰ مهر ۱۴۰۵ — ساعت ۱۷:۳۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏متوجه شدم. لطفاً متن انگلیسی مورد نظر خود را ارسال کنید تا طبق قواعد تعیین‌شده، آن را ترجمه کنم."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۴:۱۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏کمی زیاده‌روی است. با NUMERIC(10,3) 9,999,999.999 ثانیه شما به این مقدار می‌رسید: ~۱۱۵ روز"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Krishna Gandhi\n\n<a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۴:۲۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏> کمی زیاده‌روی است. با NUMERIC(10,3) و ۹,۹۹۹,۹۹۹.۹۹۹ ثانیه، شما حدود ۱۱۵ روز زمان خواهید داشت.\n\n‏آه، نکته‌ی منصفانه‌ای است.\n‏آیا DECIMAL(7,3) که حدود ۲.۸ ساعت است مناسب است **یا** DECIMAL(8,3) که حدود ۲۷ ساعت است؟ (مطمئن نیستم که آیا به این مقدار هم نیاز داریم یا خیر)"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «bug» توسط <a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۵:۵۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏شاید DECIMAL(8,3) کافی باشد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Krishna Gandhi\n\n<a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۶:۰۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏> شاید DECIMAL(8,3) کافی باشد\n\n‏انجام شد."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۶:۰۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/e45e5bafb2fd2fc6742e776fc2324e19c5d87eed\">e45e5ba</a>\n‏―――――――――――――――――\n‏این نظر با استفاده از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48682\">issues.joomla.org/tracker/joomla-cms/48682</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۹:۱۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/e45e5bafb2fd2fc6742e776fc2324e19c5d87eed\">e45e5ba</a>\n\n‏در طول تست PR جمعه‌های شاد (Happy Friday PR Testing)، توانستم این مورد را با موفقیت تست کنم! ممنون <a href=\"https://github.com/krishnagandhicode\">@krishnagandhicode</a>!\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48682\">issues.joomla.org/tracker/joomla-cms/48682</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-10-23T15:41:01Z",
+    "warnings": []
+}
