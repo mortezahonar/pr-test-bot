@@ -1,0 +1,54 @@
+{
+    "pr": 48575,
+    "is_update": false,
+    "topic_name": "[#48575] - [6.2] [AI] اصلاح فشرده‌سازی Brotli در اسکریپت بیلد که یک متغیر تعریف‌نشده را می‌نوشت",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48575] - [6.2] [AI] اصلاح فشرده‌سازی Brotli در اسکریپت بیلد که یک متغیر تعریف‌نشده را می‌نوشت"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Stefan Wendhausen\n\n<a href=\"https://github.com/tecpromotion\">tecpromotion</a>\n\n‏۱۳ مهر ۱۴۰۵ — ساعت ۱۶:۲۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] [AI] رفع فشرده‌سازی Brotli در اسکریپت بیلد که باعث نوشتن یک متغیر تعریف‌نشده می‌شد\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48575\">https://issues.joomla.org/tracker/joomla-cms/48575</a>\n\n‏درخواست ادغام (Pull Request) مشکل # را حل می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کرده‌ام و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏در فایل `build/build-modules-js/utils/compressFile.mjs` فراخوان بازگشتی (کالبک) Brotli نتیجه فشرده‌شده را به‌عنوان آرگومان دریافت نمی‌کرد، بلکه `data` را می‌نوشت که در آن حوزه (Scope) تعریف نشده است. بنابراین فراخوانی `compressFileAndSave()` با `enableBrotli = true` با خطای `ReferenceError` مواجه می‌شد.\n\n‏کالبک اکنون مانند شاخه gzip بالای خود، نتیجه را دریافت می‌کند.\n\n‏تنها فراخواننده در هسته (`default-module-builder.mjs`) قابلیت Brotli را فعال نمی‌کند، بنابراین بیلد معمولی تحت تأثیر قرار نمی‌گیرد. این باگ با #46879 ایجاد شده بود.\n\n‏### دستورالعمل‌های تست\n\n‏در پوشه ریشه مخزن اجرا کنید:\n\n‏```\necho \"console.log('test');\" > /tmp/test.min.js\nnode -e \"import('./build/build-modules-js/utils/compressFile.mjs').then((m) => m.compressFileAndSave('/tmp/test.min.js', true)).then(() => console.log('ok'), (e) => console.log(e.name + ': ' + e.message))\"\n‏```\n\n‏علاوه بر این، `npm run build:js` را اجرا کنید تا بررسی شود بیلد معمولی هنوز کار می‌کند.\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n\n‏`ReferenceError: data is not defined`، هیچ فایل `/tmp/test.min.js.br` نوشته نمی‌شود.\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n\n‏`ok` و `/tmp/test.min.js.br` در کنار `/tmp/test.min.js.gz` وجود دارد.\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای راهنمای جوملا (guide.joomla.org) نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای مستندات جوملا (manual.joomla.org) نیست\n\n‏🤖 تولیدشده با <a href=\"https://claude.com/claude-code\">Claude Code</a>"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «bug» توسط <a href=\"https://github.com/tecpromotion\">tecpromotion</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱۷ مهر ۱۴۰۵ — ساعت ۱۷:۳۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏> علاوه بر این، npm run build:js را اجرا کنید تا بررسی کنید که بیلد معمولی همچنان کار می‌کند.\n\n‏این مورد در 6.2 وجود ندارد؛ با <a href=\"https://github.com/joomla/joomla-cms/pull/46879\">https://github.com/joomla/joomla-cms/pull/46879</a> حذف شد."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱۷ مهر ۱۴۰۵ — ساعت ۱۷:۴۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من می‌توانم قبل و بعد را تأیید کنم، اما بدون دانستن منظور شما از یک \"بیلد معمولی\" با اسکریپت غیرموجود، نمی‌توانم آن را به‌عنوان یک موفقیت ثبت کنم."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Heiko Lübbe\n\n<a href=\"https://github.com/muhme\">muhme</a>\n\n‏۱۷ مهر ۱۴۰۵ — ساعت ۱۷:۵۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/6eb90aab9dddf2c6f39f20deda8b1777acf7fad7\">6eb90aa</a>\n\n‏تست با JBT\n‏* با دستور node، قبل از PR خطای `ReferenceError: data is not defined` مشاهده شد و فایل `test.min.js.br` ایجاد نشد\n‏* PR با Patch Tester اعمال شد\n‏  * دستور node به‌درستی اجرا می‌شود و فایل `test.min.js.br` ایجاد شده است\n‏* نکته: دیگر دستور `npm run build:js` در نسخه 6.2-dev وجود ندارد\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48575\">issues.joomla.org/tracker/joomla-cms/48575</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-10-09T14:25:05Z",
+    "warnings": []
+}
