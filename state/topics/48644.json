@@ -1,0 +1,10 @@
+{
+    "48644": {
+        "thread_id": 835,
+        "topic": "[#48644] - [6.2] بهبود تست‌های API مقاله برای مدیریت خطا، صفحه‌بندی (Pagination) و ارتباط دسته‌بندی (Category Relationship)",
+        "tracker": "https://issues.joomla.org/tracker/joomla-cms/48644",
+        "github": "https://github.com/joomla/joomla-cms/pull/48644",
+        "last_comment_at": "2026-10-19T13:24:18Z",
+        "created_at": "2026-10-23T17:01:15Z"
+    }
+}
