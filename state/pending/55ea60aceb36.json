@@ -1,0 +1,74 @@
+{
+    "pr": 48592,
+    "is_update": false,
+    "topic_name": "[#48592] - [5.4] زمان‌بند (Scheduler) از طریق CLI، تسک قفل‌شده را اجرا نمی‌کند",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48592] - [5.4] زمان‌بند (Scheduler) از طریق CLI، تسک قفل‌شده را اجرا نمی‌کند"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۱۶ مهر ۱۴۰۵ — ساعت ۱۲:۱۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏[5.4] زمان‌بند (Scheduler) از طریق CLI، تسک قفل‌شده را اجرا نمی‌کند\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48592\">https://issues.joomla.org/tracker/joomla-cms/48592</a>\n\n‏درخواست ادغام (Pull Request) شماره‌های #48587 و #44322 را حل می‌کند.\n\n‏- [X] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏افزودن شرط برای بررسی وضعیت قفل NULL\n\n‏### دستورالعمل تست (Testing Instructions)\n\n‏- در بخش سیستم (System) → وظایف زمان‌بندی‌شده (Scheduled Tasks)، یک وظیفه از هر نوعی، برای مثال «چک‌این سراسری (Global Check-in)» ایجاد کنید. شناسه (ID) آن را یادداشت کنید.\n‏- مستقیماً در دیتابیس، آن را به‌عنوان در حال اجرا علامت‌گذاری کنید، همان‌طور که فرآیندی که هنوز با آن مشغول است انجام می‌دهد (جایگزین کردن #__ و شناسه):\n‏- UPDATE #__scheduler_tasks SET locked = UTC_TIMESTAMP() WHERE id = 1;\n‏- دستور php cli/joomla.php scheduler:run --id=1 را اجرا کنید.\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Actual result BEFORE applying this Pull Request)\n\n‏وظیفه دوباره اجرا می‌شود.\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Expected result AFTER applying this Pull Request)\n\n‏وظیفه شروع نمی‌شود، زیرا قفل شده است.\n\n‏### لینک به مستندات (Link to documentations)\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای guide.joomla.org: &lt;link&gt;\n‏- [ ] نیازی به تغییرات مستندات برای guide.joomla.org نیست\n\n‏- [ ] لینک درخواست ادغام برای manual.joomla.org: &lt;link&gt;\n‏- [ ] نیازی به تغییرات مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-5.4-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «bug» توسط <a href=\"https://github.com/muhme\">muhme</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: Scheduler from the command line starts a task that is still running (<a href=\"https://github.com/joomla/joomla-cms/issues/48587\">https://github.com/joomla/joomla-cms/issues/48587</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Stefan Wendhausen\n\n<a href=\"https://github.com/tecpromotion\">tecpromotion</a>\n\n‏۱۸ مهر ۱۴۰۵ — ساعت ۱۶:۴۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را <a href=\"https://github.com/joomla/joomla-cms/commit/47a4981f2d3dc19e05d9febf551da53bc9ab90a0\">47a4981</a> با موفقیت تست نکردم :red_circle:\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48592\">issues.joomla.org/tracker/joomla-cms/48592</a> ایجاد شده است.\n\n‏یک تسک که به‌تازگی قفل شده است دیگر شروع نمی‌شود، اما تسکی که قفل آن منقضی شده است نیز اکنون هرگز دوباره شروع نمی‌شود.\n\n‏راه‌اندازی: تسک \"Checkin A\" (چک‌این سراسری، شناسه 4)، سررسید شده، زمان پایان تسک (Task Timeout) پیش‌فرض (300 ثانیه)، `locked` مستقیماً در دیتابیس تنظیم شده است.\n\n‏### اعتبارسنجی\n\n‏| `locked` | دستور | قبل | با PR | با اصلاح پیشنهادی |\n‏|---|---|---|---|---|\n‏| NULL | `scheduler:run --id=4` | اجرا می‌شود | ✅ اجرا می‌شود | ✅ اجرا می‌شود |\n‏| now | `scheduler:run --id=4` | دوباره اجرا می‌شود (باگ) | ✅ شروع نمی‌شود، خروج 3، \"failed to run. Is it already running?\" | ✅ شروع نمی‌شود |\n‏| 1 hour ago | `scheduler:run --id=4` | اجرا می‌شود | ❌ شروع نمی‌شود، قفل باقی می‌ماند | ✅ اجرا می‌شود |\n‏| NULL | `scheduler:run --all` | اجرا می‌شود | ✅ اجرا می‌شود | ✅ اجرا می‌شود |\n‏| now | `scheduler:run --all` | شروع نمی‌شود (\"No tasks due!\") | شروع نمی‌شود | شروع نمی‌شود |\n‏| 1 hour ago | `scheduler:run --all` | اجرا می‌شود | ❌ شروع نمی‌شود، قفل باقی می‌ماند | ✅ اجرا می‌شود |\n\n‏### یافته‌ها — قفل‌های منقضی‌شده هرگز آزاد نمی‌شوند\n\n‏`locked IS NULL` زمان پایان تسک (Task Timeout) را نادیده می‌گیرد. اگر فرآیندی که یک تسک را اجرا می‌کند از بین برود (خطای مهلک، `max_execution_time`، کشته شدن فرآیند)، `locked` هرگز بازنشانی نمی‌شود. پیش از این PR، تسک زمانی که قفل قدیمی‌تر از زمان پایان (timeout) بود دوباره انتخاب می‌شد؛ اکنون `getTask()` هرگز آن را دوباره انتخاب نمی‌کند تا زمانی که شخصی به‌صورت دستی در بخش ادمین آن را آنلاک کند. `getTask()` همان چیزی است که Lazy Scheduler و Web Cron نیز از آن استفاده می‌کنند (مسیر کد یکسان، از طریق وب تست نشده است).\n\n‏`Task::acquireLock()` و `hasRunningTasks()` در حال حاضر قفلی که قدیمی‌تر از زمان پایان باشد را منقضی‌شده تلقی می‌کنند و issue #48587 دقیقاً همان شرط را درخواست می‌کند.\n\n‏### اصلاح پیشنهادی\n\n‏در `buildLockQuery()` (و به همان شکل در `getNextTaskId()` با `$idQuery`)، به‌جای `locked IS NULL`:\n\n‏```php\n‏$timeout   = ComponentHelper::getParams('com_scheduler')->get('timeout', 300);\n‏$threshold = Factory::getDate('now', 'UTC')->modify(\"-$timeout seconds\")->toSql();\n\n‏$lockQuery->extendWhere(\n‏    'AND',\n‏    [\n‏        $db->quoteName('locked') . ' IS NULL',\n‏        $db->quoteName('locked') . ' < :lockThreshold',\n‏    ],\n‏    'OR'\n‏)->bind(':lockThreshold', $threshold);\n‏```\n\n‏تست شد: نتایج در ستون آخر جدول بالا آمده است.\n\n‏نکته در مورد #44322: با شرط زمان پایان (timeout)، تسکی که طولانی‌تر از زمان پایان تسک اجرا می‌شود، همچنان پس از پایان آن زمان دوباره شروع می‌شود (رفتار موجود)؛ آن مشکل تنها با زمان پایان بالاتر برطرف می‌شود."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Stefan Wendhausen\n\n<a href=\"https://github.com/tecpromotion\">tecpromotion</a>\n\n‏۱۹ مهر ۱۴۰۵ — ساعت ۱۴:۵۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را :red_circle: با موفقیت تست نکردم در <a href=\"https://github.com/joomla/joomla-cms/commit/2f0e8d1c10accddb110d2ab9fd5c19c2b7e1c6a5\">2f0e8d1</a>\n‏―――――――――――――――――\n‏این کامنت با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48592\">issues.joomla.org/tracker/joomla-cms/48592</a> ایجاد شد.\n\n‏### تست مجدد یافته اول\n\n‏تسک \"Checkin A\" (چک‌این سراسری، شناسه 4)، سررسید شده، زمان پایان (Timeout) پیش‌فرض تسک (300 ثانیه):\n\n‏| `locked` | دستور | 47a4981f | 2f0e8d1c |\n‏|---|---|---|---|\n‏| NULL | `scheduler:run --id=4` | اجرا می‌شود | ✅ اجرا می‌شود |\n‏| now | `scheduler:run --id=4` | شروع نمی‌شود | ✅ شروع نمی‌شود، خروج 3 |\n‏| 1 hour ago | `scheduler:run --id=4` | ❌ شروع نمی‌شود، قفل می‌ماند | ✅ اجرا می‌شود |\n‏| NULL | `scheduler:run --all` | اجرا می‌شود | ✅ اجرا می‌شود |\n‏| now | `scheduler:run --all` | شروع نمی‌شود | ✅ شروع نمی‌شود (\"No tasks due!\") |\n‏| 1 hour ago | `scheduler:run --all` | ❌ شروع نمی‌شود، قفل می‌ماند | ✅ اجرا می‌شود |\n\n‏یافته حاصل از تست اول (قفل‌های منقضی‌شده هرگز آزاد نمی‌شوند) برطرف شده است.\n\n‏### یافته جدید — `$now` بازنویسی می‌شود، تسک قفل می‌شود اما دوباره پیدا نمی‌شود\n\n‏`buildLockQuery()` و `getNextTaskId()` اکنون با این شروع می‌شوند:\n\n‏```php\n‏$now = Factory::getDate('now', 'UTC');\n‏```\n\n‏این کد، رشته `$now` که توسط `getTask()` ارسال شده را با یک شیء `Date` جدید جایگزین می‌کند. سپس `buildLockQuery()` این زمان جدید را در `locked` (`:now1`) می‌نویسد، در حالی که `getTask()` پس از آن `fetchTask($db, $now)` را با رشته اصلی خود فراخوانی می‌کند و به دنبال `locked = :now` می‌گردد. اگر این دو به اندازه یک ثانیه با هم تفاوت داشته باشند، هیچ ردیفی پیدا نمی‌شود و `fetchTask()` با مقدار `null` شکست می‌خورد.\n\n‏بازتولید با وادار کردن زمان‌بند (scheduler) به انتظار برای قفل جدول (یک نشست دیگر `LOCK TABLES #__scheduler_tasks READ` را به مدت 3 ثانیه نگه می‌دارد در حالی که `scheduler:run --id=4` روی تسکِ بدون قفل و سررسید شده شروع می‌شود):\n\n‏| | نتیجه |\n‏|---|---|\n‏| قبل (5.4-dev) | تسک اجرا می‌شود، خروج 0 |\n‏| با PR | `Attempt to assign property \"execution_rules\" on null` (خط 587 در `TaskModel.php`)، خروج 1، تسک اجرا نمی‌شود و **همچنان قفل می‌ماند** |\n‏| با اصلاح زیر | تسک اجرا می‌شود، خروج 0 |\n\n‏بدون این انتظار مصنوعی، این اتفاق هر زمان که ثانیه بین زمانی که `getTask()` مهر زمانی (timestamp) خود را می‌گیرد و زمانی که `buildLockQuery()` اجرا می‌شود تغییر کند، رخ می‌دهد؛ سپس تسک تا زمانی که زمان پایان (Timeout) تسک بگذرد، قفل می‌ماند.\n\n‏اصلاح: `$now` را همان‌طور که ارسال شده نگه دارید و فقط آستانه (threshold) را استخراج کنید (در `getNextTaskId()` هم به همین صورت):\n\n‏```php\n‏$timeout   = ComponentHelper::getParams('com_scheduler')->get('timeout', 300);\n‏$threshold = Factory::getDate($now, 'UTC')->modify(\"-$timeout seconds\")->toSql();\n‏```\n\n‏تست شد: سناریوی انتظار در بالا و تمام شش ردیف جدول اول با موفقیت انجام شدند.\n\n‏نکته جزئی: دو خط خالی پشت سر هم بعد از بلوک جدید `extendWhere()` در `getNextTaskId()` وجود دارد."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Stefan Wendhausen\n\n<a href=\"https://github.com/tecpromotion\">tecpromotion</a>\n\n‏۲۰ مهر ۱۴۰۵ — ساعت ۱۲:۱۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/b6a8341b0944fdbd7826d840b8727199cdbdc84d\">b6a8341</a>\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48592\">issues.joomla.org/tracker/joomla-cms/48592</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Krishna Gandhi\n\n<a href=\"https://github.com/krishnagandhicode\">krishnagandhicode</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۹:۲۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏آیا این درخواست ادغام (Pull Request) باید به شاخه (Branch) 6.2 منتقل شود؟ (فقط قبل از تست کردن این مورد، تأیید می‌کنم)"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Richard Fath\n\n<a href=\"https://github.com/richard67\">richard67</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۹:۵۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏> آیا این درخواست ادغام (Pull Request) باید به شاخه (Branch) 6.2 منتقل شود؟ (فقط برای اطمینان قبل از اینکه آن را تست کنم)\n\n<a href=\"https://github.com/krishnagandhicode\">@krishnagandhicode</a> بله، دیر یا زود ری‌بیس (Rebase) خواهد شد، اما می‌توان آن را پیش از آن تست کرد. اگر پس از تست‌ها، ری‌بیس تمیز و بدون تداخل (Conflict) باشد، ممکن است تست‌ها همچنان معتبر باشند."
+        }
+    ],
+    "last_item_at": "2026-10-23T16:29:39Z",
+    "warnings": []
+}
