@@ -1,0 +1,58 @@
+{
+    "pr": 48679,
+    "is_update": false,
+    "topic_name": "[#48679] - [6.2] SQL نصب TinyMCE",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48679] - [6.2] SQL نصب TinyMCE"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۳۰ مهر ۱۴۰۵ — ساعت ۱۳:۲۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] SQL نصب TinyMCE\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48679\">https://issues.joomla.org/tracker/joomla-cms/48679</a>\n\n‏درخواست ادغام (Pull Request) # را برطرف می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا بدون کمک هوش مصنوعی ایجاد شده است یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏من هنگام نوشتن #48678 متوجه شدم که مقادیر پیش‌فرض برای پیش‌تنظیم‌های TinyMCE که می‌توانید با کلیک روی دکمه در پیکربندی پلاگین TinyMCE به دست آورید، با sql نصب هماهنگ نیستند.\n\n‏هماهنگ‌سازی پیش‌تنظیم‌های پیش‌فرض نوار ابزار TinyMCE در فایل install.sql با پیش‌تنظیم‌های تعریف‌شده در ToolbarPresets.php.\n\n‏این درخواست ادغام (Pull Request) آن‌ها را در یک نصب جدید دوباره هماهنگ می‌کند - این کار پیکربندی را در زمان به‌روزرسانی تغییر نمی‌دهد، زیرا مقادیر موجود در دیتابیس قرار است تنظیمات شخصی شما باشند.\n\n1. به‌روزرسانی پیکربندی‌های ذخیره‌شده منو و نوار ابزار برای تطابق با پیش‌تنظیم‌های PHP.\n2. گنجاندن منوی راهنما در پیکربندی‌های متوسط (medium) و پیشرفته (advanced).\n3. افزودن دکمه‌های مفقود نوار ابزار، از جمله آکاردئون (accordion)، در جاهایی که توسط پیش‌تنظیم‌های PHP تعریف شده‌اند.\n4. حفظ مجموعه‌پیکربندی‌های موجود و دسترسی‌ها (Permissions).\n\n‏### دستورالعمل‌های تست\n‏در یک نصب تازه به پیکربندی پلاگین TinyMCE بروید و به نوار منو و نوار ابزار پلاگین TinyMCE نگاه کنید\n‏روی \"use Advanced preset\" کلیک کنید و هیچ چیزی نباید تغییر کند\n\nSet 1 را انتخاب کرده و برای \"use medium preset\" تکرار کنید\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n‏#### قبل از کلیک روی \"use advanced preset\"\n\n‏#### بعد از کلیک روی \"use advanced preset\"\n\n‏#### در Set 1 قبل از کلیک روی use medium preset\n\n‏#### در Set 1 بعد از کلیک روی use medium preset\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام (Pull Request)\n‏بعد از یک نصب تازه با sql اصلاح‌شده، هیچ تغییری بین قبل و بعد از کلیک روی دکمه وجود ندارد\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای راهنمای جوملا (guide.joomla.org) نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای مستندات جوملا (manual.joomla.org) نیست"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/6f0ea9c5-d9ba-4271-b52f-eb28a59994f8",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/f3e3ba9f-4d82-4eee-bc53-b7e9a6d19cae",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/3adcf101-80a5-4e42-8dda-70c8c02d5516",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/2dba9674-d07e-4aaa-8e2a-693ac8f62481",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: [6.2] TinyMCE help [a11y] (<a href=\"https://github.com/joomla/joomla-cms/pull/48678\">https://github.com/joomla/joomla-cms/pull/48678</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱ آبان ۱۴۰۵ — ساعت ۱۶:۱۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏یادداشت برای مشارکت‌کنندگان: به دلیل باگ مرتبط #48678، دکمه راهنما حتی اگر نمایش داده شود کار نخواهد کرد."
+        }
+    ],
+    "last_item_at": "2026-10-23T12:44:24Z",
+    "warnings": []
+}
