@@ -1,0 +1,22 @@
+{
+    "pr": 48682,
+    "is_update": true,
+    "topic_name": "[#48682] - [6.2] اجرای وظایف زمان‌بندی‌شده (Scheduled Task) با مدت‌زمان ۱۰۰ ثانیه یا بیشتر را در تاریخچه اجرا نگه دارید",
+    "thread_id": 978,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۲ آبان ۱۴۰۵ — ساعت ۱۲:۲۶"
+        },
+        {
+            "kind": "message",
+            "text": "RTC\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48682\">issues.joomla.org/tracker/joomla-cms/48682</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-10-24T08:56:59Z",
+    "warnings": []
+}
