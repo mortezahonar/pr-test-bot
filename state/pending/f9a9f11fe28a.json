@@ -1,0 +1,54 @@
+{
+    "pr": 48510,
+    "is_update": false,
+    "topic_name": "[#48510] - [6.3] راهنمای درون‌خطی (Inline Help): به خاطر سپردن اختیاری وضعیت سوییچ (Toggle State) به ازای هر صفحه",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48510] - [6.3] راهنمای درون‌خطی (Inline Help): به خاطر سپردن اختیاری وضعیت سوییچ (Toggle State) به ازای هر صفحه"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Mai Vu\n\n<a href=\"https://github.com/mvanvu\">mvanvu</a>\n\n‏۴ مهر ۱۴۰۵ — ساعت ۱۸:۰۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.3] راهنمای درون‌خطی (Inline help): به‌صورت اختیاری وضعیت تغییر وضعیت (toggle) را برای هر صفحه به‌خاطر بسپار.\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48510\">https://issues.joomla.org/tracker/joomla-cms/48510</a>\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏تغییر وضعیت دکمه‌ی راهنمای درون‌خطی (inline help) با هر بار بارگذاری صفحه فراموش می‌شود، بنابراین هر کسی که توضیحات را باز نگه می‌دارد، مجبور است پس از هر بار ذخیره یا بارگذاری مجدد، دوباره دکمه را فشار دهد.\n\n‏این تغییر یک ویژگی `storage` اختیاری به پیکربندی راهنمای درون‌خطی فرم اضافه می‌کند:\n\n‏```xml\n‏&lt;config&gt;\n‏    &lt;inlinehelp button=&quot;show&quot; storage=&quot;local&quot;/&gt;\n‏&lt;/config&gt;\n‏```\n\n‏هنگامی که این ویژگی تنظیم شود، وضعیت دکمه در `localStorage` ذخیره می‌شود که کلید آن بر اساس کلاس دکمه و URL صفحه (مسیر + رشته کوئری) است، بنابراین هر فرم وضعیت خاص خود را به خاطر می‌سپارد. فقط وضعیت «نمایان» ذخیره می‌شود؛ پنهان کردن راهنما، کلید مربوطه را حذف می‌کند.\n\n‏- متد `FormView::addToolbar()` ویژگی `storage` را از XML فرم می‌خواند و آن را به دکمه پاس می‌دهد.\n‏- `InlinehelpButton` یک گزینه `storage` دریافت می‌کند که به صورت `data-storage` رندر می‌شود.\n‏- فایل `inlinehelp.es6.js` فقط زمانی وضعیت را بازیابی و ذخیره می‌کند که دکمه دارای `data-storage=\"local\"` باشد. دسترسی به حافظه در یک بلوک try/catch قرار گرفته است، بنابراین در صورت مسدود بودن حافظه (حالت خصوصی، غیرفعال بودن داده‌های سایت)، رفتار به حالت پیش‌فرض بازمی‌گردد.\n\n‏فرم‌های بدون این ویژگی تغییری نمی‌کنند.\n\n‏### دستورالعمل تست (Testing Instructions)\n\n‏۱. این PR را اعمال کرده و دستور `npm run build:js` را اجرا کنید.\n‏۲. در فایل `administrator/components/com_content/forms/article.xml` مقدار `&lt;inlinehelp button=&quot;show&quot;/&gt;` را به `&lt;inlinehelp button=&quot;show&quot; storage=&quot;local&quot;/&gt;` تغییر دهید.\n‏۳. به مسیر محتوا (Content) → مقالات (Articles) → جدید (New) بروید. دکمه **Toggle Inline Help** را فشار دهید، سپس صفحه را بارگذاری مجدد کنید.\n‏۴. دوباره **Toggle Inline Help** را فشار دهید تا راهنما پنهان شود، سپس صفحه را بارگذاری مجدد کنید.\n‏۵. فرمی را باز کنید که از این ویژگی استفاده نمی‌کند (مثلاً سیستم (System) → تورهای راهنما (Guided Tours) → جدید (New))، راهنما را فعال کرده و صفحه را بارگذاری مجدد کنید.\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n\n‏راهنمای درون‌خطی پس از هر بار بارگذاری مجدد، در تمام فرم‌ها دوباره پنهان می‌شود.\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n\n‏- گام ۳: راهنما پس از بارگذاری مجدد همچنان قابل مشاهده است.\n‏- گام ۴: راهنما پس از بارگذاری مجدد پنهان است و کلید `joomla.inlinehelp.*` از `localStorage` حذف شده است.\n‏- گام ۵: راهنما پس از بارگذاری مجدد پنهان است و چیزی در `localStorage` نوشته نمی‌شود — رفتار بدون تغییر باقی می‌ماند.\n\n‏### لینک به مستندات (Link to documentations)\n\n‏لطفاً انتخاب کنید:\n\n‏- [ ] لینک مستندات برای guide.joomla.org: &lt;link&gt;\n‏- [ ] نیازی به تغییر مستندات برای guide.joomla.org نیست\n‏- [ ] لینک درخواست ادغام (Pull Request) برای manual.joomla.org: &lt;link&gt;\n‏- [ ] نیازی به تغییر مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «NPM Resource Changed» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۴ مهر ۱۴۰۵ — ساعت ۱۸:۱۷"
+        },
+        {
+            "kind": "message",
+            "text": "‏ایده‌ی خوبی است."
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۷ آبان ۱۴۰۵ — ساعت ۲۰:۴۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/bbfa22e8a0250a1f42cb01334fd6d74cf229a822\">bbfa22e</a>\n\n‏سلام <a href=\"https://github.com/mvanvu\">@mvanvu</a>، از مشارکت شما و این اصلاحیه PR سپاسگزارم (همان‌طور که برایان اشاره کرد، ایده واقعاً خوبی است و یک مورد آزاردهنده را حذف می‌کند).\n\n‏من این مورد را با موفقیت تست کردم - فقط ۱ سؤال کوچک دارم، من چندین بار سناریوی قبل (BEFORE) و بعد (AFTER) را امتحان کردم و متوجه تفاوت عملکرد بین قبل و بعد شدم که شاید گسترده نباشد و بنابراین مشکلی محسوب نشود، اما در تست من به اندازه‌ای قابل‌توجه بود که افت سرعت را ببینم (من ۲ ویدیو تهیه کردم که در زیر پیوست شده‌اند تا به نشان دادن این تفاوت کمک کنند).\n\n‏بیلد شبانه (Nightly Build) جوملا 6.3 از امروز، فقط Joomla Patch Tester و پلاگین RegularLabs Cache نصب شده‌اند، SEF/URL rewriting جوملا روشن است.\n\n‏من قبل از هر اجرا، کش را به‌عنوان مبنا پاک کردم.\n\n‏بدون این PR، راهنمای درون‌خطی (Toggle Inline Help) به‌صورت بصری در کنار دکمه انصراف (Cancel) ایجاد می‌شود و تقریباً بلافاصله به سمت راست حرکت می‌کند.\n‏با این PR، همان اتفاق می‌افتد اما تأخیر قابل‌توجهی وجود دارد که وقتی اصلاحیه PR اعمال نشده است، وجود ندارد.\n\n‏من هر اجرا را ۵ بار انجام دادم تا مطمئن شوم که یک اختلال موقت وای‌فای نبوده است.\n\n‏آیا این مورد انتظار می‌رود؟ آیا این به دلیل تغییر کد، ماهیت به‌روزرسانی LocalStorage است یا واقعاً یک وضعیت موقت وای‌فای، شبکه محلی، وضعیت میزبانی یا چیز دیگری است که اهمیت ندارد.\n\n‏این ویدیو بدون اعمال PR است:\n<a href=\"https://github.com/user-attachments/assets/3ea0f63a-3529-40dd-988d-28c66499d2b3\">https://github.com/user-attachments/assets/3ea0f63a-3529-40dd-988d-28c66499d2b3</a>\n\n‏این ویدیو با اعمال PR است:\n<a href=\"https://github.com/user-attachments/assets/dbe047c2-1f56-49f4-a5b3-0f6c5d693b2c\">https://github.com/user-attachments/assets/dbe047c2-1f56-49f4-a5b3-0f6c5d693b2c</a>\n\n‏(متوجه هستم که ویدیو کوتاه است اما امیدوارم بتواند تأخیر/تفاوت سرعت را نشان دهد)\n\n‏―――――――――――――――――\n‏این نظر با استفاده از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48510\">issues.joomla.org/tracker/joomla-cms/48510</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۷ آبان ۱۴۰۵ — ساعت ۲۳:۱۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏باید نشانگری وجود داشته باشد که مشخص کند نمایش راهنما (show help) روشن یا خاموش است."
+        }
+    ],
+    "last_item_at": "2026-10-29T19:46:58Z",
+    "warnings": []
+}
