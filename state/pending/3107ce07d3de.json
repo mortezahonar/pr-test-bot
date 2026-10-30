@@ -1,0 +1,66 @@
+{
+    "pr": 48282,
+    "is_update": false,
+    "topic_name": "[#48282] - [5.4] اصلاح جهش شیء (object mutation) و تخت‌سازی ویژگی‌های تو در تو در ContentHistory::getSha1",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48282] - [5.4] اصلاح جهش شیء (object mutation) و تخت‌سازی ویژگی‌های تو در تو در ContentHistory::getSha1"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Bhuvan Somisetty\n\n<a href=\"https://github.com/bhuvan-somisetty\">bhuvan-somisetty</a>\n\n‏۲۹ مرداد ۱۴۰۵ — ساعت ۱۷:۱۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏[5.4] اصلاح جهش شیء (object mutation) و تخت‌سازی ویژگی‌های تو در تو در ContentHistory::getSha1\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48282\">https://issues.joomla.org/tracker/joomla-cms/48282</a>\n\n‏درخواست ادغام (Pull Request) شماره #48281 را حل می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏این PR دو باگ را در `Joomla\\CMS\\Table\\ContentHistory::getSha1()` برطرف می‌کند:\n1. **جلوگیری از تغییر درجا (in-place mutation) شیء فراخواننده:** هنگامی که `$jsonData` به عنوان یک شیء (مثلاً از `Versioning::store()`) ارسال می‌شود، اکنون `$object` قبل از حذف ویژگی‌های نادیده گرفته شده (`modified`، `modified_by`، `checked_out`، `version`، `hits`، `path`) از آن جدا (decoupled) می‌شود. این کار از حذف ویژگی‌ها از نمونه Table/داده‌ی زنده در حافظه توسط فراخواننده جلوگیری می‌کند.\n2. **اصلاح نرمال‌سازی ویژگی‌های تو در تو:** حلقه داخلی در `getSha1()` اصلاح شد تا مقادیر نرمال‌شده را به جای `$object->$subName` به `$value->$subName` (در شیء تو در تو) اختصاص دهد. این کار از تخت کردن (flattening) ویژگی‌های ستون JSON تو در تو روی شیء ریشه جلوگیری می‌کند، از بازنویسی ویژگی‌های سطح بالا (مانند `title` یا `alias`) هنگام تداخل کلیدهای تو در تو اجتناب می‌ور کند و اطمینان حاصل می‌کند که مقادیر ستون JSON تو در تو نرمال‌سازی می‌شوند.\n3. **ایمنی برای داده‌های غیر شیء:** یک محافظ اضافه شد که در صورت عدم امکان دیکد کردن داده‌ها به یک شیء، مقدار `''` را برمی‌گرداند.\n4. **تست‌های واحد (Unit Tests):** فایل `tests/Unit/Libraries/Cms/Table/ContentHistoryTest.php` اضافه شد که تغییرناپذیری ورودی، نرمال‌سازی ویژگی‌های تو در تو، ایمنی در برابر تداخل کلیدها و محاسبه هش قطعی را پوشش می‌دهد.\n\n‏### دستورالعمل تست\n\n‏تست‌های واحد را اجرا کنید:\n‏```bash\nlibraries/vendor/bin/phpunit tests/Unit/Libraries/Cms/Table/ContentHistoryTest.php\n‏```\n\n‏یا به صورت برنامه‌نویسی با یک شیء نمونه حاوی پارامترهای تو در تو تست کنید:\n‏```php\n‏$data = (object) [\n‏    'title'       => 'Article Title',\n‏    'modified_by' => 42,\n‏    'version'     => 1,\n‏    'params'      => (object) [\n‏        'title'      => 'Param Header',\n‏        'show_title' => 1,\n‏    ],\n‏];\n\n‏$historyTable = new \\Joomla\\CMS\\Table\\ContentHistory($db);\n‏$contentType  = new \\Joomla\\CMS\\Table\\ContentType($db);\n‏$hash         = $historyTable->getSha1($data, $contentType);\n‏```\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n\n1. `$data->modified_by` و `$data->version` از شیء زنده `$data` در فراخواننده حذف می‌شوند.\n2. `$data->title` با `'Param Header'` بازنویسی می‌شود.\n3. `$data->show_title` به شیء ریشه `$data` تزریق می‌شود.\n4. `$data->params->show_title` به جای رشته نرمال‌شده `'1'`، به صورت عدد صحیح `1` تبدیل‌نشده باقی می‌ماند.\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام (Pull Request)\n\n1. `$data` به طور کامل در جای خود بدون تغییر باقی می‌ماند (`$data->modified_by` و `$data->version` دست‌نخورده باقی می‌مانند).\n2. `$data->title` به عنوان `'Article Title'` حفظ می‌شود.\n3. شیء ریشه با ویژگی‌های فرعی آلوده نمی‌شود.\n4. ویژگی‌های تو در تو در هش محاسبه‌شده نرمال‌سازی می‌شوند.\n5. تمام تست‌های واحد با موفقیت اجرا می‌شوند.\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [x] هیچ تغییری در مستندات برای راهنمای جوملا (guide.joomla.org) مورد نیاز نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [x] هیچ تغییری در مستندات برای مستندات جوملا (manual.joomla.org) مورد نیاز نیست\n\n‏امضاشده توسط: bhuvan-somisetty <somisettybhuvan5<a href=\"https://github.com/gmail\">@gmail</a>.com>"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-5.4-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Unit/System Tests» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲ شهریور ۱۴۰۵ — ساعت ۱۸:۱۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من گمان می‌کنم که این یک PR تولیدشده توسط هوش مصنوعی است.\n\n‏لطفاً توضیح دهید که چگونه می‌توانید یک عنوان (Title) را در پارامتر (Param) تنظیم کنید."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲ شهریور ۱۴۰۵ — ساعت ۱۸:۱۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏رونوشت <a href=\"https://github.com/bembelimen\">@bembelimen</a>"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Bhuvan Somisetty\n\n<a href=\"https://github.com/bhuvan-somisetty\">bhuvan-somisetty</a>\n\n‏۲۱ شهریور ۱۴۰۵ — ساعت ۰۱:۴۵"
+        },
+        {
+            "kind": "message",
+            "text": "<a href=\"https://github.com/brianteeman\">@brianteeman</a> آن فقط یک ویژگی ساختگی در داده‌های تست واحد (unit test) برای آزمایش تداخل نام با فیلدهای ریشه بود، نه یک پارامتر واقعی مقاله جوملا.\n\n‏مشکل اصلی در خط ۱۳۸ فایل `ContentHistory.php` است که در آن `$object->$subName = ...` به جای `$value->$subName = ...` در شیء ریشه می‌نویسد. بنابراین برای هر مقاله‌ای که دارای `params` یا `images` باشد، تمام ویژگی‌های تو در تو (مانند `show_title` یا `image_intro`) را مستقیماً روی `$object` ریشه می‌ریخت."
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: [5.4] Fix CheckboxesField ignoring option with value '0' (<a href=\"https://github.com/joomla/joomla-cms/pull/48476\">https://github.com/joomla/joomla-cms/pull/48476</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «bug» توسط <a href=\"https://github.com/muhme\">muhme</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-10-07T16:17:26Z",
+    "warnings": []
+}
