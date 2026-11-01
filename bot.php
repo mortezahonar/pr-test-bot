@@ -5,6 +5,9 @@ declare(strict_types=1);
 require __DIR__ . '/src/Http.php';
 require __DIR__ . '/src/Log.php';
 require __DIR__ . '/src/Persian.php';
+require __DIR__ . '/src/TelegramApiException.php';
+require __DIR__ . '/src/TelegramRateLimit.php';
+require __DIR__ . '/src/TelegramSender.php';
 require __DIR__ . '/src/Telegram.php';
 require __DIR__ . '/src/GitHub.php';
 require __DIR__ . '/src/TextGenerator.php';
@@ -13,6 +16,7 @@ require __DIR__ . '/src/OpenAiCompatible.php';
 require __DIR__ . '/src/FallbackGenerator.php';
 require __DIR__ . '/src/Translator.php';
 require __DIR__ . '/src/Store.php';
+require __DIR__ . '/src/PrJobExecutor.php';
 require __DIR__ . '/src/PrService.php';
 
 $config = require __DIR__ . '/config.php';
@@ -28,7 +32,7 @@ foreach (['bot_token', 'chat_id', 'gemini_api_key'] as $required) {
     }
 }
 
-$telegram = new Telegram((string) $config['bot_token']);
+$telegram = new Telegram((string) $config['bot_token'], new TelegramRateLimit());
 $github = new GitHub((string) $config['github_token']);
 $gemini = new Gemini((string) $config['gemini_api_key'], (string) $config['gemini_model']);
 
@@ -61,6 +65,7 @@ $translator = new Translator($generator, $systemPrompt, $glossary, (bool) $confi
 $service = new PrService($github, $translator, $store, $labels, $stateDir);
 
 $chatId = (string) $config['chat_id'];
+$jobExecutor = new PrJobExecutor($telegram, $store, $chatId);
 $allowedUsers = array_map('strval', (array) $config['allowed_user_ids']);
 
 $log = static function (string $message): void {
@@ -92,7 +97,7 @@ while (true) {
     try {
         $updates = $telegram->getUpdates($offset, $pollTimeout);
     } catch (Throwable $e) {
-        $log('getUpdates error: ' . $e->getMessage());
+        $log('getUpdates error: ' . safeErrorSummary($e));
 
         if ($once) {
             exit(1);
@@ -109,7 +114,7 @@ while (true) {
         try {
             handleUpdate($update);
         } catch (Throwable $e) {
-            $log('update error: ' . $e->getMessage());
+            $log('update error: ' . safeErrorSummary($e));
         }
     }
 
@@ -117,6 +122,13 @@ while (true) {
         $log('Done. updates=' . count($updates) . ' offset=' . $offset);
         break;
     }
+}
+
+function safeErrorSummary(Throwable $error): string
+{
+    return $error instanceof TelegramApiException
+        ? $error->getMessage()
+        : get_class($error);
 }
 
 /**
@@ -147,7 +159,8 @@ function processUpdateFile(string $file, int $offset): void
     try {
         handleUpdate($update);
     } catch (Throwable $e) {
-        $log('update error: ' . $e->getMessage());
+        $log('update error: ' . safeErrorSummary($e));
+        exit(1);
     }
 }
 
@@ -166,11 +179,7 @@ function handleUpdate(array $update): void
         $kind = 'message-no-text';
     }
 
-    $log(
-        'update #' . $updateId . ' kind=' . $kind
-        . ' user=' . (string) ($update['message']['from']['username'] ?? $update['callback_query']['from']['username'] ?? '?')
-        . ' text=' . json_encode($update['message']['text'] ?? '-', JSON_UNESCAPED_UNICODE)
-    );
+    $log('update #' . $updateId . ' kind=' . $kind);
 
     // This bot serves exactly one group. Anything arriving from elsewhere is
     // dropped here, before it can reach Telegram or GitHub.
@@ -195,7 +204,6 @@ function handleUpdate(array $update): void
         $data = (string) ($callback['data'] ?? '');
         $callbackId = (string) $callback['id'];
         $messageId = (int) ($callback['message']['message_id'] ?? 0);
-        $log('callback data: ' . json_encode($data, JSON_UNESCAPED_UNICODE));
 
         if ($data === 'ask') {
             answerCallback($callbackId, 'شمارهٔ PR را بفرست');
@@ -295,7 +303,7 @@ function handleUpdate(array $update): void
 
         return;
     } elseif ($awaiting !== null) {
-        $log('awaited a number, got: ' . json_encode($text, JSON_UNESCAPED_UNICODE));
+        $log('awaited number was invalid');
         $telegram->sendMessage($chatId, Persian::rtl('عدد را نگرفتم. شمارهٔ PR را به رقم بفرست.'));
 
         return;
@@ -419,13 +427,13 @@ function answerCallback(string $callbackId, string $text): void
     } catch (Throwable $e) {
         // Telegram expires callback queries within seconds, and this bot polls
         // on a schedule. A failed acknowledgement must not abort the action.
-        $log('callback ack failed: ' . $e->getMessage());
+        $log('callback ack failed: ' . safeErrorSummary($e));
     }
 }
 
 function handleJobAction(string $action, string $jobId): void
 {
-    global $telegram, $store, $chatId;
+    global $telegram, $store, $chatId, $jobExecutor;
 
     $job = $store->loadPending($jobId);
 
@@ -442,11 +450,10 @@ function handleJobAction(string $action, string $jobId): void
         return;
     }
 
-    $store->deletePending($jobId);
-
-    $result = executeJob($job);
+    $result = $jobExecutor->execute($jobId, $job);
     // Keep the completion notice in the main conversation, not in the PR topic.
     $telegram->sendMessage($chatId, Persian::rtl($result['text']), null);
+    $store->deletePending($jobId);
 }
 
 function buildPreview(array $job): string
@@ -478,55 +485,4 @@ function buildPreview(array $job): string
     }
 
     return Persian::rtl(implode("\n", $lines));
-}
-
-function executeJob(array $job): array
-{
-    global $telegram, $store, $chatId, $log;
-
-    $threadId = isset($job['thread_id']) && $job['thread_id'] !== null ? (int) $job['thread_id'] : null;
-    $sent = 0;
-    $photos = 0;
-
-    foreach ($job['actions'] as $action) {
-        switch ($action['kind']) {
-            case 'topic':
-                $result = $telegram->createForumTopic($chatId, (string) $action['name']);
-                $threadId = (int) $result['message_thread_id'];
-                usleep(300000);
-                break;
-
-            case 'message':
-                $telegram->sendMessage($chatId, (string) $action['text'], $threadId);
-                $sent++;
-                usleep(400000);
-                break;
-
-            case 'photo':
-                $telegram->sendPhoto($chatId, (string) $action['url'], $action['caption'] !== null ? (string) $action['caption'] : null, $threadId);
-                $photos++;
-                usleep(400000);
-                break;
-        }
-    }
-
-    if ($job['is_update']) {
-        if ($job['last_item_at'] !== null) {
-            $store->updateLastCommentAt((int) $job['pr'], (string) $job['last_item_at']);
-        }
-    } else {
-        $store->saveTopic((int) $job['pr'], [
-            'thread_id'      => $threadId,
-            'topic'          => (string) $job['topic_name'],
-            'tracker'        => 'https://issues.joomla.org/tracker/joomla-cms/' . $job['pr'],
-            'github'         => 'https://github.com/joomla/joomla-cms/pull/' . $job['pr'],
-            'last_comment_at' => (string) ($job['last_item_at'] ?? ''),
-            'created_at'     => gmdate('Y-m-d\TH:i:s\Z'),
-        ]);
-    }
-
-    return [
-        'thread_id' => $threadId,
-        'text'      => 'انجام شد. پیام: ' . $sent . ' — عکس: ' . $photos,
-    ];
 }

@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-final class Telegram
+final class Telegram implements TelegramSender
 {
-    public function __construct(private string $token)
+    private TelegramRateLimit $rateLimit;
+
+    public function __construct(private string $token, ?TelegramRateLimit $rateLimit = null)
     {
+        $this->rateLimit = $rateLimit ?? new TelegramRateLimit();
     }
 
     private function url(string $method): string
@@ -24,10 +27,25 @@ final class Telegram
         $res = Http::form($this->url($method), $params, $timeout);
 
         if (!is_array($res['json']) || ($res['json']['ok'] ?? false) !== true) {
-            throw new RuntimeException('Telegram API ' . $method . ' failed: ' . $res['raw']);
+            throw $this->apiFailure($method, $res);
         }
 
         return $res['json']['result'];
+    }
+
+    /** @param array<string, mixed> $response */
+    private function apiFailure(string $method, array $response): TelegramApiException
+    {
+        $json = is_array($response['json'] ?? null) ? $response['json'] : [];
+        $parameters = is_array($json['parameters'] ?? null) ? $json['parameters'] : [];
+        $description = (string) ($json['description'] ?? '');
+
+        return new TelegramApiException(
+            $method,
+            is_int($json['error_code'] ?? null) ? $json['error_code'] : null,
+            is_int($parameters['retry_after'] ?? null) ? $parameters['retry_after'] : null,
+            preg_match('/parse|entity/i', $description) === 1
+        );
     }
 
     /**
@@ -40,8 +58,8 @@ final class Telegram
     {
         try {
             return $this->call($method, $params, $timeout);
-        } catch (RuntimeException $e) {
-            if (!str_contains($e->getMessage(), 'parse')) {
+        } catch (TelegramApiException $e) {
+            if (!$e->parseError) {
                 throw $e;
             }
 
@@ -103,7 +121,7 @@ final class Telegram
         ], $timeout + 20);
 
         if (!is_array($res['json']) || ($res['json']['ok'] ?? false) !== true) {
-            throw new RuntimeException('getUpdates failed: ' . $res['raw']);
+            throw $this->apiFailure('getUpdates', $res);
         }
 
         return $res['json']['result'];
@@ -124,7 +142,7 @@ final class Telegram
             $params['reply_markup'] = json_encode($keyboard);
         }
 
-        return $this->callText('sendRichMessage', $params);
+        return $this->rateLimit->call(fn () => $this->callText('sendRichMessage', $params));
     }
 
     public function sendPhoto(string $chatId, string $photoUrl, ?string $caption = null, ?int $threadId = null): array
@@ -143,7 +161,7 @@ final class Telegram
             $params['message_thread_id'] = $threadId;
         }
 
-        return $this->callText('sendPhoto', $params, 120);
+        return $this->rateLimit->call(fn () => $this->callText('sendPhoto', $params, 120));
     }
 
     public function editMessageText(string $chatId, int $messageId, string $text, ?array $keyboard = null): array|bool
@@ -181,10 +199,10 @@ final class Telegram
 
     public function createForumTopic(string $chatId, string $name): array
     {
-        return $this->call('createForumTopic', [
+        return $this->rateLimit->call(fn () => $this->call('createForumTopic', [
             'chat_id' => $chatId,
             'name'    => $name,
-        ]);
+        ]));
     }
 
     public function editForumTopic(string $chatId, int $threadId, string $name): bool
