@@ -445,7 +445,8 @@ function handleJobAction(string $action, string $jobId): void
     $store->deletePending($jobId);
 
     $result = executeJob($job);
-    $telegram->sendMessage($chatId, Persian::rtl($result['text']), $result['thread_id']);
+    // Keep the completion notice in the main conversation, not in the PR topic.
+    $telegram->sendMessage($chatId, Persian::rtl($result['text']), null);
 }
 
 function buildPreview(array $job): string
