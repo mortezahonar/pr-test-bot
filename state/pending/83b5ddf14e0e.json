@@ -1,0 +1,146 @@
+{
+    "pr": 48732,
+    "is_update": false,
+    "topic_name": "[#48732] - [6.2] فیلد رنگ (Color Field) RTL",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48732] - [6.2] فیلد رنگ (Color Field) RTL"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۱۱:۵۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] فیلد رنگ RTL\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48732\">https://issues.joomla.org/tracker/joomla-cms/48732</a>\n\n‏درخواست ادغام (Pull Request) شماره # را حل می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد (Generative AI policy)</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏کد جاوااسکریپتی که برای ساخت فیلد سفارشی رنگ (color custom field) استفاده می‌شد ناقص بود و هنگام استفاده از RTL، فیلد را به‌درستی تولید نمی‌کرد.\n\n‏### دستورالعمل تست (Testing Instructions)\n‏این یک تغییر در جاوااسکریپت است، بنابراین یا از یک بسته از پیش ساخته‌شده استفاده کنید یا PR را اعمال کرده و دستور `npm i` را اجرا کنید.\n\n‏یک فیلد سفارشی از نوع رنگ (color) ایجاد کنید.\n\n‏نمایش فیلد را هم در یک زبان LTR و هم در یک زبان RTL تست کنید.\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n‏#### زبان LTR\n\n‏#### زبان RTL\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n‏#### زبان LTR\n\n‏#### زبان RTL\n\n‏### یادداشت\n‏فایل اصلی به‌اشتباه از تب (tabs) به‌جای فاصله (spaces) استفاده می‌کرد، بنابراین گیت‌هاب (GH) تمام خطوط را به‌عنوان تغییریافته نشان می‌دهد.\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای راهنمای جوملا (guide.joomla.org) نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای مستندات جوملا (manual.joomla.org) نیست"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/c5aa4a4c-b08b-43df-bd37-de1f4631cc9f",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/047d460a-ddfd-47f3-97b0-579358bf827d",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/097a11bb-e8d5-41fd-8026-904ef23c4c18",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/de762914-146b-4062-aa00-ffaf43093d9a",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «NPM Resource Changed» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۱۷:۵۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/f136067389b740bddd33f6dfc396894caaa4dca7\">f136067</a>\n\n‏من توانستم این مورد را همین الان با موفقیت تست کنم. ممنون <a href=\"https://github.com/brianteeman\">@brianteeman</a>!\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48732\">issues.joomla.org/tracker/joomla-cms/48732</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Stefan Wendhausen\n\n<a href=\"https://github.com/tecpromotion\">tecpromotion</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۱۹:۱۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/f136067389b740bddd33f6dfc396894caaa4dca7\">f136067</a>\n\n‏**نتیجه:** همان‌طور که در نظر گرفته شده کار می‌کند.\n\n‏در حالت RTL، نمونه رنگ (swatch) اکنون در کنار مقدار در ابتدای فیلد قرار می‌گیرد و پنل به‌صورت راست‌چین باز می‌شود که آینه‌ای از حالت LTR است. حالت LTR بدون تغییر باقی مانده است.\n\n‏### اعتبارسنجی\n‏نصب تازه 6.2-dev (DDEV)، فیلد رنگ پیشرفته (فیلد سفارشی از نوع Colour در یک مقاله + \"تنظیمات رنگ\" Atum)، RTL از طریق &lt;rtl&gt;1&lt;/rtl&gt; در متادیتای en-GB ادمین. اندازه‌گیری پس از باز کردن انتخاب‌گر:\n\n‏| | قبل از RTL | بعد از RTL | LTR قبل = بعد |\n‏|---|---|---|---|\n‏| کلاس موقعیت | `left` | `right` | `default` |\n‏| نمونه رنگ | لبه چپ، مقدار در لبه راست | لبه راست، کنار مقدار | چپ، کنار مقدار |\n‏| پنل | چپ‌چین | راست‌چین | چپ‌چین |\n\n‏### پیشنهاد (غیرمسدودکننده)\n‏متد `ColorField::getLayoutData()` (خط ۲۵۳) در حال حاضر `default` را برای RTL به `left` تبدیل می‌کند (\"حالت پیش‌فرض RTL چپ است\") و جاوااسکریپت (JS) اکنون آن را به `right` برمی‌گرداند. کامنت آنجا اکنون گمراه‌کننده است؛ شاید بهتر باشد PHP مقدار `default` را ارسال کند و نگاشت RTL را در یک مکان نگه داریم.\n\n‏―――――――――――――――――\n‏این نظر با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48732\">issues.joomla.org/tracker/joomla-cms/48732</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «NPM Resource Changed» توسط <a href=\"https://github.com/alikon\">alikon</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/alikon\">alikon</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۱۹:۱۸"
+        },
+        {
+            "kind": "message",
+            "text": "RTC\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48732\">issues.joomla.org/tracker/joomla-cms/48732</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «NPM Resource Changed» توسط <a href=\"https://github.com/alikon\">alikon</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/alikon\">alikon</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۱۹:۲۰"
+        },
+        {
+            "kind": "message",
+            "text": "<a href=\"https://github.com/tecpromotion\">@tecpromotion</a> ممکن است تغییر مقدار rtl در xml مشکلی نداشته باشد، اما مشکل اینجاست که مرورگرها هوشمند هستند و در واقع تشخیص می‌دهند که شما از یک زبان LTR استفاده می‌کنید، بنابراین شما در حال تست یک زبان RTL نیستید. برای مثال، شما نمی‌توانید کدی را تست کنید که یک RTL را مجبور به LTR می‌کند؛ کاری که گاهی اوقات مجبوریم برای رشته‌های ترکیبی `&#x200E;` انجام دهیم."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: ThomasFinnern\n\n<a href=\"https://github.com/ThomasFinnern\">ThomasFinnern</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۱۹:۲۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را تست نکرده‌ام.\n\n‏* وضعیت شروع را با زبان‌های انگلیسی و عربی بررسی کردم\n‏* پچ PR را با استفاده از npm ci اعمال کردم\n‏* نتیجه در زبان‌های عربی و انگلیسی مطلوب بود\n\n‏―――――――――――――――――\n‏این کامنت با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48732\">issues.joomla.org/tracker/joomla-cms/48732</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: ThomasFinnern\n\n<a href=\"https://github.com/ThomasFinnern\">ThomasFinnern</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۱۹:۲۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/f136067389b740bddd33f6dfc396894caaa4dca7\">f136067</a>\n\n‏* وضعیت شروع را با زبان انگلیسی و عربی بررسی کردم\n‏* پچ PR را با استفاده از npm ci اعمال کردم\n‏* نتیجه در زبان عربی و انگلیسی مطلوب بود\n\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48732\">issues.joomla.org/tracker/joomla-cms/48732</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏ادغام شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏بسته شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Martin Carl Kopp\n\n<a href=\"https://github.com/MacJoom\">MacJoom</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۲۰:۴۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏خواهش می‌کنم!"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۸ آبان ۱۴۰۵ — ساعت ۲۰:۵۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏خواهش می‌کنم."
+        }
+    ],
+    "last_item_at": "2026-10-30T17:26:58Z",
+    "warnings": []
+}
