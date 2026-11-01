@@ -104,9 +104,7 @@ final class Telegram implements TelegramSender
      */
     private static function richMessage(string $text): string
     {
-        $html = str_replace("\n", '<br>', $text);
-
-        return self::encode(['html' => $html . '<br>', 'is_rtl' => true]);
+        return TelegramMessageFormatter::richMessage($text);
     }
 
     /**
@@ -153,7 +151,7 @@ final class Telegram implements TelegramSender
         ];
 
         if ($caption !== null && $caption !== '') {
-            $params['caption'] = $caption;
+            $params['caption'] = TelegramMessageFormatter::prefixLrm($caption);
             $params['parse_mode'] = 'HTML';
         }
 
@@ -184,7 +182,7 @@ final class Telegram implements TelegramSender
         return $this->callText('editMessageCaption', [
             'chat_id'    => $chatId,
             'message_id' => $messageId,
-            'caption'    => $caption,
+            'caption'    => TelegramMessageFormatter::prefixLrm($caption),
             'parse_mode' => 'HTML',
         ]);
     }
@@ -219,7 +217,7 @@ final class Telegram implements TelegramSender
         $params = ['callback_query_id' => $callbackId];
 
         if ($text !== null && $text !== '') {
-            $params['text'] = $text;
+            $params['text'] = TelegramMessageFormatter::prefixLrm($text);
         }
 
         return (bool) $this->call('answerCallbackQuery', $params);

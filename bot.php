@@ -8,6 +8,7 @@ require __DIR__ . '/src/Persian.php';
 require __DIR__ . '/src/TelegramApiException.php';
 require __DIR__ . '/src/TelegramRateLimit.php';
 require __DIR__ . '/src/TelegramSender.php';
+require __DIR__ . '/src/TelegramMessageFormatter.php';
 require __DIR__ . '/src/Telegram.php';
 require __DIR__ . '/src/GitHub.php';
 require __DIR__ . '/src/TextGenerator.php';
@@ -458,18 +459,9 @@ function handleJobAction(string $action, string $jobId): void
 
 function buildPreview(array $job): string
 {
-    $count = 0;
-    $photos = 0;
-
-    foreach ($job['actions'] as $action) {
-        if ($action['kind'] === 'message' || $action['kind'] === 'topic') {
-            $count++;
-        }
-
-        if ($action['kind'] === 'photo') {
-            $photos++;
-        }
-    }
+    $counts = PrJobExecutor::previewCounts($job['actions']);
+    $count = $counts['messages'];
+    $photos = $counts['photos'];
 
     $lines = [
         'پیش‌نمایش #' . $job['pr'] . ($job['is_update'] ? ' (آپدیت)' : ' (تاپیک جدید)'),

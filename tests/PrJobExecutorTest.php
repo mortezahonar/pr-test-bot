@@ -60,6 +60,10 @@ $job = [
     ],
     'last_item_at' => '2026-01-01T00:00:00Z',
 ];
+$assert(
+    PrJobExecutor::previewCounts($job['actions']) === ['messages' => 2, 'photos' => 1],
+    'preview must count text messages and photos without treating topic creation as a message'
+);
 $store->savePending('job123', $job);
 $executor = new PrJobExecutor($fakeTelegram, $store, '-100123');
 

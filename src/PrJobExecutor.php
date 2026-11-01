@@ -5,6 +5,24 @@ declare(strict_types=1);
 /** Executes a pending PR plan while checkpointing each completed Telegram action. */
 final class PrJobExecutor
 {
+    /** @return array{messages:int, photos:int} */
+    public static function previewCounts(array $actions): array
+    {
+        $counts = ['messages' => 0, 'photos' => 0];
+
+        foreach ($actions as $action) {
+            $kind = $action['kind'] ?? '';
+
+            if ($kind === 'message') {
+                $counts['messages']++;
+            } elseif ($kind === 'photo') {
+                $counts['photos']++;
+            }
+        }
+
+        return $counts;
+    }
+
     public function __construct(
         private readonly TelegramSender $telegram,
         private readonly Store $store,
