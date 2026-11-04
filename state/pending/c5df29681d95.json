@@ -1,0 +1,45 @@
+{
+    "pr": 48774,
+    "is_update": false,
+    "topic_name": "[#48774] - [6.3] علامت سؤال خط عربی با LTR یکسان نیست",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48774] - [6.3] علامت سؤال خط عربی با LTR یکسان نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۱۳ آبان ۱۴۰۵ — ساعت ۱۶:۵۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.3] علامت سؤال خط عربی (Arabic-script Question Mark) با LTR یکسان نیست\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48774\">https://issues.joomla.org/tracker/joomla-cms/48774</a>\n\n‏درخواست ادغام (Pull Request) مشکل شماره # را برطرف می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست AI مولد</a> را خوانده‌ام و مشارکت من یا با کمک AI ایجاد نشده است یا با این سیاست و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏اصلاح ظاهر آیکون علامت سوال Font Awesome در رابط‌های کاربری RTL برای زبان‌هایی که از خط عربی استفاده می‌کنند (اردو، عربی، فارسی).\n\n‏آیکون استاندارد علامت سوال Font Awesome (?) برای متن‌های چپ‌به‌راست طراحی شده است. در زبان‌هایی که از خط عربی استفاده می‌کنند، علامت سوال در جهت معکوس (؟) نمایش داده می‌شود.\n\n‏با این حال، همه زبان‌های RTL از علامت سوال عربی استفاده نمی‌کنند. به عنوان مثال، عبری از علامت سوال استاندارد استفاده می‌کند و آیکون آن نباید آینه‌ای شود.\n\n‏### دستورالعمل‌های تست\n‏این یک تغییر scss است، بنابراین یا از یک پکیج از پیش ساخته‌شده استفاده کنید یا `npm i` را اجرا کنید.\n\n‏پس از اعمال درخواست ادغام (PR)، هر یک از زبان‌های با خط عربی (عربی، اردو یا فارسی) و زبان عبری (RTL اما بدون خط عربی) را نصب کنید.\n\n‏هر یک از دکمه‌های راهنما را در زبان‌های انگلیسی، عبری و زبان با خط عربی که انتخاب کرده‌اید، بررسی کنید.\n\n‏من تغییر را هم در atum و هم در cassiopeia انجام دادم اما نمی‌دانم در cassiopeia کجا از آن استفاده می‌شود (اگر اصلاً استفاده شده باشد).\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n\n‏تمام دکمه‌های راهنما به صورت `?` نمایش داده می‌شوند.\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام (Pull Request)\n\n‏انگلیسی و عبری تغییری نکرده‌اند و آیکون به صورت `?` نمایش داده می‌شود.\n‏زبان با خط عربی، آیکون را به صورت آینه‌ای یعنی `؟` نمایش می‌دهد.\n\n‏#### انگلیسی - بدون تغییر\n\n‏#### عبری - بدون تغییر\n\n‏#### عربی - آینه‌ای شده\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای راهنمای جوملا (guide.joomla.org) نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای مستندات جوملا (manual.joomla.org) نیست"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/be41e9c3-f06c-403f-9c48-2c842c96df61",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/89cfcbb7-b033-4b9e-b27e-6dbf94608f75",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/dfdbc7fc-19f8-40aa-9c7b-5dd33a6a747c",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «NPM Resource Changed» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-11-04T13:26:27Z",
+    "warnings": []
+}
