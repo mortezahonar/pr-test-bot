@@ -1,0 +1,31 @@
+{
+    "pr": 48774,
+    "is_update": true,
+    "topic_name": "[#48774] - [6.3] علامت سؤال خط عربی با LTR یکسان نیست",
+    "thread_id": 1367,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۱۴ آبان ۱۴۰۵ — ساعت ۰۰:۳۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را :white_check_mark: با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/ca9d37e1adcf0db8359033db56f48c257a633ff9\">ca9d37e</a> تست کرده‌ام\n\n‏من این را با موفقیت روی Safari 26.6.2 در یک MacBook Pro M4 تست کرده‌ام. با تشکر از <a href=\"https://github.com/brianteeman\">@brianteeman</a>. \n‏ باید مشخص کنم که عربی، عبری، انگلیسی و فرانسوی را تست کرده‌ام.\n‏―――――――――――――――――\n‏این کامنت با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48774\">issues.joomla.org/tracker/joomla-cms/48774</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "Morteza Honar\n\n<a href=\"https://github.com/mortezahonar\">mortezahonar</a>\n\n‏۱۷ آبان ۱۴۰۵ — ساعت ۱۳:۴۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/ca9d37e1adcf0db8359033db56f48c257a633ff9\">ca9d37e</a> تست کردم :white_check_mark:\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48774\">issues.joomla.org/tracker/joomla-cms/48774</a> ایجاد شده است."
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/ed78cd4f-3a36-48ef-87bd-4ed13b3e88f4",
+            "caption": "‏تصویر"
+        }
+    ],
+    "last_item_at": "2026-11-08T10:19:23Z",
+    "warnings": []
+}
