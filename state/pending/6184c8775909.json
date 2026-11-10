@@ -1,0 +1,68 @@
+{
+    "pr": 48717,
+    "is_update": false,
+    "topic_name": "[#48717] - [6.2] منوی کشویی ماژول‌های ادمین [rtl]",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48717] - [6.2] منوی کشویی ماژول‌های ادمین [rtl]"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۶ آبان ۱۴۰۵ — ساعت ۱۱:۰۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] منوی کشویی ماژول‌های ادمین [rtl]\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48717\">https://issues.joomla.org/tracker/joomla-cms/48717</a>\n\n‏درخواست ادغام (Pull Request) برطرف‌کننده # .\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد (Generative AI)</a> را خوانده‌ام و مشارکت من یا بدون کمک هوش مصنوعی ایجاد شده است یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏حذف بررسی جهت زبان برای تغییر کلاس css\n\n‏در ابتدا ما css قالب rtl را به‌صورت دستی ایجاد می‌کردیم - اما به‌جای اصلاح css در قالب rtl، کلاس را تغییر دادیم. بعداً نحوه تولید css برای RTL را تغییر دادم تا از یک پس‌پردازشگر (post processor) استفاده شود. این کار تمام left به right و غیره را تبدیل کرد، بنابراین نیازی به تغییر کلاس استفاده‌شده در اینجا نداشتیم. اشتباه من بود که هنگام انجام این تبدیل، آن را ندیده بودم.\n\n‏این درخواست ادغام (Pull Request) بررسی isRTL و تغییر در کلاس را حذف می‌کند زیرا نیازی به آن نیست\n\n‏**پاداش** این کار برخی کدهای منسوخ‌شده (deprecated) را هم حذف می‌کند \n \n‏### دستورالعمل‌های تست\n‏یک زبان RTL نصب کنید و سپس با استفاده از آن زبان RTL در بخش ادمین جوملا، به داشبورد اصلی بروید و نحوه نمایش منوی کشویی روی آیکون چرخ‌دنده ماژول را بررسی کنید\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام (Pull Request)\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای راهنمای جوملا (guide.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای راهنمای جوملا (guide.joomla.org) نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای مستندات جوملا (manual.joomla.org): &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای مستندات جوملا (manual.joomla.org) نیست"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/7cd1d098-89d1-42e3-a4e8-bb48d16aa280",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/e02cb4a0-9f5a-40fb-a150-0353225195ff",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۷ آبان ۱۴۰۵ — ساعت ۰۴:۵۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را :white_check_mark: با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/74117574e68b8011c845c0fcf3cff86c800a0a55\">7411757</a> تست کردم\n\n‏من توانستم این را با موفقیت تست کنم. با تشکر <a href=\"https://github.com/brianteeman\">@brianteeman</a>.\n\n‏برای سایر مشارکت‌کنندگان: من در ابتدا هنگام تلاش برای استفاده از Joomla Patch Tester پیامی به رنگ قرمز دریافت کردم: The file marked for modification does not exist: phpstan-baseline.neon اما سپس پکیج به‌روزرسانی را دانلود کردم و توانستم با موفقیت تست کنم.\n‏―――――――――――――――――\n‏این کامنت با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48717\">issues.joomla.org/tracker/joomla-cms/48717</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Stefan Wendhausen\n\n<a href=\"https://github.com/tecpromotion\">tecpromotion</a>\n\n‏۹ آبان ۱۴۰۵ — ساعت ۲۰:۱۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را ناموفق :red_circle: روی <a href=\"https://github.com/joomla/joomla-cms/commit/74117574e68b8011c845c0fcf3cff86c800a0a55\">7411757</a> تست کردم\n\n‏**نتیجه:** نیاز به تغییرات دارد. اصلاح RTL کار می‌کند؛ یک افت دسترسی‌پذیری (a11y) ناخواسته در `body.php` وجود دارد.\n\n‏### یافته\n‏`chromes/body.php` همچنین برچسب `visually-hidden` دکمه چرخ‌دنده را حذف می‌کند. آیکون دارای `aria-hidden` است، بنابراین دکمه اکنون هیچ نام دسترسی‌پذیری ندارد (`well.php` آن را نگه می‌دارد):\n\n‏| نام دسترسی‌پذیر دکمه چرخ‌دنده | قبل | بعد |\n‏|---|---|---|\n‏| کروم (chrome) `well` (داشبورد) | \"ویرایش ماژول 'Popular Articles'\" | بدون تغییر |\n‏| کروم (chrome) `body` | \"ویرایش ماژول 'Logged-in Users'\" | *(خالی)*، en-GB و ar-AA |\n\n‏راه حل: این خط را در `body.php` نگه دارید:\n‏```php\n<span class=\"visually-hidden\"><?php echo Text::sprintf('JACTION_EDIT_MODULE', $module->title); ?></span>\n‏```\n\n‏### بررسی (بخش RTL)\n6.2-dev، بسته زبان عربی (ar-AA 6.1.4.1) به عنوان زبان ادمین، داشبورد اصلی، چرخ‌دنده \"Popular Articles\" (`well`) و \"Logged-in Users\" تنظیم‌شده روی سبک ماژول `atum-body`:\n\n‏| ar-AA، کروم (chrome) `well` | قبل | بعد |\n‏|---|---|---|\n‏| منو | به سمت بیرون روی کارت مجاور باز می‌شود؛ در ستون چپ خارج از صفحه (`left: -90px`، اسکرول افقی صفحه) | داخل کارت باز می‌شود |\n\nen-GB: موقعیت منو بدون تغییر. phpstan (با baseline به‌روزرسانی‌شده) و php-cs-fixer بدون خطا.\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48717\">issues.joomla.org/tracker/joomla-cms/48717</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۹ آبان ۱۴۰۵ — ساعت ۲۰:۵۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏اوه، آن یک خطا بود."
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۱۲ آبان ۱۴۰۵ — ساعت ۰۵:۰۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/2c3f0059b487f4fd41e27ba821d13cc3b3f74b24\">2c3f005</a> تست کردم :white_check_mark:\n\n‏من این مورد را دوباره با موفقیت تست کردم :) با تشکر از <a href=\"https://github.com/brianteeman\">@brianteeman</a>.\n‏―――――――――――――――――\n‏این نظر با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48717\">issues.joomla.org/tracker/joomla-cms/48717</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-11-03T01:33:14Z",
+    "warnings": []
+}
