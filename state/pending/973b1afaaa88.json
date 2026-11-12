@@ -1,0 +1,18 @@
+{
+    "pr": 48830,
+    "is_update": true,
+    "topic_name": "[#48830] - [6.2] قالب‌های ایمیل RTL",
+    "thread_id": 1596,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۲۱ آبان ۱۴۰۵ — ساعت ۰۶:۲۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/07ff94c60c9d5bdc3b7110f1e230420e8f3d1eda\">07ff94c</a> تست کردم :white_check_mark:\n\n‏من توانستم اصلاحیه این درخواست ادغام (Pull Request) را با موفقیت تست کنم. با تشکر از <a href=\"https://github.com/brianteeman\">@brianteeman</a>.\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48830\">issues.joomla.org/tracker/joomla-cms/48830</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-11-12T02:51:44Z",
+    "warnings": []
+}
