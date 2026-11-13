@@ -1,0 +1,22 @@
+{
+    "pr": 48830,
+    "is_update": true,
+    "topic_name": "[#48830] - [6.2] قالب‌های ایمیل (Mail Templates) RTL",
+    "thread_id": 1596,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "‏عضو: Richard Fath\n\n<a href=\"https://github.com/richard67\">richard67</a>\n\n‏۲۲ آبان ۱۴۰۵ — ساعت ۱۹:۲۵"
+        },
+        {
+            "kind": "message",
+            "text": "RTC\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48830\">issues.joomla.org/tracker/joomla-cms/48830</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-11-13T15:55:46Z",
+    "warnings": []
+}
