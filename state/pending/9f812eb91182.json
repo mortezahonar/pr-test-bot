@@ -1,0 +1,52 @@
+{
+    "pr": 48717,
+    "is_update": true,
+    "topic_name": "[#48717] - [6.2] منوی کشویی ماژول‌های ادمین [rtl]",
+    "thread_id": 1548,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "Morteza Honar\n\n<a href=\"https://github.com/mortezahonar\">mortezahonar</a>\n\n‏۲۱ آبان ۱۴۰۵ — ساعت ۲۱:۴۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏با استفاده از پچ‌تستر (Patch Tester)،\n‏هم در زمین بازی (playground) جوملا و هم در یک سایت دیگر، نتوانستم این درخواست ادغام (Pull Request) را اعمال کنم، و این پیام را می‌دهد:\n\n‏فایلی که برای تغییر علامت‌گذاری شده وجود ندارد: phpstan-baseline.neon\n\n‏می‌توانم آن را با روش npm تست کنم، اما فقط می‌خواستم بدانم:\n‏ملاحظات تست با پچ‌تستر (Patch Tester) چیست؟"
+        },
+        {
+            "kind": "message",
+            "text": "Morteza Honar\n\n<a href=\"https://github.com/mortezahonar\">mortezahonar</a>\n\n‏۲۳ آبان ۱۴۰۵ — ساعت ۱۳:۴۰"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/04055899-82c4-4e53-9676-2cffc8c30594",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "Morteza Honar\n\n<a href=\"https://github.com/mortezahonar\">mortezahonar</a>\n\n‏۲۳ آبان ۱۴۰۵ — ساعت ۱۳:۴۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم را :white_check_mark: با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/2c3f0059b487f4fd41e27ba821d13cc3b3f74b24\">2c3f005</a> تست کردم.\n\n‏با تشکر.\n‏―――――――――――――――――\n‏این نظر با <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48717\">issues.joomla.org/tracker/joomla-cms/48717</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲۳ آبان ۱۴۰۵ — ساعت ۱۴:۰۴"
+        },
+        {
+            "kind": "message",
+            "text": "<a href=\"https://github.com/mortezahonar\">@mortezahonar</a> ابزار pathtester زمانی که فایل‌هایی در درخواست ادغام (Pull Request) وجود داشته باشند که مانند این مورد در نسخه منتشرشده‌ای از جوملا نیستند، با شکست مواجه می‌شود. معمولاً patchtester پیش از اینکه امتحان کنید این موضوع را به شما نشان می‌دهد. در این مورد، تغییر مربوط به افزودن این فایل خاص هنوز ادغام نشده است.\n\n‏همچنین می‌توانید با استفاده از یک فایل دانلود پیش‌ساخته از درخواست ادغام (Pull Request) که همیشه می‌توانید آن را در اینجا پیدا کنید، تست را انجام دهید."
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/0f07f785-413c-46c2-a9e7-57fef06093df",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "‏از آن لینک می‌توانید یک نسخه کامل شامل PR، یک به‌روزرسانی جوملا با استفاده از PR، یا حتی فقط یک لینک برای استفاده به عنوان منبع به‌روزرسانی جوملا را بارگیری (دانلود) کنید."
+        }
+    ],
+    "last_item_at": "2026-11-14T10:34:22Z",
+    "warnings": []
+}
