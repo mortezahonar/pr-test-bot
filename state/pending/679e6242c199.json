@@ -2,7 +2,7 @@
     "pr": 48831,
     "is_update": false,
     "topic_name": "[#48831] - [6.2] پیکربندی سراسری (Global Configuration): پیوند SEO به پلاگین SEF",
-    "thread_id": null,
+    "thread_id": 1690,
     "actions": [
         {
             "kind": "topic",
@@ -73,5 +73,8 @@
         }
     ],
     "last_item_at": "2026-11-12T23:38:31Z",
-    "warnings": []
+    "warnings": [],
+    "next_action": 15,
+    "sent": 11,
+    "photos": 3
 }
