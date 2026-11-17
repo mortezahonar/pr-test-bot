@@ -1,0 +1,77 @@
+{
+    "pr": 48831,
+    "is_update": false,
+    "topic_name": "[#48831] - [6.2] پیکربندی سراسری (Global Configuration): پیوند SEO به پلاگین SEF",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48831] - [6.2] پیکربندی سراسری (Global Configuration): پیوند SEO به پلاگین SEF"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲۰ آبان ۱۴۰۵ — ساعت ۱۴:۵۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] پیکربندی سراسری (Global Configuration): پیوند SEO به پلاگین SEF\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48831\">https://issues.joomla.org/tracker/joomla-cms/48831</a>\n\n‏درخواست ادغام (Pull Request) شماره #44749 را حل می‌کند.\n\n‏- [x] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏مورد #44749 توسط <a href=\"https://github.com/pe7er\">@pe7er</a> ایده خوبی بود اما پیاده‌سازی آن نیاز به تغییراتی داشت و رها شده است. این درخواست ادغام (Pull Request) کار را با استفاده از روش‌های درخواست‌شده تکمیل می‌کند.\n\n‏این درخواست ادغام (Pull Request) یک لینک به تنظیمات سراسری (Global Configuration) > سئو (SEO) اضافه می‌کند.\n‏تنظیمات اضافی را می‌توان در پلاگین \"System - SEF\" یافت.\n\n‏### دستورالعمل تست\n‏به تنظیمات سراسری (Global Configuration) در مسیر `/administrator/index.php?option=com_config` بروید، زبانه \"سایت\" (Site) > بخش سئو (SEO).\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n\n‏متن فقط یک اعلان است\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n\n‏متن اکنون حاوی یک لینک به تنظیمات پلاگین است\n\n‏تنظیمات پلاگین در یک پنجره مودال (Modal) باز می‌شود - این کار تضمین می‌کند که تغییرات در تنظیمات سراسری (Global Configuration) هنگام کلیک روی لینک از بین نروند و از همان رویکردی پیروی می‌کند که در com_redirect و com_finder دیده می‌شود.\n\n‏### لینک به مستندات\n‏لطفاً انتخاب کنید:\n‏- [ ] لینک مستندات برای guide.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای guide.joomla.org نیست\n\n‏- [ ] لینک درخواست ادغام (Pull Request) برای manual.joomla.org: &lt;link&gt;\n‏- [x] نیازی به تغییرات مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/8b5a8f79-45fd-402c-9525-2871784cf6c8",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/c2b0c79f-fd8b-4887-a7e7-8848b35ac275",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/88535264-0c17-4ef4-a459-3a9b3a6ce620",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Language Change» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: [6.3] Global Configuration: Link SEO to SEF plugin (<a href=\"https://github.com/joomla/joomla-cms/pull/44749\">https://github.com/joomla/joomla-cms/pull/44749</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۲۱ آبان ۱۴۰۵ — ساعت ۰۵:۱۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/cb0d15e8b0892a754ed45fcd91abe32e4ede660a\">cb0d15e</a>\n\n‏بهبود بسیار مفیدی است. از شما <a href=\"https://github.com/brianteeman\">@brianteeman</a> سپاسگزارم.\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48831\">issues.joomla.org/tracker/joomla-cms/48831</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: [6.2] Fix/forced mfa no active plugins (<a href=\"https://github.com/joomla/joomla-cms/pull/48839\">https://github.com/joomla/joomla-cms/pull/48839</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲۲ آبان ۱۴۰۵ — ساعت ۰۱:۳۲"
+        },
+        {
+            "kind": "message",
+            "text": "<a href=\"https://github.com/exlemor\">@exlemor</a> درخواست ادغام (Pull Request) را بهبود بخشید، با تشکر از <a href=\"https://github.com/LadySolveig\">@LadySolveig</a>، آیا می‌توانید لطفاً دوباره تست کنید؟"
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۲۲ آبان ۱۴۰۵ — ساعت ۰۳:۰۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت تست کردم :white_check_mark: در <a href=\"https://github.com/joomla/joomla-cms/commit/49713092d488b4fb6dc122bb6994320ffcd4f248\">4971309</a>\n\n‏من توانستم این PR را دوباره تست کنم و کار می‌کند :) ممنون <a href=\"https://github.com/brianteeman\">@brianteeman</a>. \n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48831\">issues.joomla.org/tracker/joomla-cms/48831</a> ایجاد شد."
+        }
+    ],
+    "last_item_at": "2026-11-12T23:38:31Z",
+    "warnings": []
+}
