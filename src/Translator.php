@@ -129,6 +129,12 @@ final class Translator
             return $this->atom('code', ['text' => html_entity_decode($m[1], ENT_QUOTES)]);
         }, $s) ?? $s;
 
+        // GitHub stores this emoji as a shortcode, while its web UI renders ✅.
+        // Protect only this shortcode so the translator cannot rewrite it.
+        $s = preg_replace_callback('/:white_check_mark:/', function (): string {
+            return $this->atom('emoji', ['text' => '✅']);
+        }, $s) ?? $s;
+
         // mentions
         $s = preg_replace_callback('#@([A-Za-z0-9](?:[A-Za-z0-9-]{0,38}))#', function (array $m): string {
             return $this->atom('mention', ['login' => $m[1]]);
@@ -189,6 +195,8 @@ final class Translator
                 return '</a>';
             case 'code':
                 return '<code>' . $this->esc($data['text']) . '</code>';
+            case 'emoji':
+                return $data['text'];
             case 'entity':
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'plain':
