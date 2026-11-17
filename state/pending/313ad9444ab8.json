@@ -1,0 +1,26 @@
+{
+    "pr": 48774,
+    "is_update": true,
+    "topic_name": "[#48774] - [6.3] علامت سؤال در خط فارسی (Arabic-script Question Mark) با علامت سؤال در متن چپ‌به‌راست (LTR) یکسان نیست.",
+    "thread_id": 1367,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Tom van der Laan\n\n<a href=\"https://github.com/TLWebdesign\">TLWebdesign</a>\n\n‏۲۶ آبان ۱۴۰۵ — ساعت ۰۴:۳۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏سلام برایان، آیا علامت سؤال داخل دایره هم باید برعکس شود؟ (مثلاً در دکمه‌ی راهنمای درون‌خطی (toggle inline help) استفاده می‌شود)."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲۶ آبان ۱۴۰۵ — ساعت ۱۳:۵۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏من به‌علاوه علامت سؤالِ داخل دایره که برای toggle-inline-help استفاده می‌شود و همچنین تمام نگاشت‌ها (mappings) به variantهای icon- را اضافه کرده‌ام، بنابراین هر افزونه‌ای که از آن آیکون‌ها استفاده کند نیز از این تغییر بهره‌مند خواهد شد.\n\n‏دستورالعمل‌های تست به‌روزرسانی شده‌اند تا بتوانید در cassiopeia نیز تست کنید."
+        }
+    ],
+    "last_item_at": "2026-11-17T10:21:01Z",
+    "warnings": []
+}
