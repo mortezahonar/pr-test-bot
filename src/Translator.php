@@ -6,6 +6,8 @@ final class Translator
 {
     private const L = "\u{27E6}";
     private const R = "\u{27E7}";
+    private const AI_POLICY_URL = 'https://developer.joomla.org/generative-ai-policy.html';
+    private const AI_POLICY_TRANSLATION_URL = 'https://t.me/Joomla_PR_test/211';
 
     /**
      * The only tags Telegram accepts in HTML mode. Any other tag found in the
@@ -95,6 +97,22 @@ final class Translator
 
     private function protect(string $s): string
     {
+        // Joomla's PR template has one fixed AI-policy checklist line. Keep
+        // its state from the source PR, but do not let the translator rewrite
+        // the sentence or its two policy links.
+        $s = preg_replace_callback(
+            '~(?mi)^(?<prefix>[ \t]*(?:[-*][ \t]*)?)\[(?<checked>[ xX])\][ \t]*'
+            . 'I read the \[Generative AI policy\]\(https://developer\.joomla\.org/generative-ai-policy\.html\)'
+            . '[ \t]+and my contribution is either not created with the help of AI or is compatible with the policy and GNU/GPL 2 or later\.[ \t]*$~',
+            function (array $m): string {
+                return $this->atom('ai_policy', [
+                    'prefix'  => $m['prefix'],
+                    'checked' => strtolower($m['checked']) === 'x',
+                ]);
+            },
+            $s
+        ) ?? $s;
+
         // Markdown links and images come from GitHub, which renders Markdown;
         // Telegram does not. Without this the URL inside "[text](url)" is
         // turned into an anchor of its own and the link ends up broken. A
@@ -197,6 +215,14 @@ final class Translator
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'emoji':
                 return $data['text'];
+            case 'ai_policy':
+                $checkbox = $data['checked'] ? 'x' : ' ';
+
+                return $data['prefix'] . '[' . $checkbox . '] '
+                    . '<a href="' . self::AI_POLICY_URL . '">سیاست هوش مصنوعی مولد</a>'
+                    . ' را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با '
+                    . '<a href="' . self::AI_POLICY_TRANSLATION_URL . '">این سیاست</a>'
+                    . ' و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.';
             case 'entity':
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'plain':
