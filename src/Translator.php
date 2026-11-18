@@ -97,6 +97,23 @@ final class Translator
 
     private function protect(string $s): string
     {
+        // The Joomla PR template starts with a fixed resolve line followed by
+        // the AI-policy checklist. Protect the whole pair so the provider
+        // cannot move the checklist between words or remove its PR number.
+        $s = preg_replace_callback(
+            '~(?mi)^Pull Request resolves #[ \t]*(?<pr>\d*)[ \t]*\.[ \t]*\n[ \t]*\n'
+            . '[ \t]*(?:[-*][ \t]*)?\[(?<checked>[ xX])\][ \t]*'
+            . 'I read the \[Generative AI policy\]\(https://developer\.joomla\.org/generative-ai-policy\.html\)'
+            . '[ \t]+and my contribution is either not created with the help of AI or is compatible with the policy and GNU/GPL 2 or later\.[ \t]*$~',
+            function (array $m): string {
+                return $this->atom('ai_policy_block', [
+                    'pr'      => $m['pr'],
+                    'checked' => strtolower($m['checked']) === 'x',
+                ]);
+            },
+            $s
+        ) ?? $s;
+
         // Joomla's PR template has one fixed AI-policy checklist line. Keep
         // its state from the source PR, but do not let the translator rewrite
         // the sentence or its two policy links.
@@ -215,6 +232,18 @@ final class Translator
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'emoji':
                 return $data['text'];
+            case 'ai_policy_block':
+                $checkbox = $data['checked'] ? 'x' : ' ';
+                $separator = Persian::separator();
+
+                return "\nدرخواست ادغام (Pull Request) شماره #" . $data['pr'] . " را حل میکند.\n\n"
+                    . $separator . "\n"
+                    . '- [' . $checkbox . '] '
+                    . '<a href="' . self::AI_POLICY_URL . '">سیاست هوش مصنوعی مولد</a>'
+                    . ' را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با '
+                    . '<a href="' . self::AI_POLICY_TRANSLATION_URL . '">این سیاست</a>'
+                    . ' و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.' . "\n"
+                    . $separator . "\n";
             case 'ai_policy':
                 $checkbox = $data['checked'] ? 'x' : ' ';
 

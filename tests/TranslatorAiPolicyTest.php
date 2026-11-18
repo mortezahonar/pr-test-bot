@@ -60,17 +60,50 @@ $assert(
 );
 
 $merged = (new Translator(new AiPolicyMergeLineGenerator(), 'test'))->translateBody(
-    "Pull Request resolves #123.\n\n"
+    "Unrelated preceding text.\n\n"
     . '- [x] I read the [Generative AI policy](https://developer.joomla.org/generative-ai-policy.html)'
     . ' and my contribution is either not created with the help of AI or is compatible with the policy and GNU/GPL 2 or later.'
 );
 $assert(
-    str_contains($merged, "Pull Request resolves #123.\n- [x] "),
+    str_contains($merged, "Unrelated preceding text.\n- [x] "),
     'AI policy checklist must remain on a separate line from the preceding text'
 );
 $assert(
-    !str_contains($merged, 'Pull Request resolves #123.- [x]'),
+    !str_contains($merged, 'Unrelated preceding text.- [x]'),
     'AI policy checklist must not be concatenated to the preceding text'
+);
+
+$block = (new Translator(new AiPolicyEchoGenerator(), 'test'))->translateBody(
+    "Pull Request resolves #123.\n\n"
+    . '- [x] I read the [Generative AI policy](https://developer.joomla.org/generative-ai-policy.html)'
+    . ' and my contribution is either not created with the help of AI or is compatible with the policy and GNU/GPL 2 or later.'
+    . "\n\n### Summary of Changes\n"
+);
+$expectedBlock = 'درخواست ادغام (Pull Request) شماره #123 را حل میکند.'
+    . "\n\n" . Persian::separator() . "\n"
+    . '- [x] ' . '<a href="https://developer.joomla.org/generative-ai-policy.html">سیاست هوش مصنوعی مولد</a>'
+    . ' را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با '
+    . '<a href="https://t.me/Joomla_PR_test/211">این سیاست</a>'
+    . ' و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.'
+    . "\n" . Persian::separator();
+$assert(str_contains($block, $expectedBlock), 'the complete PR policy block must use the fixed layout');
+$assert(
+    str_contains($block, "درخواست ادغام (Pull Request) شماره #123 را حل میکند.\n\n" . Persian::separator()),
+    'the resolve line must retain its PR number and blank line before the separator'
+);
+$assert(
+    !str_contains($block, 'Pull Request resolves'),
+    'the protected block must not leak the source resolve line into the translated output'
+);
+
+$emptyNumber = (new Translator(new AiPolicyEchoGenerator(), 'test'))->translateBody(
+    "Pull Request resolves # .\n\n"
+    . '- [ ] I read the [Generative AI policy](https://developer.joomla.org/generative-ai-policy.html)'
+    . ' and my contribution is either not created with the help of AI or is compatible with the policy and GNU/GPL 2 or later.'
+);
+$assert(
+    str_contains($emptyNumber, 'درخواست ادغام (Pull Request) شماره # را حل میکند.'),
+    'an empty source PR number must remain empty'
 );
 
 fwrite(STDOUT, "OK: AI policy checklist tests passed.\n");
