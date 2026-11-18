@@ -12,6 +12,14 @@ final class AiPolicyEchoGenerator implements TextGenerator
     }
 }
 
+final class AiPolicyMergeLineGenerator implements TextGenerator
+{
+    public function generate(string $system, string $userText, int $timeout = 60): string
+    {
+        return preg_replace('/\n+(?=\x{27E6}\d+\x{27E7})/u', '', $userText) ?? $userText;
+    }
+}
+
 $translator = new Translator(new AiPolicyEchoGenerator(), 'test');
 $unchecked = $translator->translateBody(
     '- [ ] I read the [Generative AI policy](https://developer.joomla.org/generative-ai-policy.html)'
@@ -49,6 +57,20 @@ $assert(
 $assert(
     preg_replace('/\[[ xX]\]/', '', $unchecked) === preg_replace('/\[[ xX]\]/', '', $checked),
     'checked state must be the only difference between the two policy lines'
+);
+
+$merged = (new Translator(new AiPolicyMergeLineGenerator(), 'test'))->translateBody(
+    "Pull Request resolves #123.\n\n"
+    . '- [x] I read the [Generative AI policy](https://developer.joomla.org/generative-ai-policy.html)'
+    . ' and my contribution is either not created with the help of AI or is compatible with the policy and GNU/GPL 2 or later.'
+);
+$assert(
+    str_contains($merged, "Pull Request resolves #123.\n- [x] "),
+    'AI policy checklist must remain on a separate line from the preceding text'
+);
+$assert(
+    !str_contains($merged, 'Pull Request resolves #123.- [x]'),
+    'AI policy checklist must not be concatenated to the preceding text'
 );
 
 fwrite(STDOUT, "OK: AI policy checklist tests passed.\n");

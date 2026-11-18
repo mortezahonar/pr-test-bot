@@ -218,11 +218,12 @@ final class Translator
             case 'ai_policy':
                 $checkbox = $data['checked'] ? 'x' : ' ';
 
-                return $data['prefix'] . '[' . $checkbox . '] '
+                return "\n" . $data['prefix'] . '[' . $checkbox . '] '
                     . '<a href="' . self::AI_POLICY_URL . '">سیاست هوش مصنوعی مولد</a>'
                     . ' را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با '
                     . '<a href="' . self::AI_POLICY_TRANSLATION_URL . '">این سیاست</a>'
-                    . ' و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.';
+                    . ' و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.'
+                    . "\n";
             case 'entity':
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'plain':
