@@ -1,0 +1,150 @@
+{
+    "pr": 48338,
+    "is_update": false,
+    "topic_name": "[#48338] - [6.3] [joomla/database] استفاده از createQuery",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48338] - [6.3] [joomla/database] استفاده از createQuery"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Christian Heel\n\n<a href=\"https://github.com/heelc29\">heelc29</a>\n\n‏۶ شهریور ۱۴۰۵ — ساعت ۱۸:۰۲"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.3] [joomla/database] استفاده از createQuery\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48338\">https://issues.joomla.org/tracker/joomla-cms/48338</a>\n\n‏درخواست ادغام (Pull Request) شماره \n‏- [x] <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با <a href=\"https://t.me/Joomla_PR_test/211\">این سیاست</a> و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.\n‏ را حل می‌کند.\n\n‏―――――――――――――――――\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏اعمال تغییرات از #45056 روی فایل‌های جدید (ادغام‌شده از 5.4 یا PRهای ادغام‌شده در 6.1)\n\n‏> تمام فراخوانی‌های تابع `getQuery(true)` با `createQuery()` جایگزین شدند، اما فقط در بافت (context) مرتبط با دیتابیس.\n‏نکته: یک قابلیت `getQuery(true)` نیز در `Joomla\\CMS\\Uri\\Uri` وجود دارد که باید دست‌نخورده باقی بماند.\n\n‏### دستورالعمل تست (Testing Instructions)\n\n‏بازبینی کد یا بررسی فایل‌های لاگ (گزینه log در تنظیمات سراسری (Global Settings) فعال باشد)\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n\n‏`Since joomla/database 2.2.0: The parameter $new is deprecated and will be removed in 4.0, use Joomla\\Database\\DatabaseDriver::createQuery() instead.`\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n\n‏بدون هشدار برای `getQuery(true)`\n\n‏### لینک به مستندات (Link to documentations)\n‏لطفاً انتخاب کنید:\n‏- [x] نیازی به تغییرات مستندات برای راهنمای جوملا (guide.joomla.org) نیست\n‏- [x] نیازی به تغییرات مستندات برای مستندات جوملا (manual.joomla.org) نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏درخواست بازبینی"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.1-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Architecture» توسط <a href=\"https://github.com/laoneo\">laoneo</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عنوان از «[6.1] [joomla/database] use createQuery» به «[6.3] [joomla/database] use createQuery» تغییر کرد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Language Change» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Language Change» توسط <a href=\"https://github.com/HLeithner\">HLeithner</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Architecture» توسط <a href=\"https://github.com/HLeithner\">HLeithner</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/HLeithner\">HLeithner</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Feature» توسط <a href=\"https://github.com/HLeithner\">HLeithner</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Architecture» توسط <a href=\"https://github.com/HLeithner\">HLeithner</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Harald Leithner\n\n<a href=\"https://github.com/HLeithner\">HLeithner</a>\n\n‏۶ شهریور ۱۴۰۵ — ساعت ۱۸:۲۷"
+        },
+        {
+            "kind": "message",
+            "text": "‏به نسخه 6.3 ری‌بیس (rebase) شد، این یک رفع باگ (bugfix) نیست."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Christian Heel\n\n<a href=\"https://github.com/heelc29\">heelc29</a>\n\n‏۶ شهریور ۱۴۰۵ — ساعت ۱۹:۰۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏> rebased به 6.3، این یک bugfix نیست.\n\n‏فرایند فکری من:\n‏- استفاده از یک تابع منسوخ (deprecated) = باگ\n‏- استفاده در 6.1-dev معرفی شده بود\n‏- PR علیه 6.1-dev\n\n‏من با این تصمیم مشکلی ندارم."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Conflicting Files» توسط <a href=\"https://github.com/github-actions[bot]\">github-actions[bot]</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: github-actions[bot]\n\n<a href=\"https://github.com/github-actions[bot]\">github-actions[bot]</a>\n\n‏۶ شهریور ۱۴۰۵ — ساعت ۱۹:۱۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏این درخواست ادغام (Pull Request) دارای تداخل‌هایی است، لطفاً پیش از آنکه بتوانیم درخواست ادغام را ارزیابی کنیم، آن‌ها را برطرف کنید."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.1-dev» توسط <a href=\"https://github.com/QuyTon\">QuyTon</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/QuyTon\">QuyTon</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Conflicting Files» توسط <a href=\"https://github.com/github-actions[bot]\">github-actions[bot]</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Roland Dalmulder\n\n<a href=\"https://github.com/roland-d\">roland-d</a>\n\n‏۲۵ آبان ۱۴۰۵ — ساعت ۲۲:۵۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏سلام <a href=\"https://github.com/heelc29\">@heelc29</a> ما می‌خواهیم این مورد را در سریع‌ترین زمان ممکن در چرخه Joomla 6.3 بگنجانیم. آیا لطفاً می‌توانید تداخل‌های ادغام (merge conflicts) را برطرف کنید؟ متشکرم."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Tom van der Laan\n\n<a href=\"https://github.com/TLWebdesign\">TLWebdesign</a>\n\n‏۲۶ آبان ۱۴۰۵ — ساعت ۰۲:۴۱"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد را با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/fd847edc04375624c65c1afea682506f07361e41\">fd847ed</a> تست کردم ✅\n\n‏این مورد را با موفقیت روی 6.3dev تست کردم.\n\n‏| عملیات | عملکرد قبل | عملکرد بعد |\n‏|---|---|---|\n‏| آیتم منو: بارگذاری آیتم‌های والد برای یک منو | بله | بله |\n‏| گردش کار (Workflow): ذخیره موقعیت‌های مرحله | بله | بله، موقعیت به‌صورت `{\"x\":55, \"y\":75}` ذخیره شد |\n‏| فرم ویرایش مقاله با گردش کار فعال (فیلد انتقال) | بله | بله |\n‏| تگ‌ها: کپی دسته‌ای (Batch) | بله | بله، کپی \"PR48338 tag (3)\" ایجاد شد |\n\n‏―――――――――――――――――\n‏این دیدگاه با استفاده از <a href=\"https://github.com/joomla/jissues\">اپلیکیشن J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48338\">issues.joomla.org/tracker/joomla-cms/48338</a> ایجاد شده است.\n\n‏هشدارهای منسوخ‌شدگی (deprecation warnings) نیز پس از اعمال پچ از بین رفتند."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Christian Heel\n\n<a href=\"https://github.com/heelc29\">heelc29</a>\n\n‏۲۶ آبان ۱۴۰۵ — ساعت ۲۱:۲۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏سلام <a href=\"https://github.com/heelc29\">@heelc29</a>، ما می‌خواهیم این مورد را در سریع‌ترین زمان ممکن در چرخه Joomla 6.3 بگنجانیم. آیا می‌توانید لطفاً تداخل‌های ادغام (merge conflicts) را برطرف کنید؟ متشکرم.\n\n‏من هیچ تداخل ادغامی نمی‌بینم و در این فاصله <a href=\"https://github.com/TLWebdesign\">@TLWebdesign</a> یک به‌روزرسانی تمیز از شاخه (branch) انجام داده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: George Wilson\n\n<a href=\"https://github.com/wilsonge\">wilsonge</a>\n\n‏۲۷ آبان ۱۴۰۵ — ساعت ۱۷:۵۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏تأیید شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Harald Leithner\n\n<a href=\"https://github.com/HLeithner\">HLeithner</a>\n\n‏۲۷ آبان ۱۴۰۵ — ساعت ۱۸:۴۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏تأیید شد"
+        }
+    ],
+    "last_item_at": "2026-11-18T15:15:05Z",
+    "warnings": []
+}
