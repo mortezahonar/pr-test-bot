@@ -2,7 +2,7 @@
     "pr": 48338,
     "is_update": false,
     "topic_name": "[#48338] - [6.3] [joomla/database] استفاده از createQuery",
-    "thread_id": null,
+    "thread_id": 1743,
     "actions": [
         {
             "kind": "topic",
@@ -138,5 +138,8 @@
         }
     ],
     "last_item_at": "2026-11-18T14:25:58Z",
-    "warnings": []
+    "warnings": [],
+    "next_action": 2,
+    "sent": 1,
+    "photos": 0
 }
