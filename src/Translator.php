@@ -97,6 +97,25 @@ final class Translator
 
     private function protect(string $s): string
     {
+        // Joomla's documentation section is fixed; only its four checkbox
+        // states come from the PR. Protect the complete section as one atom.
+        $s = preg_replace_callback(
+            '~(?mi)^### Link to documentations[ \t]*\n[ \t]*Please select:[ \t]*\n'
+            . '[ \t]*(?:\n[ \t]*)*-[ \t]*\[(?<guide_link>[ xX])\][ \t]*Documentation link for guide\.joomla\.org:[ \t]*(?:<link>)?[ \t]*\n'
+            . '[ \t]*(?:\n[ \t]*)*-[ \t]*\[(?<guide_none>[ xX])\][ \t]*No documentation changes for guide\.joomla\.org needed[ \t]*\n'
+            . '[ \t]*(?:\n[ \t]*)*-[ \t]*\[(?<manual_link>[ xX])\][ \t]*Pull Request link for manual\.joomla\.org:[ \t]*(?:<link>)?[ \t]*\n'
+            . '[ \t]*(?:\n[ \t]*)*-[ \t]*\[(?<manual_none>[ xX])\][ \t]*No documentation changes for manual\.joomla\.org needed[ \t]*(?=$)~',
+            function (array $m): string {
+                return $this->atom('documentation_block', [
+                    'guide_link'  => strtolower($m['guide_link']) === 'x',
+                    'guide_none'  => strtolower($m['guide_none']) === 'x',
+                    'manual_link' => strtolower($m['manual_link']) === 'x',
+                    'manual_none' => strtolower($m['manual_none']) === 'x',
+                ]);
+            },
+            $s
+        ) ?? $s;
+
         // The Joomla PR template starts with a fixed resolve line followed by
         // the AI-policy checklist. Protect the whole pair so the provider
         // cannot move the checklist between words or remove its PR number.
@@ -232,6 +251,15 @@ final class Translator
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'emoji':
                 return $data['text'];
+            case 'documentation_block':
+                $checkbox = static fn (bool $checked): string => $checked ? '[x]' : '[ ]';
+
+                return "\n<b>پیوند به مستندات</b>\n\n"
+                    . 'لطفاً انتخاب کنید:' . "\n\n"
+                    . '- ' . $checkbox($data['guide_link']) . ' پیوند مستندات برای guide.joomla.org:' . "\n\n"
+                    . '- ' . $checkbox($data['guide_none']) . ' نیازی به تغییر مستندات برای guide.joomla.org نیست' . "\n\n"
+                    . '- ' . $checkbox($data['manual_link']) . ' پیوند Pull Request برای manual.joomla.org:' . "\n\n"
+                    . '- ' . $checkbox($data['manual_none']) . ' نیازی به تغییر مستندات برای manual.joomla.org نیست' . "\n";
             case 'ai_policy_block':
                 $checkbox = $data['checked'] ? 'x' : ' ';
                 $separator = Persian::separator();
