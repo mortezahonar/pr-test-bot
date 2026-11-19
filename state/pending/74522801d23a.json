@@ -1,0 +1,30 @@
+{
+    "pr": 48877,
+    "is_update": false,
+    "topic_name": "[#48877] - [6.2] اصلاح مقدار JPATH_PLATFORM در پلاگین Compat6",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48877] - [6.2] اصلاح مقدار JPATH_PLATFORM در پلاگین Compat6"
+        },
+        {
+            "kind": "message",
+            "text": "RoNiN\n\n<a href=\"https://github.com/ParsaAzima\">ParsaAzima</a>\n\n‏۲۷ آبان ۱۴۰۵ — ساعت ۱۸:۴۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.2] اصلاح مقدار JPATH_PLATFORM در پلاگین Compat6\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48877\">https://issues.joomla.org/tracker/joomla-cms/48877</a>\n\n‏درخواست ادغام (Pull Request) شماره <a href=\"https://github.com/joomla/joomla-cms/issues/48872\">#48872</a> را حل میکند.\n\n‏―――――――――――――――――\n‏- [x] <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با <a href=\"https://t.me/Joomla_PR_test/211\">این سیاست</a> و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.\n‏―――――――――――――――――\n\n‏### خلاصه تغییرات (Summary of Changes)\n\n‏پلاگین Compat6 مقدار `JPATH_PLATFORM` را با استفاده از `__DIR__` تعریف می‌کند. از آنجا که این تعریف از `libraries/bootstrap.php` به داخل پلاگین منتقل شده است (<a href=\"https://github.com/joomla/joomla-cms/pull/44638\">#44638</a>)، مقدار `__DIR__` به‌جای پوشه `libraries` به `plugins/behaviour/compat6/src/Extension` اشاره می‌کند.\n\n‏بنابراین افزونه‌هایی که هنوز مسیرها را بر اساس `JPATH_PLATFORM` می‌سازند، آن‌ها را نسبت به پوشه پلاگین مسیریابی می‌کنند. به‌عنوان مثال VirtueMart 4.8.4 از `$vmPathLibraries = JPATH_PLATFORM;` در `helpers/vmdefines.php` استفاده می‌کند و سپس به‌دنبال TCPDF و فونت‌های آن در زیرپوشه پلاگین می‌گردد.\n\n‏این درخواست ادغام (Pull Request)، مقدار `JPATH_PLATFORM` را برابر با `JPATH_LIBRARIES` تعریف می‌کند و مقدار آن در جوملا ۴ و ۵ را بازیابی می‌نماید.\n\n‏### دستورالعمل‌های تست\n\n1. جوملا 6.2 را با فعال بودن پلاگین \"Behaviour - Compat6\" (پیش‌فرض) نصب کنید.\n2. عبارت `<?php echo JPATH_PLATFORM; ?>` را به‌طور موقت در بالای فایل `templates/cassiopeia/index.php` اضافه کرده و فرانت‌اند را بارگذاری کنید.\n3. به‌عنوان روش جایگزین، VirtueMart 4.8.4 را نصب کرده و آدرس `index.php?option=com_virtuemart&view=invoice&task=samplePDF` را باز کنید.\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n\n‏مقدار `JPATH_PLATFORM` به `.../plugins/behaviour/compat6/src/Extension` اشاره می‌کند. افزونه‌هایی که به آن وابسته هستند، مسیرهای کتابخانه‌ها و vendor را نسبت به پوشه پلاگین مسیریابی می‌کنند؛ بنابراین فاکتور نمونه VirtueMart با خطای HTTP 500 مواجه شده و ویوی vendor خطای \"Fonts not found in .../plugins/behaviour/compat6/src/Extension/fonts\" را گزارش می‌دهد.\n\n‏### نتیجه مورد انتظار بعد از اعمال این درخواست ادغام (Pull Request)\n\n‏مقدار `JPATH_PLATFORM` به `.../libraries` اشاره می‌کند که همان مقدار `JPATH_LIBRARIES` و همان مقداری است که در جوملا ۴ و ۵ داشت. فاکتور نمونه VirtueMart تولید می‌شود.\n\n<b>پیوند به مستندات</b>\n\n‏لطفاً انتخاب کنید:\n\n‏- [ ] پیوند مستندات برای guide.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای guide.joomla.org نیست\n\n‏- [ ] پیوند Pull Request برای manual.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «bug» توسط <a href=\"https://github.com/richard67\">richard67</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-11-19T14:54:28Z",
+    "warnings": []
+}
