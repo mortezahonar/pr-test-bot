@@ -62,7 +62,19 @@ if ((string) $config['glossary_path'] !== '' && is_file((string) $config['glossa
 
 $labels = json_decode((string) file_get_contents(__DIR__ . '/data/labels.json'), true) ?: [];
 
-$translator = new Translator($generator, $systemPrompt, $glossary, (bool) $config['link_commit_hashes']);
+$translator = new Translator(
+    $generator,
+    $systemPrompt,
+    $glossary,
+    (bool) $config['link_commit_hashes'],
+    static function (int $number) use ($github): ?string {
+        try {
+            return $github->referenceUrl($number);
+        } catch (Throwable) {
+            return null;
+        }
+    }
+);
 $service = new PrService($github, $translator, $store, $labels, $stateDir);
 
 $chatId = (string) $config['chat_id'];

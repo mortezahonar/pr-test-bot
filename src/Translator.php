@@ -6,6 +6,7 @@ final class Translator
 {
     private const L = "\u{27E6}";
     private const R = "\u{27E7}";
+    private const PR_URL_BASE = 'https://github.com/joomla/joomla-cms/pull/';
     private const AI_POLICY_URL = 'https://developer.joomla.org/generative-ai-policy.html';
     private const AI_POLICY_TRANSLATION_URL = 'https://t.me/Joomla_PR_test/211';
 
@@ -20,12 +21,15 @@ final class Translator
 
     /** @var array<int, array{type:string, data:array}> */
     private array $atoms = [];
+    /** @var array<string, ?string> */
+    private array $referenceCache = [];
 
     public function __construct(
         private TextGenerator $generator,
         private string $systemPrompt,
         private string $glossary = '',
-        private bool $linkCommitHashes = true
+        private bool $linkCommitHashes = true,
+        private ?Closure $referenceResolver = null
     ) {
     }
 
@@ -204,6 +208,15 @@ final class Translator
             return $this->atom('url', ['url' => rtrim($m[0], '.,;:)')]);
         }, $s) ?? $s;
 
+        // A numeric GitHub reference such as #123 denotes Joomla PR #123.
+        // Protect it after code, anchors, and bare URLs so those are not
+        // modified.
+        $s = preg_replace_callback('~(?<![A-Za-z0-9_])#(?<number>[0-9]+)\b~', function (array $m): string {
+            $url = $this->resolveReference($m['number']);
+
+            return $url === null ? $m[0] : $this->atom('pr_ref', ['number' => $m['number'], 'url' => $url]);
+        }, $s) ?? $s;
+
         // commit hashes
         $s = preg_replace_callback('#\b[0-9a-f]{40}\b#', function (array $m): string {
             return $this->atom('hash', ['hash' => $m[0]]);
@@ -251,6 +264,8 @@ final class Translator
                 return '<code>' . $this->esc($data['text']) . '</code>';
             case 'emoji':
                 return $data['text'];
+            case 'pr_ref':
+                return '<a href="' . $this->esc($data['url']) . '">#' . $data['number'] . '</a>';
             case 'documentation_block':
                 $checkbox = static fn (bool $checked): string => $checked ? '[x]' : '[ ]';
 
@@ -264,7 +279,9 @@ final class Translator
                 $checkbox = $data['checked'] ? 'x' : ' ';
                 $separator = Persian::separator();
 
-                return "\nدرخواست ادغام (Pull Request) شماره #" . $data['pr'] . " را حل میکند.\n\n"
+                $pr = $this->referenceLabel($data['pr']);
+
+                return "\nدرخواست ادغام (Pull Request) شماره " . $pr . " را حل میکند.\n\n"
                     . $separator . "\n"
                     . '- [' . $checkbox . '] '
                     . '<a href="' . self::AI_POLICY_URL . '">سیاست هوش مصنوعی مولد</a>'
@@ -354,6 +371,36 @@ final class Translator
         $this->atoms[$id] = ['type' => $type, 'data' => $data];
 
         return self::L . $id . self::R;
+    }
+
+    private function referenceLabel(string $number): string
+    {
+        if ($number === '') {
+            return '#';
+        }
+
+        $url = $this->resolveReference($number);
+
+        return $url === null
+            ? '#' . $number
+            : '<a href="' . $this->esc($url) . '">#' . $number . '</a>';
+    }
+
+    private function resolveReference(string $number): ?string
+    {
+        if (array_key_exists($number, $this->referenceCache)) {
+            return $this->referenceCache[$number];
+        }
+
+        if ($this->referenceResolver === null) {
+            return $this->referenceCache[$number] = null;
+        }
+
+        try {
+            return $this->referenceCache[$number] = ($this->referenceResolver)((int) $number);
+        } catch (Throwable) {
+            return $this->referenceCache[$number] = null;
+        }
     }
 
     private function esc(string $text): string

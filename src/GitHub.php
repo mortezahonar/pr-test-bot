@@ -54,6 +54,18 @@ final class GitHub
         return $this->paginate('/repos/' . self::REPO . '/pulls/' . $number);
     }
 
+    /**
+     * Resolve a numeric GitHub reference to its canonical issue or PR URL.
+     */
+    public function referenceUrl(int $number): string
+    {
+        $item = $this->paginate('/repos/' . self::REPO . '/issues/' . $number);
+
+        return isset($item['pull_request'])
+            ? 'https://github.com/' . self::REPO . '/pull/' . $number
+            : 'https://github.com/' . self::REPO . '/issues/' . $number;
+    }
+
     public function issueComments(int $number): array
     {
         $all = $this->paginate('/repos/' . self::REPO . '/issues/' . $number . '/comments');
