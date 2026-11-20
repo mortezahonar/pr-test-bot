@@ -1,0 +1,30 @@
+{
+    "pr": 48880,
+    "is_update": true,
+    "topic_name": "[#48880] - [6.2] از مجموعه‌های فیلتر (Filtersets) منتشرنشده در جستجوهای com_finder استفاده نکنید",
+    "thread_id": 2015,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲۹ آبان ۱۴۰۵ — ساعت ۱۸:۵۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/d6654a914b6ab0b34c3143030b609023b2c7eba9\">d6654a9</a> تست کردم.\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48880\">issues.joomla.org/tracker/joomla-cms/48880</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۲۹ آبان ۱۴۰۵ — ساعت ۱۹:۱۴"
+        },
+        {
+            "kind": "message",
+            "text": "RTC\n‏―――――――――――――――――\n‏این نظر با <a href=\"https://github.com/joomla/jissues\">اپلیکیشن J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48880\">issues.joomla.org/tracker/joomla-cms/48880</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-11-20T15:44:13Z",
+    "warnings": []
+}
