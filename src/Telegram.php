@@ -57,6 +57,8 @@ final class Telegram implements TelegramSender
         return match (true) {
             str_contains($description, 'message thread not found'),
             str_contains($description, 'thread not found') => 'thread_not_found',
+            str_contains($description, 'topic_not_modified'),
+            str_contains($description, 'not modified') => 'topic_not_modified',
             str_contains($description, 'topic is closed'),
             str_contains($description, 'topic_closed') => 'topic_closed',
             str_contains($description, 'not enough rights'),
