@@ -26,6 +26,7 @@ $iconId = $telegram->laboratoryIconId();
 $topicDir = (string) $config['state_dir'] . '/topics';
 $updated = 0;
 $skipped = 0;
+$failed = [];
 
 $files = glob($topicDir . '/*.json') ?: [];
 sort($files, SORT_STRING);
@@ -46,9 +47,18 @@ foreach ($files as $file) {
             continue;
         }
 
-        $telegram->editForumTopicIcon($chatId, $threadId, $iconId);
-        $updated++;
+        try {
+            $telegram->editForumTopicIcon($chatId, $threadId, $iconId);
+            $updated++;
+        } catch (TelegramApiException $e) {
+            $failed[] = ['thread_id' => $threadId, 'code' => $e->apiErrorCode];
+        }
     }
 }
 
-fwrite(STDOUT, 'Updated forum topic icons: ' . $updated . '; skipped: ' . $skipped . "\n");
+fwrite(STDOUT, 'Updated forum topic icons: ' . $updated . '; skipped: ' . $skipped . '; failed: ' . count($failed) . "\n");
+
+if ($failed !== []) {
+    fwrite(STDERR, 'Failed topic updates: ' . json_encode($failed, JSON_UNESCAPED_SLASHES) . "\n");
+    exit(1);
+}
