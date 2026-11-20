@@ -12,7 +12,8 @@ final class TelegramApiException extends RuntimeException
         public readonly string $method,
         public readonly ?int $apiErrorCode,
         public readonly ?int $retryAfter = null,
-        public readonly bool $parseError = false
+        public readonly bool $parseError = false,
+        public readonly string $reason = 'unknown'
     ) {
         $message = 'Telegram API ' . $method . ' failed';
 
@@ -22,6 +23,10 @@ final class TelegramApiException extends RuntimeException
 
         if ($parseError) {
             $message .= ' (parse error)';
+        }
+
+        if ($reason !== 'unknown') {
+            $message .= ' (' . $reason . ')';
         }
 
         parent::__construct($message, $apiErrorCode ?? 0);

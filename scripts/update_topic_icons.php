@@ -51,7 +51,11 @@ foreach ($files as $file) {
             $telegram->editForumTopicIcon($chatId, $threadId, $iconId);
             $updated++;
         } catch (TelegramApiException $e) {
-            $failed[] = ['thread_id' => $threadId, 'code' => $e->apiErrorCode];
+            $failed[] = [
+                'thread_id' => $threadId,
+                'code' => $e->apiErrorCode,
+                'reason' => $e->reason,
+            ];
         }
     }
 }

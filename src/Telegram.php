@@ -45,8 +45,27 @@ final class Telegram implements TelegramSender
             $method,
             is_int($json['error_code'] ?? null) ? $json['error_code'] : null,
             is_int($parameters['retry_after'] ?? null) ? $parameters['retry_after'] : null,
-            preg_match('/parse|entity/i', $description) === 1
+            preg_match('/parse|entity/i', $description) === 1,
+            self::failureReason($description)
         );
+    }
+
+    private static function failureReason(string $description): string
+    {
+        $description = strtolower($description);
+
+        return match (true) {
+            str_contains($description, 'message thread not found'),
+            str_contains($description, 'thread not found') => 'thread_not_found',
+            str_contains($description, 'topic is closed'),
+            str_contains($description, 'topic_closed') => 'topic_closed',
+            str_contains($description, 'not enough rights'),
+            str_contains($description, 'administrator rights') => 'not_enough_rights',
+            str_contains($description, 'custom emoji'),
+            str_contains($description, 'icon_custom_emoji_id') => 'invalid_topic_icon',
+            str_contains($description, 'bad request') => 'bad_request',
+            default => 'unknown',
+        };
     }
 
     /**
