@@ -11,6 +11,10 @@ on:
         description: "Read updates with getUpdates (only when no webhook is set)"
         type: boolean
         default: false
+      update_topic_icons:
+        description: "Set all bot-managed forum topics to the laboratory test-tube icon"
+        type: boolean
+        default: false
 
   # Safety net: makes sure the webhook is still registered.
   schedule:
@@ -64,6 +68,10 @@ jobs:
       - name: Manual poll
         if: github.event_name == 'workflow_dispatch' && inputs.poll
         run: php bot.php --once
+
+      - name: Update forum topic icons
+        if: github.event_name == 'workflow_dispatch' && inputs.update_topic_icons
+        run: php scripts/update_topic_icons.php
 
       - name: Webhook health check
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

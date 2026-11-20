@@ -5,6 +5,7 @@ declare(strict_types=1);
 final class Telegram implements TelegramSender
 {
     private TelegramRateLimit $rateLimit;
+    private ?string $forumTopicIconId = null;
 
     public function __construct(private string $token, ?TelegramRateLimit $rateLimit = null)
     {
@@ -197,9 +198,44 @@ final class Telegram implements TelegramSender
 
     public function createForumTopic(string $chatId, string $name): array
     {
+        $iconId = $this->laboratoryIconId();
+
         return $this->rateLimit->call(fn () => $this->call('createForumTopic', [
-            'chat_id' => $chatId,
-            'name'    => $name,
+            'chat_id'              => $chatId,
+            'name'                 => $name,
+            'icon_custom_emoji_id' => $iconId,
+        ]));
+    }
+
+    /** @return array<int, array<string, mixed>> */
+    public function getForumTopicIconStickers(): array
+    {
+        $result = $this->rateLimit->call(fn () => $this->call('getForumTopicIconStickers'));
+
+        return is_array($result) ? $result : [];
+    }
+
+    public function laboratoryIconId(): string
+    {
+        if ($this->forumTopicIconId !== null) {
+            return $this->forumTopicIconId;
+        }
+
+        foreach ($this->getForumTopicIconStickers() as $sticker) {
+            if (($sticker['emoji'] ?? '') === '🧪' && (string) ($sticker['custom_emoji_id'] ?? '') !== '') {
+                return $this->forumTopicIconId = (string) $sticker['custom_emoji_id'];
+            }
+        }
+
+        throw new RuntimeException('Telegram laboratory test tube topic icon was not found.');
+    }
+
+    public function editForumTopicIcon(string $chatId, int $threadId, string $iconId): bool
+    {
+        return (bool) $this->rateLimit->call(fn () => $this->call('editForumTopic', [
+            'chat_id'              => $chatId,
+            'message_thread_id'    => $threadId,
+            'icon_custom_emoji_id' => $iconId,
         ]));
     }
 
