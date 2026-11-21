@@ -1,0 +1,30 @@
+{
+    "pr": 48774,
+    "is_update": true,
+    "topic_name": "[#48774] - [6.3] علامت سؤال خط عربی با LTR یکی نیست",
+    "thread_id": 1367,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۳۰ آبان ۱۴۰۵ — ساعت ۱۸:۵۸"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/9a41be0a9a295c9ad631eff08a7661975ada017b\">9a41be0</a> تست کردم\n\n‏من توانستم این را با موفقیت دوباره تست کنم! با تشکر <a href=\"https://github.com/brianteeman\">@brianteeman</a>. \n‏―――――――――――――――――\n‏این کامنت با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48774\">issues.joomla.org/tracker/joomla-cms/48774</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Richard Fath\n\n<a href=\"https://github.com/richard67\">richard67</a>\n\n‏۳۰ آبان ۱۴۰۵ — ساعت ۱۹:۳۳"
+        },
+        {
+            "kind": "message",
+            "text": "RTC\n‏―――――――――――――――――\n‏این نظر توسط <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48774\">issues.joomla.org/tracker/joomla-cms/48774</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-11-21T16:03:12Z",
+    "warnings": []
+}
