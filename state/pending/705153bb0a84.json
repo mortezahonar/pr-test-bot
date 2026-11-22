@@ -1,0 +1,36 @@
+{
+    "pr": 48895,
+    "is_update": true,
+    "topic_name": "[#48895] - [6.2] [AI] ثبت فایل‌های دارایی (Asset Files) یک قالب فرزند (Child Template) بعد از والد آن در صفحه خطا (Error Page)",
+    "thread_id": 2122,
+    "actions": [
+        {
+            "kind": "message",
+            "text": "Morteza Honar\n\n<a href=\"https://github.com/mortezahonar\">mortezahonar</a>\n\n‏۱ آذر ۱۴۰۵ — ساعت ۲۱:۰۷"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این مورد ✅ را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/aa650c5eec765293ffb9c12225af216f6e6355ab\">aa650c5</a> تست کردم.\n\n‏با تشکر.\n‏قبل:"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/c0f5b151-b154-47b9-be8d-ab3df17481a0",
+            "caption": "Screenshot_۲۰۲۶۱۱۲۲-۲۱۰۹۴۷_Chrome"
+        },
+        {
+            "kind": "message",
+            "text": "‏بعد از:"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/f4625970-6704-48b2-99f2-9f3c5677b07a",
+            "caption": "Screenshot_۲۰۲۶۱۱۲۲-۲۱۰۸۲۵_Chrome"
+        },
+        {
+            "kind": "message",
+            "text": "‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48895\">issues.joomla.org/tracker/joomla-cms/48895</a> ایجاد شده است."
+        }
+    ],
+    "last_item_at": "2026-11-22T17:37:48Z",
+    "warnings": []
+}
