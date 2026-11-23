@@ -1,0 +1,182 @@
+{
+    "pr": 46902,
+    "is_update": false,
+    "topic_name": "[#46902] - [6.3] {loadmoduleid} شامل عنوان (include title)",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#46902] - [6.3] {loadmoduleid} شامل عنوان (include title)"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲۸ بهمن ۱۴۰۴ — ساعت ۱۵:۳۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.3] {loadmoduleid} شامل عنوان\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/46902\">https://issues.joomla.org/tracker/joomla-cms/46902</a>\n\n‏درخواست ادغام (Pull Request) جزئی برای گزارش مشکل (Issue) <a href=\"https://github.com/joomla/joomla-cms/issues/46900\">#46900</a> .\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏هنگامی که از دکمه editor-xtd برای درج یک ماژول در یک مطلب استفاده می‌کنید، این امکان را دارید که ماژول را بر اساس عنوان در پنجره مودال (Modal) انتخاب کنید، اما به محض این‌که در مطلب درج می‌شود، فقط شناسه (ID) ماژول را نمایش می‌دهد.\n\n‏این یک مشکل است زیرا وقتی برای ویرایش مطلب بازمی‌گردید، نمی‌توانید به‌راحتی تشخیص دهید که کدام ماژول درج شده است. تنها راه برای انجام این کار این است که از مطلب خارج شوید، به مدیر ماژول‌ها بروید و ماژول را با شماره شناسه (ID) پیدا کنید.\n\n‏این درخواست ادغام (Pull Request) این وضعیت را تغییر می‌دهد تا عنوان ماژول نیز علاوه بر آن درج شود. این یک تغییر ظاهری است و بر ماژول‌های موجود که قبلاً درج شده‌اند تأثیری نمی‌گذارد.\n\n‏### دستورالعمل‌های تست\n‏یک ماژول را در یک مطلب درج کنید و تأیید کنید که در بخش کاربری سایت (Frontend) به همان صورتِ مورد انتظار نمایش داده می‌شود.\n\n‏### نتیجه واقعی قبل از اعمال این درخواست ادغام (Pull Request)\n‏{loadmoduleid 99}\n‏_که در آن 99 شناسه (ID) ماژول است_\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n‏{loadmoduleid 99 - Latest Posts}\n‏_که در آن 99 شناسه (ID) ماژول و Latest Posts عنوان ماژول است_\n\n<b>پیوند به مستندات</b>\n\n‏لطفاً انتخاب کنید:\n\n‏- [ ] پیوند مستندات برای guide.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای guide.joomla.org نیست\n\n‏- [ ] پیوند Pull Request برای manual.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.1-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "webnet-assmann\n\n<a href=\"https://github.com/webnet-assmann\">webnet-assmann</a>\n\n‏۲۸ بهمن ۱۴۰۴ — ساعت ۱۷:۰۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/746421ee93af60372e21ad40df7af475429f0a6d\">746421e</a> تست کردم.\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">J!Tracker Application</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/46902\">issues.joomla.org/tracker/joomla-cms/46902</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "Morteza Honar\n\n<a href=\"https://github.com/mortezahonar\">mortezahonar</a>\n\n‏۲۸ بهمن ۱۴۰۴ — ساعت ۱۸:۴۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/746421ee93af60372e21ad40df7af475429f0a6d\">746421e</a> تست کردم.\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/46902\">issues.joomla.org/tracker/joomla-cms/46902</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Feature» توسط <a href=\"https://github.com/Fedik\">Fedik</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "Marian Tanase\n\n<a href=\"https://github.com/mariantanase\">mariantanase</a>\n\n‏۲۹ بهمن ۱۴۰۴ — ساعت ۱۱:۴۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/746421ee93af60372e21ad40df7af475429f0a6d\">746421e</a> تست کردم\n\n‏رفتار مورد انتظار: هنگام درج یک فرم، عنوان آن فرم نیز ظاهر می‌شود. برای شناسایی سریع ماژول درج‌شده مفید است.\n‏―――――――――――――――――\n‏این نظر با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/46902\">issues.joomla.org/tracker/joomla-cms/46902</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۲ اسفند ۱۴۰۴ — ساعت ۰۵:۰۴"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/746421ee93af60372e21ad40df7af475429f0a6d\">746421e</a> تست کردم.\n\n‏من توانستم این را با موفقیت تست کنم - نصب تازه جوملا 6.1 ß2.\n\n‏با تشکر <a href=\"https://github.com/brianteeman\">@brianteeman</a> \n‏―――――――――――――――――\n‏این کامنت با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/46902\">issues.joomla.org/tracker/joomla-cms/46902</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Feature» توسط <a href=\"https://github.com/alikon\">alikon</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.1-dev» توسط <a href=\"https://github.com/alikon\">alikon</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۲ اسفند ۱۴۰۴ — ساعت ۰۹:۵۶"
+        },
+        {
+            "kind": "message",
+            "text": "RTC\n‏―――――――――――――――――\n‏این دیدگاه توسط <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/46902\">issues.joomla.org/tracker/joomla-cms/46902</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Feature» توسط <a href=\"https://github.com/alikon\">alikon</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.1-dev» توسط <a href=\"https://github.com/alikon\">alikon</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Harald Leithner\n\n<a href=\"https://github.com/HLeithner\">HLeithner</a>\n\n‏۲۶ اسفند ۱۴۰۴ — ساعت ۱۲:۴۲"
+        },
+        {
+            "kind": "message",
+            "text": "‏این درخواست ادغام (Pull Request) به‌صورت خودکار روی 6.2-dev ریبیس شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏عنوان از «[6.1] {loadmoduleid} include title» به «[6.2] {loadmoduleid} include title» تغییر کرد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.1-dev» توسط <a href=\"https://github.com/HLeithner\">HLeithner</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Martin Carl Kopp\n\n<a href=\"https://github.com/MacJoom\">MacJoom</a>\n\n‏۲۰ تیر ۱۴۰۵ — ساعت ۲۲:۳۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏بابت درخواست ادغام (Pull Request) متشکرم - ایده‌اش را دوست دارم. یک دغدغه:\n‏عبارت باقاعده (Regex) به‌روزرسانی‌شده، عنوان را اختیاری می‌کند، اما در واقع جداکننده‌ای بین شناسه (ID) ماژول و عنوان تعریف نمی‌کند.\n\n/{loadmoduleid\\s([1-9][0-9]*)(?:[^\\}]*)\\}/i\n\n‏هر کاراکتری را بعد از شناسه (ID) عددی می‌پذیرد، بنابراین تگ‌های شکل‌نادرستی مانند:\n\n‏{loadmoduleid 99abc}\n‏{loadmoduleid 99,foo}\n‏{loadmoduleid 99 anything}\n\n‏همگی منطبق شده و ماژول 99 را بارگذاری خواهند کرد.\n\n‏آیا بهتر نیست جداکنندهٔ واقعی تولیدشده توسط پنجره مودال (Modal) (چه - باشد چه ,) الزامی شود تا پارسر به‌جای پذیرش متن پایانی دلخواه، یک گرامر کاملاً تعریف‌شده داشته باشد؟"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Feature» توسط <a href=\"https://github.com/MacJoom\">MacJoom</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/MacJoom\">MacJoom</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/MacJoom\">MacJoom</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «Feature» توسط <a href=\"https://github.com/MacJoom\">MacJoom</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/MacJoom\">MacJoom</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۲۱ تیر ۱۴۰۵ — ساعت ۱۳:۲۷"
+        },
+        {
+            "kind": "message",
+            "text": "‏> آیا بهتر نیست جداکنندهٔ واقعی تولیدشده توسط پنجره مودال (Modal) (خواه - باشد یا ،) را الزامی کنیم تا پارسر (parser) به‌جای پذیرش متن پایانی دلخواه، دارای یک گرامر مشخص باشد؟\n\n‏آیا تفاوتی ایجاد می‌کند؟"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Richard Fath\n\n<a href=\"https://github.com/richard67\">richard67</a>\n\n‏۲۷ مرداد ۱۴۰۵ — ساعت ۱۵:۳۵"
+        },
+        {
+            "kind": "message",
+            "text": "‏> > آیا بهتر نیست همان جداکنندهٔ واقعی تولیدشده توسط پنجره مودال (Modal) (خواه - باشد یا ,) الزامی شود تا پارسر (parser) به‌جای پذیرفتن متن انتهایی دلخواه، دارای یک گرامر کاملاً تعریف‌شده باشد؟\n‏> \n‏> آیا فرقی می‌کند؟\n\n<a href=\"https://github.com/MacJoom\">@MacJoom</a> چگونه در اینجا ادامه دهیم؟"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Harald Leithner\n\n<a href=\"https://github.com/HLeithner\">HLeithner</a>\n\n‏۱۵ آبان ۱۴۰۵ — ساعت ۱۱:۱۳"
+        },
+        {
+            "kind": "message",
+            "text": "‏این درخواست ادغام (Pull Request) به‌صورت خودکار روی 6.3-dev ریبیس شد. جوملا! 6.2 اکنون در وضعیت انجماد قابلیت‌ها (Feature Freeze) قرار دارد."
+        },
+        {
+            "kind": "message",
+            "text": "‏عنوان از «[6.2] {loadmoduleid} include title» به «[6.3] {loadmoduleid} include title» تغییر کرد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.2-dev» توسط <a href=\"https://github.com/TLWebdesign\">TLWebdesign</a> حذف شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Richard Fath\n\n<a href=\"https://github.com/richard67\">richard67</a>\n\n‏۲ آذر ۱۴۰۵ — ساعت ۰۱:۳۵"
+        },
+        {
+            "kind": "message",
+            "text": "<a href=\"https://github.com/roland-d\">@roland-d</a> <a href=\"https://github.com/TLWebdesign\">@TLWebdesign</a> از آنجا که درخواست ادغام (Pull Request) در این میان از 6.2-dev به 6.3-dev ریبیس شده است، فکر می‌کنم تصمیم‌گیری بر عهده شماست.\n\n‏پیش از ریبیس، <a href=\"https://github.com/MacJoom\">@MacJoom</a> خواستار یک بهبود شد و RTC را برداشت، سپس درخواست ادغام (Pull Request) ریبیس شد، اما آن گفتگو هرگز به نتیجه نرسید.\n\n‏چگونه باید در اینجا ادامه داد؟"
+        }
+    ],
+    "last_item_at": "2026-11-22T22:05:45Z",
+    "warnings": []
+}
