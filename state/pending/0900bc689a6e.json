@@ -1,0 +1,88 @@
+{
+    "pr": 48893,
+    "is_update": false,
+    "topic_name": "[#48893] - [6.3] صفحه‌بندی در صفحه‌نمایش‌های کوچک (جایگزین)",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48893] - [6.3] صفحه‌بندی در صفحه‌نمایش‌های کوچک (جایگزین)"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۳۰ آبان ۱۴۰۵ — ساعت ۱۵:۰۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.3] صفحه‌بندی (Pagination) در صفحه‌نمایش‌های کوچک (جایگزین)\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48893\">https://issues.joomla.org/tracker/joomla-cms/48893</a>\n\n‏درخواست ادغام (Pull Request) <a href=\"https://github.com/joomla/joomla-cms/issues/32674\">https://github.com/joomla/joomla-cms/issues/32674</a> <a href=\"https://github.com/joomla/joomla-cms/issues/38955\">https://github.com/joomla/joomla-cms/issues/38955</a> را برطرف می‌کند\n‏این یک راهکار جایگزین برای <a href=\"https://github.com/joomla/joomla-cms/pull/46856\">https://github.com/joomla/joomla-cms/pull/46856</a> توسط <a href=\"https://github.com/hans2103\">@hans2103</a> است اما فقط از css استفاده می‌کند.\n‏این یک راهکار جایگزین برای <a href=\"https://github.com/joomla/joomla-cms/pull/48888\">#48888</a> است \n\n‏- [x] <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با <a href=\"https://t.me/Joomla_PR_test/211\">این سیاست</a> و مجوز GNU/GPL نسخه ۲ یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏این یک پیاده‌سازی جایگزین برای PR <a href=\"https://github.com/joomla/joomla-cms/pull/48888\">#48888</a> است.\n\n‏کد CSS به‌جای اتکا به موقعیت آیتم‌های فردی صفحه‌بندی، از کلاس موجود .active برای شناسایی صفحه فعلی و تعیین اینکه کدام لینک‌های صفحات مجاور باید مرئی بمانند، استفاده می‌کند.\n\n‏کنترل‌های صفحه‌بندی (نخست، قبلی، بعدی و آخرین) با نشانه‌گذاری آیکون خود شناسایی می‌شوند، بنابراین صرف‌نظر از موقعیت آن‌ها در لیست یا اینکه برخی از کنترل‌ها توسط اورراید قالب حذف شده باشند، مرئی می‌مانند.\n\n‏### دستورالعمل‌های تست\n‏این یک تغییر scss است، بنابراین یا از یک پکیج ازپیش‌ساخته‌شده استفاده کنید یا npm i را اجرا نمایید\n\n‏تعداد زیادی مقاله در یک دسته واحد ایجاد کنید\n‏اکنون می‌توانید صفحه‌بندی را در بخش ادمین تست کنید\n‏یک آیتم منوی لیست دسته به همان دسته ایجاد کنید\n‏اکنون می‌توانید صفحه‌بندی را در بخش سایت تست کنید\n\n‏- بالای 40rem: نمایش تمام لینک‌های صفحات.\n‏- در 40rem یا کمتر از آن: نمایش صفحه فعلی و حداکثر دو صفحه مجاور در هر طرف.\n‏- در 30rem یا کمتر از آن: نمایش صفحه فعلی و یک صفحه مجاور در هر طرف.\n‏- در 22rem یا کمتر از آن: نمایش فقط صفحه فعلی.\n\n‏کنترل‌های نخست، قبلی، بعدی و آخرین در صورت وجود، مرئی می‌مانند\n\n‏یک اورراید قالب برای صفحه‌بندی ایجاد کرده و قبلی و بعدی را حذف کنید\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n‏صفحه‌بندی صرف‌نظر از اندازه صفحه یا فضای موجود، همیشه به یک شکل نمایش داده می‌شود، بنابراین می‌تواند فضای افقی زیادی را در صفحه‌نمایش‌های کوچک‌تر اشغال کند و باعث سرریز (overflow) شود.\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n‏صفحه‌بندی خود را با عرض موجود در کانتینر خود وفق می‌دهد. صفحه فعلی مرئی باقی می‌ماند و با محدودتر شدن فضا، لینک‌های صفحات مجاور کمتری نمایش داده می‌شوند. کنترل‌های مسیریابی (Navigation) در صورت وجود همچنان در دسترس می‌مانند.\n\n<b>پیوند به مستندات</b>\n\n‏لطفاً انتخاب کنید:\n\n‏- [ ] پیوند مستندات برای guide.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای guide.joomla.org نیست\n\n‏- [ ] پیوند Pull Request برای manual.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «NPM Resource Changed» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏ارجاع به: [6.3] Pagination on small screens (<a href=\"https://github.com/joomla/joomla-cms/pull/48888\">https://github.com/joomla/joomla-cms/pull/48888</a>)"
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۳۰ آبان ۱۴۰۵ — ساعت ۱۷:۲۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت در <a href=\"https://github.com/joomla/joomla-cms/commit/58c35da0b4c2398c559004aa2fe6acfc2c47c3f9\">58c35da</a> تست کردم\n\n‏من توانستم این اصلاحیه PR را با موفقیت تست کنم. از <a href=\"https://github.com/brianteeman\">@brianteeman</a> بابت نسخه/جایگزین اضافی سپاسگزارم.\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48893\">issues.joomla.org/tracker/joomla-cms/48893</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "Morteza Honar\n\n<a href=\"https://github.com/mortezahonar\">mortezahonar</a>\n\n‏۴ آذر ۱۴۰۵ — ساعت ۱۴:۵۶"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/58c35da0b4c2398c559004aa2fe6acfc2c47c3f9\">58c35da</a> تست کردم.\n\n‏با تشکر."
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/e586e159-13a0-402a-ad18-b9eb8264ecf2",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "photo",
+            "url": "https://github.com/user-attachments/assets/07ce2bc5-9349-4567-88b3-3e87efa8cfe1",
+            "caption": "‏تصویر"
+        },
+        {
+            "kind": "message",
+            "text": "‏―――――――――――――――――\n‏این نظر با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48893\">issues.joomla.org/tracker/joomla-cms/48893</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Nicola Galgano\n\n<a href=\"https://github.com/alikon\">alikon</a>\n\n‏۴ آذر ۱۴۰۵ — ساعت ۱۴:۵۸"
+        },
+        {
+            "kind": "message",
+            "text": "RTC\n‏―――――――――――――――――\n‏این دیدگاه با <a href=\"https://github.com/joomla/jissues\">برنامه J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48893\">issues.joomla.org/tracker/joomla-cms/48893</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RTC» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "‏عضو: Richard Fath\n\n<a href=\"https://github.com/richard67\">richard67</a>\n\n‏۴ آذر ۱۴۰۵ — ساعت ۱۵:۰۱"
+        },
+        {
+            "kind": "message",
+            "text": "<a href=\"https://github.com/roland-d\">@roland-d</a> <a href=\"https://github.com/TLWebdesign\">@TLWebdesign</a> از آنجا که این درخواست ادغام (Pull Request) در وضعیت RTC است اما یک درخواست ادغام جایگزین <a href=\"https://github.com/joomla/joomla-cms/pull/48888\">#48888</a> (که آن هم RTC است) وجود دارد، برچسب RMDQ را مانند کاری که برای دیگری انجام دادم تنظیم کرده‌ام تا بدانید پیش از آنکه این یکی یا آن دیگری ادغام شود، ابتدا به یک تصمیم‌گیری نیاز است. به نظرم ادغام هر دو درخواست ادغام (Pull Request) منطقی نخواهد بود."
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «RMDQ» توسط <a href=\"https://github.com/richard67\">richard67</a> اضافه شد"
+        }
+    ],
+    "last_item_at": "2026-11-25T11:31:32Z",
+    "warnings": []
+}
