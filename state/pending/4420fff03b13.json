@@ -1,0 +1,42 @@
+{
+    "pr": 48943,
+    "is_update": false,
+    "topic_name": "[#48943] - [6.3] گنجاندن فایل‌های RTL بوت‌استرپ (Bootstrap) در media/vendor",
+    "thread_id": null,
+    "actions": [
+        {
+            "kind": "topic",
+            "name": "[#48943] - [6.3] گنجاندن فایل‌های RTL بوت‌استرپ (Bootstrap) در media/vendor"
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۵ آذر ۱۴۰۵ — ساعت ۱۶:۳۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏[6.3] گنجاندن فایل‌های RTL بوت‌استرپ (Bootstrap) در media/vendor\n\n<a href=\"https://issues.joomla.org/tracker/joomla-cms/48943\">https://issues.joomla.org/tracker/joomla-cms/48943</a>\n\n‏درخواست ادغام (Pull Request) شماره #48788 را حل می‌کند.\n\n‏- [x ] من <a href=\"https://developer.joomla.org/generative-ai-policy.html\">سیاست هوش مصنوعی مولد</a> را مطالعه کردم و مشارکت من یا با کمک هوش مصنوعی ایجاد نشده است و یا با این سیاست و مجوز GNU/GPL 2 یا بالاتر سازگار است.\n\n‏### خلاصه تغییرات (Summary of Changes)\n‏فایل‌های css راست‌به‌چپ (RTL) بوت‌استرپ را در پوشه media/vendor بگنجانید.\n\n‏### دستورالعمل تست (Testing Instructions)\n‏این یک تغییر در بیلد (build) است، بنابراین نمی‌توانید با patchtester تست کنید - باید `npm i` را اجرا کنید.\n‏محتویات media/vendor را بررسی کنید.\n\n‏### نتیجه واقعی پیش از اعمال این درخواست ادغام (Pull Request)\n\n‏فایل‌های RTL وجود ندارند.\n\n‏### نتیجه مورد انتظار پس از اعمال این درخواست ادغام (Pull Request)\n\n‏فایل‌های RTL موجود هستند.\n\n<b>پیوند به مستندات</b>\n\n‏لطفاً انتخاب کنید:\n\n‏- [ ] پیوند مستندات برای guide.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای guide.joomla.org نیست\n\n‏- [ ] پیوند Pull Request برای manual.joomla.org:\n\n‏- [x] نیازی به تغییر مستندات برای manual.joomla.org نیست"
+        },
+        {
+            "kind": "message",
+            "text": "‏برچسب «PR-6.3-dev» توسط <a href=\"https://github.com/joomla-cms-bot\">joomla-cms-bot</a> اضافه شد"
+        },
+        {
+            "kind": "message",
+            "text": "Emmanuel Lemor\n\n<a href=\"https://github.com/exlemor\">exlemor</a>\n\n‏۵ آذر ۱۴۰۵ — ساعت ۲۰:۰۹"
+        },
+        {
+            "kind": "message",
+            "text": "‏من این آیتم ✅ را با موفقیت روی <a href=\"https://github.com/joomla/joomla-cms/commit/98027f750172d64c28d81d7636703a040a1db4d1\">98027f7</a> تست کردم.\n\n‏من توانستم این اصلاحیه PR را با موفقیت تست کنم. ممنون <a href=\"https://github.com/brianteeman\">@brianteeman</a>!\n\n‏برای سایر مشارکت‌کنندگان، بسته به راه‌اندازی/پیکربندی شما:\n\n‏اگر از Joomla Patch Tester استفاده می‌کنید، من این پیام را دریافت کردم:\n\n‏_هیچ فایلی برای اعمال پچ از این درخواست ادغام (Pull Request) وجود ندارد. این ممکن است به این معنی باشد که فایل‌های موجود در درخواست ادغام در نصب شما وجود ندارند._\n\n‏بنابراین من از URL بسته دانلود (یا خودِ بسته دانلود) برای به‌روزرسانی نصب تستی خود استفاده کردم و توانستم PR را تست کنم.\n\n‏------\n\n‏سؤال؟: از آنجایی که این مورد وزن نسبتاً زیادی به فرانت‌اند سایت اضافه می‌کند:\n\n‏آیا فایل‌های Bootstrap RTL که توسط این اصلاحیه اضافه شده‌اند، تنها در صورتی توسط جوملا بارگذاری می‌شوند که سایت در فرانت‌اند دارای یک زبان RTL باشد؟\n\n‏(با همان منطق، فرض می‌کنم که این فایل‌ها تنها در صورتی برای بک‌اند بارگذاری می‌شوند که یک زبان RTL برای بک‌اند وجود داشته باشد، اما وزن سایت در بک‌اند اهمیت کمتری دارد زیرا بر SEO، عملکرد و غیره تأثیر نمی‌گذارد)\n\n‏―――――――――――――――――\n‏این نظر با استفاده از اپلیکیشن <a href=\"https://github.com/joomla/jissues\">J!Tracker</a> در <a href=\"https://issues.joomla.org/tracker/joomla-cms/48943\">issues.joomla.org/tracker/joomla-cms/48943</a> ایجاد شده است."
+        },
+        {
+            "kind": "message",
+            "text": "‏مشارکت‌کننده: Brian Teeman\n\n<a href=\"https://github.com/brianteeman\">brianteeman</a>\n\n‏۵ آذر ۱۴۰۵ — ساعت ۲۰:۲۰"
+        },
+        {
+            "kind": "message",
+            "text": "‏جوملا هرگز این فایل‌ها را بارگذاری نمی‌کند - آن‌ها فقط برای کامل بودن ارائه شده‌اند تا شخص ثالث به آن‌ها دسترسی داشته باشد. ما قبلاً دسترسی به فایل‌های LTR معمولی را فراهم کرده‌ایم، فقط فایل‌های RTL را اضافه نکرده بودیم."
+        }
+    ],
+    "last_item_at": "2026-11-26T16:50:32Z",
+    "warnings": []
+}
